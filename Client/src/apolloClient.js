@@ -2,6 +2,7 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import { ApolloClient, InMemoryCache, split, HttpLink } from "@apollo/client";
+import { createUploadLink } from 'apollo-upload-client'
 
 const GRAPHQL_ENDPOINT =
   process.env.REACT_APP_ENV === "production"
@@ -14,7 +15,8 @@ const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
 
 const webSocketsLink = new WebSocketLink(client);
 
-const httpLink = new HttpLink({
+
+const httpLink = new createUploadLink({
   uri:
     process.env.REACT_APP_ENV === "production"
       ? `${process.env.REACT_APP_PRODUCTION_SERVER_URL}/graphql`

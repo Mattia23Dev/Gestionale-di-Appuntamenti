@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Spring, animated, Keyframes } from "react-spring/renderprops";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+
 import {
   faSuitcase,
   faClock,
@@ -9,6 +11,7 @@ import {
   faSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { InView } from "react-intersection-observer";
+import getServiceQuery from "../../../graphql/queries/getServiceQuery"
 import ACTION_BACIAL_TOGGLE from "../../../actions/Treatments/Bacial/ACTION_BACIAL_TOGGLE";
 import ACTION_CALM_TOGGLE_RESET from "../../../actions/Treatments/Calm/ACTION_CALM_TOGGLE_RESET";
 import ACTION_CLARIFY_TOGGLE_RESET from "../../../actions/Treatments/Clarify/ACTION_CLARIFY_TOGGLE_RESET";
@@ -39,6 +42,7 @@ import ACTION_JET_HYDRO_PEEL_TOGGLE_RESET from "../../../actions/Treatments/JetH
 
 const Bacial = (props) => {
   // "Learn More" states
+  
   const calmToggle = useSelector((state) => state.calmToggle.toggle);
   const clarifyToggle = useSelector((state) => state.clarifyToggle.toggle);
   const bacialToggle = useSelector((state) => state.bacialToggle.toggle);
@@ -135,11 +139,13 @@ const Bacial = (props) => {
       dispatch(ACTION_BACIAL_TOGGLE_RESET());
     }
   };
-
-  const cardDescriptionHandler = () => {
+  const cardDescriptionHandler = (data) => {
     if (bacialToggle) {
       return (
+        
         <>
+
+     
           <div className="card_description_paragraph_toggle">
             <div className="card_description_icon_wrapper_container">
               <div className="card_description_paragraph_icon_wrapper">
@@ -150,7 +156,7 @@ const Bacial = (props) => {
                 <p className="card_description_paragraph_title">Duration</p>
               </div>
               <div className="card_description_paragraph_value">
-                <p>50 minutes</p>
+                <p>{props.data.duration}</p>
               </div>
               <div className="card_description_paragraph_icon_wrapper">
                 <FontAwesomeIcon
@@ -160,17 +166,17 @@ const Bacial = (props) => {
                 <p className="card_description_paragraph_title">Price</p>
               </div>
               <div className="card_description_paragraph_value">
-                <p>$120</p>
+                <p>{data.price}</p>
               </div>
             </div>
           </div>
+        
         </>
-      );
+      )
     } else {
       return (
         <p className="card_description_paragraph">
-          Bacial is a back treatment that uses many of the same skin cleansing
-          techniques and antibacterial ingredients as the Clarify facial.
+         {props.data.description}
         </p>
       );
     }
@@ -480,20 +486,21 @@ const Bacial = (props) => {
 
   const bigScreenBottomWrapperRender = () => {
     return (
+     
       <div className="big_screen_entire_bottom_wrapper">
         <div className="big_screen_price_wrapper">
           <FontAwesomeIcon
             className="big_screen_card_description_icon"
             icon={faTag}
           />
-          <p className="big_screen_price">$120</p>
+          <p className="big_screen_price">{props.data.price}$</p>
         </div>
         <div className="big_screen_duration_wrapper">
           <FontAwesomeIcon
             className="big_screen_card_description_icon"
             icon={faClock}
           />
-          <p className="big_screen_duration">50 minutes</p>
+          <p className="big_screen_duration">{props.data.duration}</p>
         </div>
       </div>
     );
@@ -794,14 +801,15 @@ const Bacial = (props) => {
                     }}
                   >
                     <div className="card_description_inner_wrapper">
-                      <h2 style={{ fontWeight: 400 }}>BACIAL</h2>
+                      <h2 style={{ fontWeight: 400 }}>{props.data.name}</h2>
                       <p
                         className="card_description_subheader"
                         style={{ opacity: 0.6 }}
                       >
-                        Back acne-fighting
+                        {props.data.category}
+                        
                       </p>
-                      {cardDescriptionHandler()}
+                      {cardDescriptionHandler(props.data)}
                       {dynamicScreenSizeBottomCardRender()}
                     </div>
                   </div>

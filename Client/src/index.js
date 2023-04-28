@@ -1679,7 +1679,7 @@ const App = () => {
               By using this website, you agree to our{" "}
               <Link to="/privacy">Privacy Policy</Link>,{" "}
               <Link to="/termsandconditions">Terms and Conditions</Link>, and
-              use of cookies. We use cookies to provide you with a personalized
+              Use of cookies. We use cookies to provide you with a personalized
               experience.
             </p>
           }

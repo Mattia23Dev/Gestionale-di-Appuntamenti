@@ -1,6 +1,8 @@
 const express = require("express");
 const compression = require("compression");
 const { graphqlHTTP } = require("express-graphql");
+const fs = require('fs');
+const path = require('path');
 const expressPlayground =
   require("graphql-playground-middleware-express").default;
 const { ApolloServer } = require("apollo-server-express");
@@ -29,6 +31,9 @@ const { v4: uuidv4 } = require("uuid");
 const http = require("http");
 const { ApiError, Environment } = require("square");
 const SquareClient = require("square").Client;
+const { graphqlUploadExpress } = require('graphql-upload');
+const { GraphQLUpload } = require('graphql-upload');
+
 
 // Used to normalize phone numbers for use by Twilio
 const phone = require("phone");
@@ -57,6 +62,8 @@ app.use(
         ? process.env.PRODUCTION_CLIENT_URL
         : "http://localhost:3000",
     credentials: true,
+    Upload: GraphQLUpload,
+
   })
 );
 
@@ -582,11 +589,14 @@ const pubsub =
 
 const server = new ApolloServer({
   schema,
+  uploads: false,
+
   context: async ({ req, res }) => {
     return {
       req,
       res,
       pubsub,
+
     };
   },
   playground: process.env.NODE_ENV === "production" ? false : true,
@@ -1505,6 +1515,7 @@ app.use(async (req, res, next) => {
     return next();
   }
 });
+app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
 app.use(
   "/graphql",
@@ -1513,6 +1524,7 @@ app.use(
     graphiql: process.env.NODE_ENV === "production" ? false : true,
   })
 );
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 server.applyMiddleware({
   app,

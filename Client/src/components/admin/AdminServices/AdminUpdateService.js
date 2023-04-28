@@ -3,13 +3,17 @@ import { Transition } from "react-spring/renderprops";
 import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import Modal from "react-modal";
 import { css } from "@emotion/css";
+import {useHistory} from "react-router-dom"
+
 import BounceLoader from "react-spinners/BounceLoader";
-import phone from "phone";
-import isEmail from "validator/lib/isEmail";
-import isMobilePhone from "validator/lib/isMobilePhone";
+import { ApolloError } from 'apollo-client';
+
+import updateServiceMutation from "../../../graphql/mutations/updateServiceMutation";
+import addServiceMutation from "../../../graphql/mutations/addServiceMutaion";
+
 import addEmployeeMutation from "../../../graphql/mutations/addEmployeeMutation";
 import Dropdown from "react-dropdown";
 import ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER from "../../../actions/Admin/AdminAddStaffMember/AdminStaffMemberPhoneNumber/ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER";
@@ -26,34 +30,35 @@ import ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET from "../../../actions/Admin/AdminA
 import ACTION_LOADING_SPINNER_RESET from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_RESET";
 import "react-dropdown/style.css";
 import "react-day-picker/lib/style.css";
-import "./AdminStaff.css";
+import "./AdminService.css";
 
-const AdminAddStaffMember = (props) => {
+const AdminUpdateService = (props) => {
   const dispatch = useDispatch();
-
+const navigate = useHistory()
   const otherRoleRef = useRef(null);
 
   const {
     addStaffMemberClicked,
-    changeAddStaffMemberClicked,
+    changeupdateServiceClicked,
     getEmployeesRefetch,
+    ServiceID
   } = props;
-
-  const adminStaffMemberFirstName = useSelector(
-    (state) => state.adminStaffMemberFirstName.admin_staff_member_first_name
-  );
-  const adminStaffMemberLastName = useSelector(
-    (state) => state.adminStaffMemberLastName.admin_staff_member_last_name
-  );
-  const adminStaffMemberEmail = useSelector(
-    (state) => state.adminStaffMemberEmail.admin_staff_member_email
-  );
-  const adminStaffMemberPhoneNumber = useSelector(
-    (state) => state.adminStaffMemberPhoneNumber.admin_staff_member_phone_number
-  );
-  const adminStaffMemberRoles = useSelector(
-    (state) => state.adminStaffMemberRoles.admin_staff_member_roles
-  );
+  
+//   const adminStaffMemberFirstName = useSelector(
+//     (state) => state.adminStaffMemberFirstName.admin_staff_member_first_name
+//   );
+//   const adminStaffMemberLastName = useSelector(
+//     (state) => state.adminStaffMemberLastName.admin_staff_member_last_name
+//   );
+//   const adminStaffMemberEmail = useSelector(
+//     (state) => state.adminStaffMemberEmail.admin_staff_member_email
+//   );
+//   const adminStaffMemberPhoneNumber = useSelector(
+//     (state) => state.adminStaffMemberPhoneNumber.admin_staff_member_phone_number
+//   );
+//   const adminStaffMemberRoles = useSelector(
+//     (state) => state.adminStaffMemberRoles.admin_staff_member_roles
+//   );
 
   const logoutClicked = useSelector(
     (state) => state.logoutClicked.log_out_clicked
@@ -72,11 +77,45 @@ const AdminAddStaffMember = (props) => {
   const [phoneNumberError, changePhoneNumberError] = useState(false);
   const [roleError, changeRoleError] = useState(false);
 
+
+
+
+
+
+
+
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [duration, setDuration] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [img, setImg] = useState('');
+
+
   const [
     addEmployee,
     { loading: addEmployeeLoading, data: addEmployeeData },
   ] = useMutation(addEmployeeMutation);
+  const [updateService, { loading, error }] = useMutation(updateServiceMutation,{
 
+        variables: { _id:ServiceID,name: name ||undefined, 
+            category: category||undefined,   
+            description:description||undefined,     
+            duration:parseInt(duration) ||undefined
+            , price:parseInt(price) ||undefined,
+            // category: category, description:description, 
+         
+           img:img ||undefined
+          },
+        onCompleted: (data) => {
+          console.log(data, "data");
+          // perform any data processing here
+          console.log(data, "data");
+    
+        }
+  }
+  );
+  
   const override = css`
     display: block;
     position: absolute;
@@ -84,137 +123,20 @@ const AdminAddStaffMember = (props) => {
     right: 25%;
   `;
 
-  const phoneNumberKeyTyping = (e) => {
-    if (
-      (e.keyCode >= 8 && e.keyCode < 32) ||
-      (e.keyCode >= 37 && e.keyCode <= 40) ||
-      (e.keyCode >= 96 && e.keyCode <= 105) ||
-      (e.keyCode >= 48 && e.keyCode <= 57)
-    ) {
-      return e.keyCode;
-    } else {
-      e.preventDefault();
-    }
-  };
 
-  const resetAllErrorStates = () => {
-    if (firstNameError) {
-      changeFirstNameError(false);
-    }
+  
 
-    if (lastNameError) {
-      changeLastNameError(false);
-    }
 
-    if (emailError) {
-      changeEmailError(false);
-    }
-
-    if (phoneNumberError) {
-      changePhoneNumberError(false);
-    }
-
-    if (roleError) {
-      changeRoleError(false);
-    }
-  };
-
-  const phoneNumberTyping = (e) => {
-    let currentTyping = e.currentTarget.value;
-
-    resetAllErrorStates();
-
-    // Formatting for US Phone Numbers
-    if (currentTyping.length === 3) {
-      currentTyping = currentTyping.split("");
-      currentTyping.unshift("(");
-      currentTyping.push(") ");
-
-      currentTyping = currentTyping.join("");
-    } else {
-      if (currentTyping.length === 4) {
-        if (
-          currentTyping.indexOf("(") === 0 &&
-          currentTyping.indexOf(")") < 0
-        ) {
-          currentTyping = currentTyping.split("");
-          currentTyping.splice(currentTyping.indexOf("("), 1);
-
-          currentTyping = currentTyping.join("");
-        } else {
-          if (
-            currentTyping.indexOf("(") < 0 &&
-            currentTyping.indexOf(")") < 0
-          ) {
-            currentTyping = currentTyping.split("");
-            currentTyping.unshift("(");
-            currentTyping.splice(4, 0, ") ");
-
-            currentTyping = currentTyping.join("");
-          }
-        }
-      } else {
-        if (currentTyping.length === 6) {
-          if (currentTyping.indexOf(" ") < 0) {
-            currentTyping = currentTyping.split("");
-            currentTyping.splice(5, 0, " ");
-
-            currentTyping = currentTyping.join("");
-          }
-        } else {
-          if (currentTyping.length === 10) {
-            if (currentTyping.lastIndexOf(" ") === 5) {
-              currentTyping = currentTyping.split("");
-              currentTyping.splice(9, 0, " - ");
-
-              currentTyping = currentTyping.join("");
-            } else {
-              if (currentTyping.indexOf("(") < 0) {
-                currentTyping = currentTyping.split("");
-                currentTyping.unshift("(");
-                currentTyping.splice(4, 0, ") ");
-                currentTyping.splice(8, 0, " - ");
-                currentTyping = currentTyping.join("");
-              }
-            }
-          } else {
-            if (currentTyping.length === 11) {
-              if (
-                currentTyping.lastIndexOf(" ") === 9 &&
-                currentTyping.indexOf("-") < 0
-              ) {
-                currentTyping = currentTyping.split("");
-                currentTyping.splice(9, 0, " -");
-
-                currentTyping = currentTyping.join("");
-              }
-            } else {
-              if (currentTyping.length === 12) {
-                if (currentTyping.lastIndexOf(" ") === 9) {
-                  currentTyping = currentTyping.split("");
-                  currentTyping.splice(11, 0, " ");
-
-                  currentTyping = currentTyping.join("");
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    e.currentTarget.value = currentTyping;
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER(currentTyping));
-  };
 
   useEffect(() => {
     if (addEmployeeData && !loadingSpinnerActive) {
-      changeAddStaffMemberClicked(false);
+        changeupdateServiceClicked(false);
       getEmployeesRefetch();
     }
   }, [
     addEmployeeData,
     loadingSpinnerActive,
-    changeAddStaffMemberClicked,
+    changeupdateServiceClicked,
     getEmployeesRefetch,
   ]);
 
@@ -250,73 +172,88 @@ const AdminAddStaffMember = (props) => {
   }, [firstFocus]);
 
   const handleBackToAllStaff = () => {
-    changeAddStaffMemberClicked(false);
+    navigate.go(0)
+
+    changeupdateServiceClicked(false);
     changeOtherRoles([]);
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME_RESET());
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_LAST_NAME_RESET());
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL_RESET());
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET());
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET());
+    // dispatch(ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME_RESET());
+    // dispatch(ACTION_ADMIN_STAFF_MEMBER_LAST_NAME_RESET());
+    // dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL_RESET());
+    // dispatch(ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET());
+    // dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET());
+
   };
 
-  const otherRolesValuesArr = otherRoles.map((role) => role.value);
 
-  const otherRolesValuesFiltered = otherRolesValuesArr.filter((role) => role);
+  // const variablesModel = {
+  //   firstName: adminStaffMemberFirstName,
+  //   lastName: adminStaffMemberLastName,
+  //   email: adminStaffMemberEmail,
+  //   phoneNumber: adminStaffMemberPhoneNumber,
+  //   employeeRole: adminStaffMemberRoles.concat(otherRolesValuesFiltered),
+  // };
+  
 
-  const variablesModel = {
-    firstName: adminStaffMemberFirstName,
-    lastName: adminStaffMemberLastName,
-    email: adminStaffMemberEmail,
-    phoneNumber: adminStaffMemberPhoneNumber,
-    employeeRole: adminStaffMemberRoles.concat(otherRolesValuesFiltered),
-  };
 
-  const handleSubmit = () => {
-    if (
-      adminStaffMemberFirstName &&
-      adminStaffMemberLastName &&
-      adminStaffMemberPhoneNumber &&
-      adminStaffMemberEmail &&
-      adminStaffMemberRoles.concat(otherRolesValuesFiltered).length > 0
-    ) {
-      addEmployee({
-        variables: {
-          ...variablesModel,
-        },
-      });
-    } else {
-      if (!adminStaffMemberFirstName) {
-        changeFirstNameError(true);
-      }
+  const handleSubmit =async () => {
+    console.log(img,"img")
+    // if (
+    //   adminStaffMemberFirstName &&
+    //   adminStaffMemberLastName &&
+    //   adminStaffMemberPhoneNumber &&
+    //   adminStaffMemberEmail &&
+    //   adminStaffMemberRoles.concat(otherRolesValuesFiltered).length > 0
+    // ) {
+   
+    try {
+      // your GraphQL query here
+      console.log("sent", ServiceID)
+      await updateService()
+      navigate.go(0)
 
-      if (!adminStaffMemberLastName) {
-        changeLastNameError(true);
-      }
-
-      if (!adminStaffMemberPhoneNumber) {
-        changePhoneNumberError(true);
-      } else {
-        if (phone(adminStaffMemberPhoneNumber)[0]) {
-          if (!isMobilePhone(phone(adminStaffMemberPhoneNumber)[0])) {
-            changePhoneNumberError(true);
-          }
-        } else {
-          changePhoneNumberError(true);
-        }
-      }
-
-      if (!adminStaffMemberEmail) {
-        changeEmailError(true);
-      } else {
-        if (!isEmail(adminStaffMemberEmail)) {
-          changeEmailError(true);
-        }
-      }
-
-      if (adminStaffMemberRoles.concat(otherRolesValuesFiltered).length < 1) {
-        changeRoleError(true);
-      }
+    changeupdateServiceClicked(false);
+    } catch (error) {
+      
+        console.log('Errors', error);
+      
     }
+
+  // }
+  // );
+  
+    // } else {
+    //   if (!adminStaffMemberFirstName) {
+    //     changeFirstNameError(true);
+    //   }
+
+    //   if (!adminStaffMemberLastName) {
+    //     changeLastNameError(true);
+    //   }
+
+    //   if (!adminStaffMemberPhoneNumber) {
+    //     changePhoneNumberError(true);
+    //   } else {
+    //     if (phone(adminStaffMemberPhoneNumber)[0]) {
+    //       if (!isMobilePhone(phone(adminStaffMemberPhoneNumber)[0])) {
+    //         changePhoneNumberError(true);
+    //      }
+    //     } else {
+    //       changePhoneNumberError(true);
+    //     }
+    //   }
+
+    //   if (!adminStaffMemberEmail) {
+    //     changeEmailError(true);
+    //   } else {
+    //     if (!isEmail(adminStaffMemberEmail)) {
+    //       changeEmailError(true);
+    //     }
+    //   }
+
+    //   if (adminStaffMemberRoles.concat(otherRolesValuesFiltered).length < 1) {
+    //     changeRoleError(true);
+    //   }
+    // }
   };
 
   return (
@@ -379,11 +316,11 @@ const AdminAddStaffMember = (props) => {
                 <p onClick={handleBackToAllStaff}>Torna indietro</p>
               </div>
               <div className="admin_create_appointment_section_header">
-                <h2>Informazioni del nuovo membro del personale</h2>
+                <h2>Edit Service Information</h2>
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Nome
+                  Name
                 </div>
                 <div
                   role="combobox"
@@ -403,51 +340,23 @@ const AdminAddStaffMember = (props) => {
                     aria-autocomplete="list"
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
-                    value={adminStaffMemberFirstName}
-                    onChange={(e) => {
-                      resetAllErrorStates();
-                      dispatch(
-                        ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
-                      );
-                    }}
+                    // value={adminStaffMemberFirstName}
+                    // onChange={(e) => {
+                    //   resetAllErrorStates();
+                    //   dispatch(
+                    //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
+                    //   );
+                    // }}
+                    onChange={(e)=>setName(e.target.value)}
                     placeholder="Nome"
                   />
                 </div>
-                <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Cognome
-                </div>
-                <div
-                  role="combobox"
-                  aria-haspopup="listbox"
-                  aria-owns="react-autowhatever-1"
-                  aria-controls="react-autowhatever-1"
-                  aria-expanded="false"
-                  className="react-autosuggest__container"
-                  style={{
-                    outline: lastNameError ? "3px solid red" : "none",
-                    zIndex: lastNameError ? 99999 : "auto",
-                  }}
-                >
-                  <input
-                    type="text"
-                    autoComplete="off"
-                    aria-autocomplete="list"
-                    aria-controls="react-autowhatever-1"
-                    className="react-autosuggest__input"
-                    value={adminStaffMemberLastName}
-                    onChange={(e) => {
-                      resetAllErrorStates();
-                      dispatch(
-                        ACTION_ADMIN_STAFF_MEMBER_LAST_NAME(e.target.value)
-                      );
-                    }}
-                    placeholder="Cognome"
-                  />
-                </div>
+             
+              
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Email
+                  Price
                 </div>
                 <div
                   role="combobox"
@@ -467,17 +376,51 @@ const AdminAddStaffMember = (props) => {
                     aria-autocomplete="list"
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
-                    placeholder="Email"
-                    value={adminStaffMemberEmail}
+                    placeholder="Price"
+                    // value={adminStaffMemberEmail}
                     maxLength={100}
-                    onChange={(e) => {
-                      resetAllErrorStates();
-                      dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL(e.target.value));
-                    }}
+                    // onChange={(e) => {
+                    //   resetAllErrorStates();
+                    //   dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL(e.target.value));
+                    // }}
+                    onChange={(e)=>setPrice(e.target.value)}
+
                   />
                 </div>
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Numero di telefono
+              Duration
+                </div>
+                <div
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-owns="react-autowhatever-1"
+                  aria-controls="react-autowhatever-1"
+                  aria-expanded="false"
+                  className="react-autosuggest__container"
+                  // style={{
+                  //   outline: durationError ? "3px solid red" : "none",
+                  //   zIndex: durationError ? 99999 : "auto",
+                  // }}
+                >
+                  <input
+                    type="text"
+                    autoComplete="off"
+                    aria-autocomplete="list"
+                    // onKeyDown={phoneNumberKeyTyping}
+                    // onChange={phoneNumberTyping}
+                    maxLength={16}
+                    // value={adminStaffMemberPhoneNumber}
+                    aria-controls="react-autowhatever-1"
+                    className="react-autosuggest__input"
+                    placeholder="Duration"
+                    onChange={(e)=>setDuration(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="admin_create_appointment_input_information_container">
+                <div className="admin_create_appointment_label admin_create_appointment_double_label">
+                  Category
                 </div>
                 <div
                   role="combobox"
@@ -487,32 +430,106 @@ const AdminAddStaffMember = (props) => {
                   aria-expanded="false"
                   className="react-autosuggest__container"
                   style={{
-                    outline: phoneNumberError ? "3px solid red" : "none",
-                    zIndex: phoneNumberError ? 99999 : "auto",
+                    outline: firstNameError ? "3px solid red" : "none",
+                    zIndex: firstNameError ? 99999 : "auto",
                   }}
                 >
                   <input
                     type="text"
                     autoComplete="off"
                     aria-autocomplete="list"
-                    onKeyDown={phoneNumberKeyTyping}
-                    onChange={phoneNumberTyping}
-                    maxLength={16}
-                    value={adminStaffMemberPhoneNumber}
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
-                    placeholder="Numero"
+                    // value={adminStaffMemberFirstName}
+                    // onChange={(e) => {
+                    //   resetAllErrorStates();
+                    //   dispatch(
+                    //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
+                    //   );
+                    // }}
+                    onChange={(e)=>setCategory(e.target.value)}
+
+                    placeholder="Categroy"
+                  />
+                </div>
+             
+              
+              </div>   <div className="admin_create_appointment_input_information_container">
+                <div className="admin_create_appointment_label admin_create_appointment_double_label">
+                  Description
+                </div>
+                <div
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-owns="react-autowhatever-1"
+                  aria-controls="react-autowhatever-1"
+                  aria-expanded="false"
+                  className="react-autosuggest__container"
+                  // style={{
+                  //   outline: nameError ? "3px solid red" : "none",
+                  //   zIndex: nameError ? 99999 : "auto",
+                  // }}
+                >
+                  <textarea
+                    type="text"
+                    autoComplete="off"
+                    aria-autocomplete="list"
+                    aria-controls="react-autowhatever-1"
+                    className="react-autosuggest__input"
+                    // value={adminStaffMemberFirstName}
+                    // onChange={(e) => {
+                    //   resetAllErrorStates();
+                    //   dispatch(
+                    //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
+                    //   );
+                    // }}
+                    placeholder="Description"
+                    onChange={(e)=>setDescription(e.target.value)}
+
+                  />
+                </div>
+             
+                <div className="admin_create_appointment_label admin_create_appointment_double_label">
+                  Image
+                </div>
+                <div
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-owns="react-autowhatever-1"
+                  aria-controls="react-autowhatever-1"
+                  aria-expanded="false"
+                  className="react-autosuggest__container"
+                  style={{
+                    outline: firstNameError ? "3px solid red" : "none",
+                    zIndex: firstNameError ? 99999 : "auto",
+                  }}
+                >
+                  <input
+                    type="file"
+                    autoComplete="off"
+                    aria-autocomplete="list"
+                    aria-controls="react-autowhatever-1"
+                    className="react-autosuggest__input"
+                    // value={adminStaffMemberFirstName}
+                    // onChange={(e) => {
+                    //   resetAllErrorStates();
+                    //   dispatch(
+                    //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
+                    //   );
+                    // }}
+                    onChange={(e)=>setImg(e.target.files[0])}
+
+                    placeholder="Image"
                   />
                 </div>
               </div>
-
-           
+              
             
 
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
                   <div className="sq-creditcard" onClick={handleSubmit}>
-                    Aggiungi membro del personale
+                   Update Service
                   </div>
                 </div>
               </div>
@@ -524,4 +541,4 @@ const AdminAddStaffMember = (props) => {
   );
 };
 
-export default AdminAddStaffMember;
+export default AdminUpdateService;

@@ -585,6 +585,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
             </div>
           ) : null}
           {getEmployeeData ? (
+            <>
             <div
               className="large_screen_side_menu_item_container"
               onClick={handleAdminResetNotifications}
@@ -605,6 +606,8 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 <h2>Clienti</h2>
               </Link>
             </div>
+          
+            </>
           ) : (
             <div className="large_screen_side_menu_item_container">
               <Link
@@ -695,7 +698,35 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   <h2>Calendario</h2>
                 </Link>
               </div>
+            
+
+
+
+            
+              <div
+              className="large_screen_side_menu_item_container"
+              // onClick={(e)=>{alert("yes")}}
+            >
+              <Link className="large_screen_side_menu_item" to="/admin/service">
+                <div
+                  className="large_screen_side_menu_item_selected_border"
+                  style={{
+                    opacity: location.pathname.includes("/admin/service")
+                      ? 1
+                      : 0,
+                  }}
+                />
+                <FontAwesomeIcon
+                  icon={faUsers}
+                  className="large_screen_side_menu_item_icon"
+                />
+                <h2>Services</h2>
+              </Link>
+            </div>
               <div className="large_screen_side_menu_underline_separator" />
+              
+            
+
             </>
           ) : (
             <>
@@ -797,8 +828,10 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           )}
         </div>
       )}
+       
       {guestConsentFormAccessToken ? null : (
         <div className="large_screen_side_menu_item_container large_screen_side_menu_log_out">
+          
           <div
             className="large_screen_side_menu_item"
             onClick={() => {

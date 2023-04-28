@@ -79,7 +79,7 @@ const AllAddOns = React.forwardRef((props, ref) => {
           >
             {(styles) => (
               <>
-                <h2
+                {/* <h2
                   style={{
                     position: `${styles.position}`,
                     opacity: `${styles.opacity}`,
@@ -111,13 +111,13 @@ const AllAddOns = React.forwardRef((props, ref) => {
                     qualche extra speciale <br />
                     aggiuntivo.
                   </p>
-                </h3>
+                </h3> */}
               </>
             )}
           </Spring>
         ) : null}
       </header>
-      <Suspense fallback={<></>}>
+      {/* <Suspense fallback={<></>}>
         <ExtraExtractions
           initialScreenSize={initialScreenSize}
           currentScreenSize={currentScreenSize}
@@ -197,7 +197,7 @@ const AllAddOns = React.forwardRef((props, ref) => {
             resetAllCartStatesExceptTreatments
           }
         />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 });

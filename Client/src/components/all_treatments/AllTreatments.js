@@ -2,11 +2,23 @@ import React, { useMemo, useRef } from "react";
 import { Suspense } from "react";
 import { Spring } from "react-spring/renderprops";
 import { useInView } from "react-intersection-observer";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import getServiceQuery from "../../graphql/queries/getServiceQuery"
+
 import { ToastContainer } from "react-toastify";
 import ToastifyCSSImport from "./ToastifyCSSImport";
 import "./AllTreatments.css";
 
 const AllTreatments = React.forwardRef((props, ref) => {
+  const {
+    data,
+    refetch: getServiceRefetch,
+    loading: getServiceLoading,
+  } = useQuery(getServiceQuery, {
+    fetchPolicy: "no-cache",
+  });
+  console.log(data, "datas")
+
   const {
     currentScreenSize,
     initialScreenSize,
@@ -22,50 +34,50 @@ const AllTreatments = React.forwardRef((props, ref) => {
     () => React.lazy(() => import("../treatments/Calm/Calm")),
     []
   );
-  const Clarify = useMemo(
-    () => React.lazy(() => import("../treatments/Clarify/Clarify")),
-    []
-  );
+  // const Clarify = useMemo(
+  //   () => React.lazy(() => import("../treatments/Clarify/Clarify")),
+  //   []
+  // );
   const Bacial = useMemo(
     () => React.lazy(() => import("../treatments/Bacial/Bacial")),
     []
   );
-  const Glow = useMemo(
-    () => React.lazy(() => import("../treatments/Glow/Glow")),
-    []
-  );
-  const Rejuvenate = useMemo(
-    () => React.lazy(() => import("../treatments/Rejuvenate/Rejuvenate")),
-    []
-  );
-  const Quench = useMemo(
-    () => React.lazy(() => import("../treatments/Quench/Quench")),
-    []
-  );
-  const SaltCave = useMemo(
-    () => React.lazy(() => import("../treatments/SaltCave/SaltCave")),
-    []
-  );
-  const ChemicalPeel = useMemo(
-    () => React.lazy(() => import("../treatments/ChemicalPeel/ChemicalPeel")),
-    []
-  );
-  const Dermaplaning = useMemo(
-    () => React.lazy(() => import("../treatments/Dermaplaning/Dermaplaning")),
-    []
-  );
-  const CBD = useMemo(
-    () => React.lazy(() => import("../treatments/CBD/CBD")),
-    []
-  );
-  const Microneedle = useMemo(
-    () => React.lazy(() => import("../treatments/Microneedle/Microneedle")),
-    []
-  );
-  const JetHydroPeel = useMemo(
-    () => React.lazy(() => import("../treatments/JetHydroPeel/JetHydroPeel")),
-    []
-  );
+  // const Glow = useMemo(
+  //   () => React.lazy(() => import("../treatments/Glow/Glow")),
+  //   []
+  // );
+  // const Rejuvenate = useMemo(
+  //   () => React.lazy(() => import("../treatments/Rejuvenate/Rejuvenate")),
+  //   []
+  // );
+  // const Quench = useMemo(
+  //   () => React.lazy(() => import("../treatments/Quench/Quench")),
+  //   []
+  // );
+  // const SaltCave = useMemo(
+  //   () => React.lazy(() => import("../treatments/SaltCave/SaltCave")),
+  //   []
+  // );
+  // const ChemicalPeel = useMemo(
+  //   () => React.lazy(() => import("../treatments/ChemicalPeel/ChemicalPeel")),
+  //   []
+  // );
+  // const Dermaplaning = useMemo(
+  //   () => React.lazy(() => import("../treatments/Dermaplaning/Dermaplaning")),
+  //   []
+  // );
+  // const CBD = useMemo(
+  //   () => React.lazy(() => import("../treatments/CBD/CBD")),
+  //   []
+  // );
+  // const Microneedle = useMemo(
+  //   () => React.lazy(() => import("../treatments/Microneedle/Microneedle")),
+  //   []
+  // );
+  // const JetHydroPeel = useMemo(
+  //   () => React.lazy(() => import("../treatments/JetHydroPeel/JetHydroPeel")),
+  //   []
+  // );
 
   const [inViewRef, inView] = useInView({
     triggerOnce: true,
@@ -153,7 +165,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
           </Spring>
         ) : null}
       </header>
-      <Suspense fallback={<></>}>
+      {/* <Suspense fallback={<></>}>
         <Calm
           initialScreenSize={initialScreenSize}
           currentScreenSize={currentScreenSize}
@@ -167,15 +179,26 @@ const AllTreatments = React.forwardRef((props, ref) => {
           currentScreenSize={currentScreenSize}
           resetAllCartStates={resetAllCartStates}
         />
-      </Suspense>
+      </Suspense> */}
+      {data ?
+      (
+        data.services.map((d)=>{
+
+
+          return (
+            <>
       <Suspense fallback={<></>}>
         <Bacial
           initialScreenSize={initialScreenSize}
           currentScreenSize={currentScreenSize}
           resetAllCartStates={resetAllCartStates}
+          data = {d}
+      
         />
       </Suspense>
-      <Suspense fallback={<></>}>
+      </>)})
+      ): ("")}
+      {/* <Suspense fallback={<></>}>
         <Glow
           initialScreenSize={initialScreenSize}
           currentScreenSize={currentScreenSize}
@@ -236,7 +259,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
           initialScreenSize={initialScreenSize}
           currentScreenSize={currentScreenSize}
         />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 });

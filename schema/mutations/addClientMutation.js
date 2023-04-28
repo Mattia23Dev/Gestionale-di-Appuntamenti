@@ -12,14 +12,15 @@ const addClientMutation = {
     email: { type: new GraphQLNonNull(GraphQLString) },
     phoneNumber: { type: GraphQLString },
   },
-  resolve(parent, args) {
+  
+  async resolve(parent, args) {
     let client = new Client({
       firstName: args.firstName.trim(),
       lastName: args.lastName.trim(),
       email: args.email,
       phoneNumber: args.phoneNumber,
     });
-    return client.save();
+    return await client.save();
   },
 };
 

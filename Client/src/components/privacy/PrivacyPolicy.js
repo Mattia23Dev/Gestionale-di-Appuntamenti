@@ -245,7 +245,7 @@ const PrivacyPolicy = () => {
         </li>
         <li>
           <strong>Flash Cookies.</strong> Certain features of our Service may
-          use local stored objects (or Flash Cookies) to collect and store
+          Use local stored objects (or Flash Cookies) to collect and store
           information about Your preferences or Your activity on our Service.
           Flash Cookies are not managed by the same browser settings as those
           used for Browser Cookies. For more information on how You can delete

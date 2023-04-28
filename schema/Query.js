@@ -10,6 +10,7 @@ const ownAppointmentsQuery = require("./queries/ownAppointmentsQuery");
 const ownPastAppointmentsQuery = require("./queries/ownPastAppointmentsQuery");
 const clientsQuery = require("./queries/clientsQuery");
 const employeesQuery = require("./queries/employeesQuery");
+const servicessQuery = require("./queries/servicesQuery")
 
 const { GraphQLObjectType } = graphql;
 
@@ -27,6 +28,7 @@ const Query = new GraphQLObjectType({
     own_past_appointments: ownPastAppointmentsQuery,
     clients: clientsQuery,
     employees: employeesQuery,
+    services: servicessQuery,
   },
 });
 

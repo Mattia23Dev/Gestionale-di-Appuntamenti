@@ -3,11 +3,13 @@ import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import AdminLoginPage from "./AdminLogin/AdminLoginPage";
 import AdminMenu from "./AdminMenu/AdminMenu";
 import AdminClients from "./AdminClients/AdminClients";
+import AdminService from "./AdminServices/AdminService";
 import AdminSchedule from "./AdminSchedule/AdminSchedule";
 import AdminStaff from "./AdminStaff/AdminStaff";
 import AdminNotifications from "./AdminNotifications/AdminNotifications";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import getClientsQuery from "../../graphql/queries/getClientsQuery";
+import getServiceQuery from "../../graphql/queries/getServiceQuery"
 import getAllAppointmentsQuery from "../../graphql/queries/getAllAppointmentsQuery";
 import getAllPersonalEventsQuery from "../../graphql/queries/getAllPersonalEventsQuery";
 import resetNotificationsMutation from "../../graphql/mutations/resetNotificationsMutation";
@@ -59,7 +61,13 @@ const AdminRouter = React.forwardRef((props, ref) => {
   } = useQuery(getClientsQuery, {
     fetchPolicy: "no-cache",
   });
-
+  const {
+    data: getServiceData,
+    refetch: getServiceRefetch,
+    loading: getServiceLoading,
+  } = useQuery(getServiceQuery, {
+    fetchPolicy: "no-cache",
+  });
   const {
     data: getAllAppointmentsData,
     refetch: getAllAppointmentsRefetch,
@@ -276,6 +284,29 @@ const AdminRouter = React.forwardRef((props, ref) => {
               resetNotifications={resetNotifications}
               employeeDataRefetch={employeeDataRefetch}
               getEmployeesRefetch={getEmployeesRefetch}
+            />
+          )}
+        />
+          <Route
+          exact
+          path={path + "/service"}
+          onLeave={() => resetNotifications()}
+          render={() => (
+            <AdminService
+            initialScreenSize={initialScreenSize}
+            currentScreenSize={currentScreenSize}
+            getClientsData={getServiceData ? getServiceData : null}
+            getClientsLoading={getServiceLoading}
+            getEmployeeData={getServiceData ? getServiceData : null}
+            getEmployeeError={getEmployeeError}
+            getEmployeesError={getEmployeesError}
+            employeeDataRefetch={employeeDataRefetch}
+            getEmployeesData={getServiceData}
+            getEmployeesRefetch={getServiceRefetch}
+            getAllAppointmentsData={getAllAppointmentsData}
+            getAllAppointmentsRefetch={getAllAppointmentsRefetch}
+            randomColorArray={randomColorArray ? randomColorArray : null}
+            resetNotifications={resetNotifications}
             />
           )}
         />
