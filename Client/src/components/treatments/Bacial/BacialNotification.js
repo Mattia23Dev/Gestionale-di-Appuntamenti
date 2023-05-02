@@ -60,8 +60,8 @@ const BacialNotification = (props) => {
         </g>
       </svg>
       <div className="notification_text_container">
-        <h3>Bacial Added</h3>
-        <p>The Bacial facial treatment has been added to your cart</p>
+        <h3>{props.serviceName} added</h3>
+        <p>The {props.serviceName} has been added to your cart</p>
       </div>
     </div>
   );

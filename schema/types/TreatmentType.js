@@ -1,6 +1,12 @@
 const graphql = require("graphql");
-
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = graphql;
+const serviceType = require("./SeriveType");
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLBoolean,
+} = graphql;
 
 const TreatmentType = new GraphQLObjectType({
   name: "Treatment",
@@ -8,9 +14,10 @@ const TreatmentType = new GraphQLObjectType({
     id: {
       type: GraphQLID,
     },
+    // booked: { type: GraphQLBoolean },
+    // price: { type: GraphQLInt },
+    // duration: { type: GraphQLInt },
     name: { type: GraphQLString },
-    price: { type: GraphQLInt },
-    duration: { type: GraphQLInt },
   }),
 });
 

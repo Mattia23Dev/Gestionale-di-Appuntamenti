@@ -26,6 +26,7 @@ const resetNotificationsMutation = require("./mutations/resetNotificationsMutati
 const addServiceMutation = require("./mutations/addServiceMutation")
 const updateServiceMutation = require("./mutations/updateServiceMutation")
 const deleteServiceMutation = require("./mutations/deleteServiceMutation")
+const addTreatmentMutation = require("./mutations/addTreatmentMutation")
 
 const { GraphQLObjectType } = graphql;
 
@@ -58,7 +59,8 @@ const Mutation = new GraphQLObjectType({
     resetNotifications: resetNotificationsMutation,
     addService: addServiceMutation,
     updateService:updateServiceMutation,
-    deleteService: deleteServiceMutation
+    deleteService: deleteServiceMutation,
+    addTreatment:addTreatmentMutation
 
   },
 });
