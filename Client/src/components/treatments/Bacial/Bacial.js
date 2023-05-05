@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Spring, animated, Keyframes } from "react-spring/renderprops";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-
 import {
   faSuitcase,
   faClock,
   faTag,
   faSquare,
 } from "@fortawesome/free-solid-svg-icons";
-import addTreatmentMutation from "../../../graphql/mutations/addTreatmentMutation";
-import getTreatmentQuery from "../../../graphql/queries/getTreatmentQuery";
-
-import {useHistory} from "react-router-dom"
 import { InView } from "react-intersection-observer";
+import treatmentSuggestions from "../../admin/AdminSchedule/AdminCreateAppointment/TreatmentSuggestions";
 import ACTION_BACIAL_TOGGLE from "../../../actions/Treatments/Bacial/ACTION_BACIAL_TOGGLE";
 import ACTION_CALM_TOGGLE_RESET from "../../../actions/Treatments/Calm/ACTION_CALM_TOGGLE_RESET";
 import ACTION_CLARIFY_TOGGLE_RESET from "../../../actions/Treatments/Clarify/ACTION_CLARIFY_TOGGLE_RESET";
@@ -45,22 +40,11 @@ import ACTION_JET_HYDRO_PEEL_TOGGLE_RESET from "../../../actions/Treatments/JetH
 
 const Bacial = (props) => {
   // "Learn More" states
-  const [serviceID, setServiceID] = useState(false);
-  const [notification, setNotification] = useState(false);
-
- const navigate = useHistory();
-   const [addTreatment, { loading, error }] = useMutation(addTreatmentMutation);
-  const {
-    data: getTreatmentData,
-    
-  } = useQuery(getTreatmentQuery, {
-    fetchPolicy: "no-cache",
-  });
-  if(getTreatmentData && getTreatmentData.treatments)
-  console.log(getTreatmentData.treatments, "nnnn")
+  const [prevState, setPrevState] = useState([]);
   const calmToggle = useSelector((state) => state.calmToggle.toggle);
   const clarifyToggle = useSelector((state) => state.clarifyToggle.toggle);
   const bacialToggle = useSelector((state) => state.bacialToggle.toggle);
+
   const glowToggle = useSelector((state) => state.glowToggle.toggle);
   const rejuvenateToggle = useSelector(
     (state) => state.rejuvenateToggle.toggle
@@ -81,13 +65,16 @@ const Bacial = (props) => {
   const jetHydroPeelToggle = useSelector(
     (state) => state.jetHydroPeelToggle.toggle
   );
-
+  //  useEffect(()=>{
+  // setPrevState([bacialInCartID])},[bacialInCartID])
+  // setPrevState([bacialInCartID])
   // In Cart states
+  // console.log(prevState, "state data")
   const calmInCart = useSelector((state) => state.calmInCart.in_cart);
-  const bacialID = useSelector((state) => state.bacialInCart);
-
   const clarifyInCart = useSelector((state) => state.clarifyInCart.in_cart);
   const bacialInCart = useSelector((state) => state.bacialInCart.in_cart);
+  const bacialInCartID = useSelector((state) => state.bacialInCart);
+
   const glowInCart = useSelector((state) => state.glowInCart.in_cart);
   const cbdInCart = useSelector((state) => state.cbdInCart.in_cart);
   const chemicalPeelInCart = useSelector(
@@ -110,16 +97,7 @@ const Bacial = (props) => {
   // Cart States
   const [cartClicked, changeCartClicked] = useState(false);
   const [bookNowButtonHovered, changeBookNowButtonHovered] = useState(false);
-  const handleTreatment=(id)=>{
-  //  alert("yes")
-    addTreatment({
-      variables: {
-       name:id
-   } })
-   navigate.go(0)
 
-  }
-  console.log()
   const dispatch = useDispatch();
 
   const handleToggle = () => {
@@ -165,7 +143,8 @@ const Bacial = (props) => {
       dispatch(ACTION_BACIAL_TOGGLE_RESET());
     }
   };
-  const cardDescriptionHandler = (data) => {
+
+  const cardDescriptionHandler = () => {
     if (bacialToggle) {
       return (
         <>
@@ -179,7 +158,7 @@ const Bacial = (props) => {
                 <p className="card_description_paragraph_title">Duration</p>
               </div>
               <div className="card_description_paragraph_value">
-                <p>{props.data.duration}</p>
+                <p>{props.data.duration} minutes</p>
               </div>
               <div className="card_description_paragraph_icon_wrapper">
                 <FontAwesomeIcon
@@ -189,7 +168,7 @@ const Bacial = (props) => {
                 <p className="card_description_paragraph_title">Price</p>
               </div>
               <div className="card_description_paragraph_value">
-                <p>{data.price}</p>
+                <p>${props.data.price}</p>
               </div>
             </div>
           </div>
@@ -241,7 +220,7 @@ const Bacial = (props) => {
       },
     ],
   });
-// console.log(bacialID, "ID")
+
   const checkMark = () => {
     return (
       <Spring from={{ x: 100 }} to={{ x: 0 }} config={{ duration: 2000 }}>
@@ -314,7 +293,7 @@ const Bacial = (props) => {
                   : props.currentScreenSize >= 360
                   ? "-0.5rem"
                   : "0rem",
-              display: serviceID ? "block" : "none",
+              display: bacialInCart ? "block" : "none",
             }}
             viewBox="0 0 13.229 13.229"
           >
@@ -324,7 +303,7 @@ const Bacial = (props) => {
               stroke="#000"
               strokeDasharray="100"
               strokeDashoffset={
-                cartClicked ? (serviceID ? `${styles.x}` : 0) : 0
+                cartClicked ? (bacialInCart ? `${styles.x}` : 0) : 0
               }
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -338,21 +317,7 @@ const Bacial = (props) => {
 
   const inCartToastId = "facial_already_in_cart";
 
-  const addToCart = (id, name , price, duration) => {
-    let bool =false;
-    if(getTreatmentData && getTreatmentData.treatments)
-    {
-     { getTreatmentData.treatments.map((serviceData)=>{
- if(serviceData.name===id)
-//  alert(id)
-//  alert(serviceData.name)
- bool = true;
- setServiceID(true)
- return true
-     })}
-    }
-
-    // dispatch(ACTION_BACIAL_IN_CART(props.data._id)); 
+  const addToCart = () => {
     if (
       calmInCart |
         cbdInCart |
@@ -381,55 +346,70 @@ const Bacial = (props) => {
         );
       }
     } else {
-      if (bool) {
+      if ( bacialInCart && bacialInCartID.id === props.data._id) {
+        console.log("removed");
         toast.dismiss();
-        // dispatch(ACTION_BACIAL_NOT_IN_CART());
-        // dispatch(ACTION_DECREMENT_COUNTER());
-        // dispatch(ACTION_SELECTED_DAY_RESET());
-        // dispatch(ACTION_SELECT_TIME_NOT_ACTIVE());
-        // dispatch(ACTION_NAVBAR_IS_VISIBLE());
+        dispatch(
+          ACTION_BACIAL_NOT_IN_CART(
+            props.data._id,
+            props.data.price,
+            props.data.duration,
+            props.data.name
+          )
+        );
+        dispatch(ACTION_DECREMENT_COUNTER());
+        dispatch(ACTION_SELECTED_DAY_RESET());
+        dispatch(ACTION_SELECT_TIME_NOT_ACTIVE());
+        dispatch(ACTION_NAVBAR_IS_VISIBLE());
 
         props.resetAllCartStates();
         toast(
           <BacialRemovedNotification
             currentScreenSize={props.currentScreenSize}
             initialScreenSize={props.initialScreenSize}
-            serviceName= {props.data.name}
-
+            serviceName={props.data.name}
           />,
           {
             className: "toast_removed_container",
           }
-         
         );
-        
-        // {
-        //   setTimeout(()=>{
-        //     navigate.go(0)
-        //   }, 2000)
-        // }
-      } else {
+      } else if (bacialInCartID.id !== props.data._id && !bacialInCart) {
+        console.log("yesUin");
+        console.log(props.data._id, "ba", bacialInCartID.id);
         toast.dismiss();
-        // dispatch(ACTION_BACIAL_IN_CART(props.data._id));
-        // dispatch(ACTION_INCREMENT_COUNTER());
-        // dispatch(ACTION_NAVBAR_IS_VISIBLE());
-        // handleTreatment(id)
-        // changeCartClicked(true);
-        // setTimeout(() => changeCartClicked(false), 200);
-        handleTreatment(id)
-
+        const data = [
+          {
+            id: props.data._id,
+            price: props.data.price,
+            duration: props.data.duration,
+            name: props.data.name,
+          },
+        ];
+        const pre = [];
+        if (bacialInCartID.id != "") pre.push(bacialInCartID.id);
+        console.log(bacialInCartID, "osdiowidoe", " ", pre);
+        // pre.push(bacialInCartID)
+        const combinedData = [...pre, ...data];
+        console.log(combinedData, "Combined");
+        dispatch(
+          ACTION_BACIAL_IN_CART(
+            props.data._id,
+            props.data.price,
+            props.data.duration,
+            props.data.name
+          )
+        );
+        dispatch(ACTION_INCREMENT_COUNTER());
+        dispatch(ACTION_NAVBAR_IS_VISIBLE());
+        changeCartClicked(true);
+        setTimeout(() => changeCartClicked(false), 200);
         toast(
           <BacialNotification
             currentScreenSize={props.currentScreenSize}
             initialScreenSize={props.initialScreenSize}
-            serviceName= {props.data.name}
+            serviceName={props.data.name}
           />
         );
-        {
-          setTimeout(()=>{
-            navigate.go(0)
-          }, 2000)
-        }
       }
     }
   };
@@ -443,7 +423,7 @@ const Bacial = (props) => {
             style={
               bacialToggle
                 ? clarifyInCart |
-                    serviceID |
+                    bacialInCart |
                     cbdInCart |
                     chemicalPeelInCart |
                     calmInCart |
@@ -459,12 +439,12 @@ const Bacial = (props) => {
                   : styles
                 : { position: "relative" }
             }
-            onClick={() => addToCart(props.data._id, props.data.name, props.data.price, props.data.duration)}
+            onClick={() => addToCart()}
           >
             <FontAwesomeIcon
               color={
                 bacialToggle
-                  ? serviceID
+                  ? bacialInCart
                     ? "rgba(119, 221, 119, 0.6)"
                     : clarifyInCart |
                         cbdInCart |
@@ -480,7 +460,7 @@ const Bacial = (props) => {
                       saltCaveInCart
                     ? "rgba(211, 211, 211, 0.8"
                     : "rgba(0, 129, 177, 0.4)"
-                  : serviceID
+                  : bacialInCart
                   ? "rgba(119, 221, 119, 0.6)"
                   : clarifyInCart |
                       cbdInCart |
@@ -511,7 +491,7 @@ const Bacial = (props) => {
             {checkMark()}
             <FontAwesomeIcon
               className="small_screen_card_description_suitcase"
-              style={{ display: serviceID ? "none" : "block" }}
+              style={{ display: bacialInCart ? "none" : "block" }}
               color={
                 clarifyInCart |
                   cbdInCart |
@@ -544,14 +524,14 @@ const Bacial = (props) => {
             className="big_screen_card_description_icon"
             icon={faTag}
           />
-          <p className="big_screen_price">{props.data.price}$</p>
+          <p className="big_screen_price">${props.data.price}</p>
         </div>
         <div className="big_screen_duration_wrapper">
           <FontAwesomeIcon
             className="big_screen_card_description_icon"
             icon={faClock}
           />
-          <p className="big_screen_duration">{props.data.duration}</p>
+          <p className="big_screen_duration">{props.data.duration} minutes</p>
         </div>
       </div>
     );
@@ -591,42 +571,58 @@ const Bacial = (props) => {
     }
   };
 
-  const bigScreenAddToCartButton = (id) => {
-    let bool = false
-  if(getTreatmentData && getTreatmentData.treatments)
-   {
-    { getTreatmentData.treatments.map((serviceData)=>{
-if(serviceData.name===id)
-bool = true
-return true
-    })}
-   }
-   
-   
-   
-   
+  const bigScreenAddToCartButton = () => {
+    // if (bacialInCartID=== props.data._id) {
+    let bool = false;
+    // bacialInCart = {id: '', duration: '', name: '', price: '', in_cart: false}
+    // console.log(bacialInCartID, bacialInCartID.length, "yw")
+    const arr = [];
+    arr.push(bacialInCartID);
+
+    // if (bacialInCartID) {
+    //   // arr.push(bacialInCartID)
+    //   const isData = Array.isArray(arr)
+    //     ? arr.map((key) => {
+    //         // console.log(key, "key");
+    //         const id = key.id
+    //           ? key.id.map((key1) => {
+    //               if (key1.id === props.data._id) {
+    //                 bool = true;
+    //                 // console.log(key1.id, "2");
+    //                 return true;
+    //               }
+    //             })
+    //           : null;
+    //         // return { name: key, value: bacialInCart[key] };
+    //         // console.log(data, "datahhhh")
+    //         // console.log(data.id.id, " u",props.data._id," ", bool)
+
+    //         // if(data.id===props.data._id){
+    //         // bool = true;
+    //         // return true}
+    //       })
+    //     : null;
+    //   // console.log(bool, "isData");
+    // }
+    if (bacialInCartID.id === props.data._id && bacialInCart) {
+      bool = true;
+    }
+    // console.log(isData, " ", bool)
     if (bool) {
       return (
         <>
-          {/* {checkMark()} */}
-          <p className="big_screen_in_cart" >IN CART</p>
+          {checkMark()}
+          <p className="big_screen_in_cart">IN CART</p>
         </>
       );
-    } 
-    
-    
-    
-    
-    
-    else {
+    } else {
       return (
         <>
           <FontAwesomeIcon
             className="big_screen_card_description_suitcase"
             icon={faSuitcase}
           />
-          {console.log(bool)}
-          <p >BOOK NOW</p>
+          <p>BOOK NOW</p>
         </>
       );
     }
@@ -634,7 +630,6 @@ return true
 
   return (
     <InView threshold={0.2} triggerOnce={true}>
-      
       {({ inView, ref }) => (
         <div
           className="card_container"
@@ -670,12 +665,10 @@ return true
                         <>
                           <div
                             className="big_screen_book_now_wrapper"
-                            
-                            onClick={() => addToCart(props.data._id)}
-                           
+                            onClick={() => addToCart()}
                             style={{
                               background: bookNowButtonHovered
-                                ? serviceID
+                                ? bacialInCart
                                   ? "rgba(69, 171, 69, 0.6)"
                                   : clarifyInCart |
                                       cbdInCart |
@@ -691,7 +684,7 @@ return true
                                     saltCaveInCart
                                   ? "rgb(201, 201, 201)"
                                   : "rgb(0, 129, 177)"
-                                : serviceID
+                                : bacialInCart
                                 ? "rgba(119, 221, 119, 0.6)"
                                 : clarifyInCart |
                                     cbdInCart |
@@ -708,7 +701,7 @@ return true
                                 ? "rgb(201, 201, 201)"
                                 : "transparent",
                               border: bookNowButtonHovered
-                                ? serviceID
+                                ? bacialInCart
                                   ? "1px solid rgb(69, 171, 69, 0.8)"
                                   : clarifyInCart |
                                       cbdInCart |
@@ -724,7 +717,7 @@ return true
                                     saltCaveInCart
                                   ? "1px solid transparent"
                                   : "1px solid rgb(0, 129, 177)"
-                                : serviceID
+                                : bacialInCart
                                 ? "1px solid rgb(69, 171, 69, 0.8)"
                                 : clarifyInCart |
                                     cbdInCart |
@@ -741,7 +734,7 @@ return true
                                 ? "1px solid transparent"
                                 : "1px solid rgb(0, 129, 177)",
                               color: bookNowButtonHovered
-                                ? serviceID
+                                ? bacialInCart
                                   ? "rgb(0, 0, 0)"
                                   : clarifyInCart |
                                       cbdInCart |
@@ -757,7 +750,7 @@ return true
                                     saltCaveInCart
                                   ? "rgb(141, 141, 141)"
                                   : "rgb(255, 255, 255)"
-                                : serviceID
+                                : bacialInCart
                                 ? "rgb(0, 0, 0)"
                                 : clarifyInCart |
                                     cbdInCart |
@@ -797,7 +790,7 @@ return true
                               changeBookNowButtonHovered(false)
                             }
                           >
-                            {bigScreenAddToCartButton(props.data._id)}
+                            {bigScreenAddToCartButton()}
                           </div>
                           <svg
                             className="card_svg"
@@ -880,9 +873,9 @@ return true
                         className="card_description_subheader"
                         style={{ opacity: 0.6 }}
                       >
-                        {props.data.category}
+                        Back acne-fighting
                       </p>
-                      {cardDescriptionHandler(props.data)}
+                      {cardDescriptionHandler()}
                       {dynamicScreenSizeBottomCardRender()}
                     </div>
                   </div>

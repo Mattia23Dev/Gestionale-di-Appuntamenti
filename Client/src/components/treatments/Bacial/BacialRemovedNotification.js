@@ -60,8 +60,8 @@ const BacialRemovedNotification = (props) => {
         </g>
       </svg>
       <div className="notification_text_container">
-        <h3>{props.serviceName} already added</h3>
-        <p>The {props.serviceName} treatment has been already added to your cart</p>
+        <h3>{props.serviceName} removed</h3>
+        <p>The {props.serviceName}  has been removed from your cart</p>
       </div>
     </div>
   );

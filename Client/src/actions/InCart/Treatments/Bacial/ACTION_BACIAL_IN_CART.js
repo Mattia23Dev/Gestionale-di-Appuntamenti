@@ -1,15 +1,16 @@
 const BACIAL_IN_CART = "BACIAL_IN_CART";
 
-const ACTION_BACIAL_IN_CART = (id) => {
-  console.log(id, "iddi")
+const ACTION_BACIAL_IN_CART = (id, price, duration , name) => {
+  console.log(id, "id")
   
   return {
     type: BACIAL_IN_CART,
     payload: {
-      serviceID: id, //Added serviceID key with value of id
-      name: "Bacial",
-      price: 120,
-      duration: 50,
+      id: id, 
+      name: name,
+      price: price,
+      duration: duration,
+      
     },
   };
 };

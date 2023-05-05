@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ACTION_BACIAL_NOT_IN_CART from "../../../../actions/InCart/Treatments/Bacial/ACTION_BACIAL_NOT_IN_CART";
 import ACTION_DECREMENT_COUNTER from "../../../../actions/Counter/ACTION_DECREMENT_COUNTER";
 import ACTION_SELECTED_DAY_RESET from "../../../../actions/SelectedDay/ACTION_SELECTED_DAY_RESET";
@@ -8,7 +8,8 @@ import "../../CartCard.css";
 
 const BacialCard = (props) => {
   const dispatch = useDispatch();
-
+  const bacialInCart = useSelector((state) => state.bacialInCart);
+  console.log(bacialInCart, "shoppingg");
   const handleRemove = () => {
     dispatch(ACTION_BACIAL_NOT_IN_CART());
     dispatch(ACTION_DECREMENT_COUNTER());
@@ -47,12 +48,16 @@ const BacialCard = (props) => {
       </div>
       <div className="shopping_cart_card_description">
         <div className="cart_card_top_container">
-          <h3>Bacial</h3>
-          <p className="shopping_cart_duration">Duration: 50 minutes</p>
+          <h3>{bacialInCart ? bacialInCart.name : ""}</h3>
+          <p className="shopping_cart_duration">
+            Duration: {bacialInCart ? bacialInCart.duration : ""} minutes
+          </p>
         </div>
         <div className="cart_card_bottom_container">
           <div className="shopping_cart_price_container">
-            <p className="shopping_cart_price">$120</p>
+            <p className="shopping_cart_price">
+              $ {bacialInCart ? bacialInCart.price : ""}
+            </p>
           </div>
           <div className="shopping_cart_remove_button" onClick={handleRemove}>
             <p>Remove</p>

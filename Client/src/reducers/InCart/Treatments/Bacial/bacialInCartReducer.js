@@ -2,25 +2,35 @@ const BACIAL_IN_CART = "BACIAL_IN_CART";
 const BACIAL_NOT_IN_CART = "BACIAL_NOT_IN_CART";
 const TREATMENTS_CART_RESET = "TREATMENTS_CART_RESET";
 const initialState = {
-  serviceID: "",
+  id: "",
+  duration: "",
+  name: "",
   price: "",
-  in_cart: false
+  in_cart: false,
 };
-const bacialInCartReducer = (state= initialState , action) => {
+const bacialInCartReducer = (state = initialState, action) => {
   switch (action.type) {
     case BACIAL_IN_CART:
-      const { serviceID, price } = action.payload;
-      console.log({ ...state, in_cart: true }, "ao");
+      const { id, price, duration, name } = action.payload;
+      console.log({ ...state, in_cart: true }, "bacial in cart reducer");
       return {
         ...state,
-        serviceID,
+        id,
         price,
-        in_cart: true
-
+        duration,
+        name,
+        in_cart: true,
       };
     case TREATMENTS_CART_RESET:
     case BACIAL_NOT_IN_CART:
-      return { ...state, in_cart: false };
+      return    {
+        ...state,
+        id,
+        price,
+        duration,
+        name,
+        in_cart: false,
+      };
     default:
       return { ...state };
   }

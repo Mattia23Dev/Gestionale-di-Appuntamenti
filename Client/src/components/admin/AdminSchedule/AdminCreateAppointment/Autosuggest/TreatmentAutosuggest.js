@@ -4,10 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import treatmentSuggestions from "../TreatmentSuggestions";
 import ACTION_ADMIN_APPOINTMENT_DURATION from "../../../../../actions/Admin/AdminCreateAppointment/AdminAppointmentDuration/ACTION_ADMIN_APPOINTMENT_DURATION";
 import ACTION_ADMIN_SELECTED_TREATMENTS from "../../../../../actions/Admin/AdminCreateAppointment/AdminSelectedTreatments/ACTION_ADMIN_SELECTED_TREATMENTS";
+import getServiceQuery from "../../../../../graphql/queries/getServiceQuery"
+import { useMutation,useQuery } from "@apollo/react-hooks";
 
 const TreatmentAutosuggest = (props) => {
   const dispatch = useDispatch();
-
+  const {
+    data: getServiceData,
+    refetch: getServiceRefetch,
+    loading: getServiceLoading,
+  } = useQuery(getServiceQuery, {
+    fetchPolicy: "no-cache",
+  });
   const [treatmentInputSuggestions, changeTreatmentInputSuggestions] = useState(
     []
   );
@@ -94,34 +102,39 @@ const TreatmentAutosuggest = (props) => {
 
     return "";
   };
-
   const getTreatmentSuggestions = (value) => {
+    console.log(treatmentSuggestions(getServiceData), "please")
+
     const inputValue = value ? value.trim().toLowerCase() : "";
+    
+    
+    
     const inputLength = inputValue.length;
 
     if (inputLength === 0) {
       const sortedArr = [];
 
-      for (let i = 0; i < treatmentSuggestions().length; i++) {
+      for (let i = 0; i < treatmentSuggestions(getServiceData).length; i++) {
         sortedArr.push({
-          sectionTitle: treatmentSuggestions()
-            ? treatmentSuggestions()[i].sectionTitle
-              ? treatmentSuggestions()[i].sectionTitle
+          sectionTitle: treatmentSuggestions(getServiceData)
+            ? treatmentSuggestions(getServiceData)[i].sectionTitle
+              ? treatmentSuggestions(getServiceData)[i].sectionTitle
               : null
             : null,
-          suggestions: treatmentSuggestions()
-            ? treatmentSuggestions()[i].suggestions
-              ? treatmentSuggestions()[i].suggestions.sort((a, b) =>
+          suggestions: treatmentSuggestions(getServiceData)
+            ? treatmentSuggestions(getServiceData)[i].suggestions
+              ? treatmentSuggestions(getServiceData)[i].suggestions.sort((a, b) =>
                   a.name ? a.name.localeCompare(b.name) : null
                 )
               : null
             : null,
         });
       }
+      console.log(sortedArr,"su")
       return sortedArr;
     } else {
       const sortedArr = [];
-      const allTreatmentSuggestions = treatmentSuggestions();
+      const allTreatmentSuggestions = treatmentSuggestions(getServiceData);
       for (let i = 0; i < allTreatmentSuggestions.length; i++) {
         sortedArr.push({
           sectionTitle: allTreatmentSuggestions

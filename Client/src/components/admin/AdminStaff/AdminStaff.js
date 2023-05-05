@@ -187,25 +187,25 @@ const AdminStaff = (props) => {
   useEffect(() => {
     if (employeeNameToggled) {
       changeSelectedEmployeeAppointments({
-        own_appointments: getAllAppointmentsData.all_appointments.filter(
+        own_appointments:   getAllAppointmentsData ? getAllAppointmentsData.all_appointments.filter(
           (x) =>
             x.esthetician === employeeNameToggled &&
             moment(
               x.date + " " + x.startTime + " " + x.morningOrEvening,
               "MMMM D, YYYY h:mm A"
             ).isAfter(moment())
-        ),
+        ):null
       });
 
       changeSelectedEmployeePastAppointments({
-        own_past_appointments: getAllAppointmentsData.all_appointments.filter(
+        own_past_appointments:getAllAppointmentsData? getAllAppointmentsData.all_appointments.filter(
           (x) =>
             x.esthetician === employeeNameToggled &&
             moment(
               x.date + " " + x.startTime + " " + x.morningOrEvening,
               "MMMM D, YYYY h:mm A"
             ).isBefore(moment())
-        ),
+        ):null
       });
     } else {
       changeSelectedEmployeeAppointments([]);

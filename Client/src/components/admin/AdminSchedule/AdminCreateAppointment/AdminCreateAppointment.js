@@ -8,7 +8,7 @@ import Dropdown from "react-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import ClientAutosuggest from "./Autosuggest/ClientAutosuggest";
 import TreatmentAutosuggest from "./Autosuggest/TreatmentAutosuggest";
-import SaltCaveAutosuggest from "./Autosuggest/SaltCaveAutosuggest";
+// import SaltCaveAutosuggest from "./Autosuggest/SaltCaveAutosuggest";
 import AdminPaymentInfo from "./AdminPaymentInfo/AdminPaymentInfo";
 import { Collapse } from "reactstrap";
 import addAppointmentMutation from "../../../../graphql/mutations/addAppointmentMutation";
@@ -498,44 +498,44 @@ const AdminCreateAppointment = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (adminSelectedTreatments.length > 0) {
-      const treatments = adminSelectedTreatments.filter(
-        (item) => !item.props.children[0].props.children.includes("Add On")
-      );
-      const addOns = adminSelectedTreatments.filter((item) =>
-        item.props.children[0].props.children.includes("Add On")
-      );
+  // useEffect(() => {
+  //   if (adminSelectedTreatments.length > 0) {
+  //     const treatments = adminSelectedTreatments.filter(
+  //       (item) => !item.props.children[0].props.children.includes("Add On")
+  //     );
+  //     const addOns = adminSelectedTreatments.filter((item) =>
+  //       item.props.children[0].props.children.includes("Add On")
+  //     );
 
-      changeSelectedTreatments(
-        treatments.map((item) => {
-          if (item.props.children.length === 4) {
-            return {
-              name: item.props.children[0].props.children,
-              duration: item.props.children[1].props.children,
-              price: item.props.children[2].props.children,
-            };
-          } else {
-            return {
-              name: item.props.children[1].props.children,
-              duration: item.props.children[2].props.children,
-              price: item.props.children[3].props.children,
-            };
-          }
-        })
-      );
+  //     changeSelectedTreatments(
+  //       treatments.map((item) => {
+  //         if (item.props.children.length === 4) {
+  //           return {
+  //             name: item.props.children[0].props.children,
+  //             duration: item.props.children[1].props.children,
+  //             price: item.props.children[2].props.children,
+  //           };
+  //         } else {
+  //           return {
+  //             name: item.props.children[1].props.children,
+  //             duration: item.props.children[2].props.children,
+  //             price: item.props.children[3].props.children,
+  //           };
+  //         }
+  //       })
+  //     );
 
-      changeSelectedAddOns(
-        addOns.map((item) => {
-          return {
-            name: item.props.children[1].props.children,
-            duration: item.props.children[2].props.children,
-            price: item.props.children[3].props.children,
-          };
-        })
-      );
-    }
-  }, [adminSelectedTreatments]);
+  //     changeSelectedAddOns(
+  //       addOns.map((item) => {
+  //         return {
+  //           name: item.props.children[1].props.children,
+  //           duration: item.props.children[2].props.children,
+  //           price: item.props.children[3].props.children,
+  //         };
+  //       })
+  //     );
+  //   }
+  // }, [adminSelectedTreatments]);
 
   const variablesModel = {
     firstName: adminClientFirstName,
@@ -1140,9 +1140,9 @@ const AdminCreateAppointment = (props) => {
             </div>
             {renderSelectedTreatments()}
             <TreatmentAutosuggest />
-            <SaltCaveAutosuggest
+            {/* <SaltCaveAutosuggest
               getAllAppointmentsData={props.getAllAppointmentsData}
-            />
+            /> */}
 
             <div
               className="admin_create_appointment_service_label_container"

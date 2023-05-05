@@ -8,6 +8,7 @@ import getServiceQuery from "../../graphql/queries/getServiceQuery";
 import { ToastContainer } from "react-toastify";
 import ToastifyCSSImport from "./ToastifyCSSImport";
 import "./AllTreatments.css";
+import treatmentSuggestions from "../admin/AdminSchedule/AdminCreateAppointment/TreatmentSuggestions";
 
 const AllTreatments = React.forwardRef((props, ref) => {
   const {
@@ -28,7 +29,6 @@ const AllTreatments = React.forwardRef((props, ref) => {
   } = props;
 
   const treatmentsHeaderRef = useRef(null);
-
 
   const Bacial = useMemo(
     () => React.lazy(() => import("../treatments/Bacial/Bacial")),
@@ -121,23 +121,24 @@ const AllTreatments = React.forwardRef((props, ref) => {
           </Spring>
         ) : null}
       </header>
-    
-      {data
-        ? data.services.map((d) => {
-            return (
-              <>
-                <Suspense fallback={<></>}>
+
+      <>
+        <Suspense fallback={<></>}>
+          {data
+            ? data.services.map((d) => {
+                return (
                   <Bacial
                     initialScreenSize={initialScreenSize}
                     currentScreenSize={currentScreenSize}
                     resetAllCartStates={resetAllCartStates}
                     data={d}
                   />
-                </Suspense>
-              </>
-            );
-          })
-        : ""}
+                );
+              })
+            : ""}
+        </Suspense>
+      </>
+
     </div>
   );
 });

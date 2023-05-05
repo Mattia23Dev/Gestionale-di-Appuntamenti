@@ -477,7 +477,7 @@ const AdminAddStaffMember = (props) => {
                   />
                 </div>
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Numero di telefono
+                Numero di telefono
                 </div>
                 <div
                   role="combobox"
@@ -506,8 +506,145 @@ const AdminAddStaffMember = (props) => {
                 </div>
               </div>
 
-           
-            
+              {adminStaffMemberRoles.length > 0
+                ? adminStaffMemberRoles.map((role, index) => (
+                    <div
+                      className="admin_create_appointment_input_information_container"
+                      key={index}
+                    >
+                      <div className="admin_create_appointment_label">
+                        Ruolo ({index + 1})
+                      </div>
+                      <div
+                        role="combobox"
+                        aria-haspopup="listbox"
+                        aria-owns="react-autowhatever-1"
+                        aria-controls="react-autowhatever-1"
+                        aria-expanded="false"
+                        className="react-autosuggest__container"
+                        style={{
+                          outline: roleError ? "3px solid red" : "none",
+                          zIndex: roleError ? 99999 : "auto",
+                        }}
+                      >
+                        <input
+                          type="text"
+                          autoComplete="off"
+                          aria-autocomplete="list"
+                          aria-controls="react-autowhatever-1"
+                          className="react-autosuggest__input admin_create_appointent_dropdown_placeholder_time"
+                          value={role}
+                          maxLength={100}
+                          disabled
+                        />
+                      </div>
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className="admin_create_appointment_treatment_delete_button"
+                        onClick={() => {
+                          let newArr = [...adminStaffMemberRoles];
+                          newArr.splice(index, 1);
+
+                          if (newArr.length < 1) {
+                            dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET());
+                          } else {
+                            dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET());
+                            newArr.forEach((item) => {
+                              dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES(item));
+                            });
+                          }
+                        }}
+                      />
+                    </div>
+                  ))
+                : null}
+              {otherRoles.length > 0
+                ? otherRoles.map((role, index) => (
+                    <div
+                      className="admin_create_appointment_input_information_container"
+                      key={index}
+                    >
+                      <div className="admin_create_appointment_label">
+                        Ruolo ({adminStaffMemberRoles.length + index + 1})
+                      </div>
+                      <div
+                        role="combobox"
+                        aria-haspopup="listbox"
+                        aria-owns="react-autowhatever-1"
+                        aria-controls="react-autowhatever-1"
+                        aria-expanded="false"
+                        className="react-autosuggest__container"
+                        style={{
+                          outline: roleError ? "3px solid red" : "none",
+                          zIndex: roleError ? 99999 : "auto",
+                        }}
+                      >
+                        <input
+                          ref={otherRoleRef}
+                          type="text"
+                          autoComplete="off"
+                          aria-autocomplete="list"
+                          aria-controls="react-autowhatever-1"
+                          className="react-autosuggest__input"
+                          placeholder="Ruolo del dipendente"
+                          value={role.value}
+                          maxLength={100}
+                          onChange={(e) => {
+                            resetAllErrorStates();
+
+                            let newArr = [...otherRoles];
+                            newArr[index].value = e.target.value;
+
+                            changeOtherRoles(newArr);
+                          }}
+                        />
+                      </div>
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        onClick={() => {
+                          let newArr = [...otherRoles];
+                          newArr.splice(index, 1);
+
+                          changeOtherRoles(newArr);
+                        }}
+                        className="admin_create_appointment_treatment_delete_button"
+                      />
+                    </div>
+                  ))
+                : null}
+              {adminStaffMemberRoles.concat(otherRolesValuesArr).length < 3 ? (
+                <div className="admin_create_appointment_input_information_container">
+                  <div className="admin_create_appointment_label">Ruolo</div>
+                  <Dropdown
+                    options={[
+                      "Admin",
+                      "Esthetician",
+                      "Massage Therapist",
+                      "Wax Specialist",
+                      "Service Provider",
+                      "Other",
+                    ].filter((x) => !adminStaffMemberRoles.includes(x))}
+                    onChange={(choice) => {
+                      resetAllErrorStates();
+
+                      if (choice.value === "Other") {
+                        changeOtherRoles([...otherRoles, { value: "" }]);
+                        changeFirstFocus(true);
+                      } else {
+                        dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES(choice.value));
+                      }
+                    }}
+                    className="react-autosuggest__container"
+                    controlClassName={
+                      roleError
+                        ? "react-autosuggest__input personal_event_error"
+                        : "react-autosuggest__input"
+                    }
+                    placeholder="Ruolo del dipendente"
+                    placeholderClassName="admin_add_staff_dropdown_placeholder_no_time"
+                  />
+                </div>
+              ) : null}
 
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
