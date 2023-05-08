@@ -169,6 +169,7 @@ const ConfirmationPage = (props) => {
   `;
 
   useEffect(() => {
+    console.log(treatmentsArr, "array of treatment")
     const addOnsPriceArr = addOnsArr.map((x) => x.price);
     const treatmentsPriceArr = treatmentsArr.map((x) => x.price);
     const allPricesArr = addOnsPriceArr.concat(treatmentsPriceArr);
@@ -217,7 +218,7 @@ const ConfirmationPage = (props) => {
 
   const handleSubmitBooking = (e) => {
     e.preventDefault();
-
+console.log(e, "e")
     if (!finalBookButtonActive) {
       dispatch(ACTION_FINAL_BOOK_BUTTON_ACTIVE());
     }
@@ -233,7 +234,7 @@ const ConfirmationPage = (props) => {
         addOns: addOnsArr,
       };
     };
-
+console.log(variablesModel, " variablr ", treatmentsArray(), " treatment ", addOnsArray(), "just to test")
     addAppointment({
       variables: { ...variablesModel, ...treatmentsArray(), ...addOnsArray() },
     });

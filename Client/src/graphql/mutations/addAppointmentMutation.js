@@ -85,11 +85,6 @@ const addAppointmentMutation = gql`
         squareCustomerId
         unsavedSquareCardIDs
       }
-      treatments {
-        name
-        price
-        duration
-      }
       addOns {
         name
         price
