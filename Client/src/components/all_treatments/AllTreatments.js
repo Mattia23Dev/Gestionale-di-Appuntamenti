@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import ToastifyCSSImport from "./ToastifyCSSImport";
 import "./AllTreatments.css";
 import treatmentSuggestions from "../admin/AdminSchedule/AdminCreateAppointment/TreatmentSuggestions";
+import getAllAppointmentsQuery from "../../graphql/queries/getAllAppointmentsQuery";
 
 const AllTreatments = React.forwardRef((props, ref) => {
   const {
@@ -19,6 +20,13 @@ const AllTreatments = React.forwardRef((props, ref) => {
     fetchPolicy: "no-cache",
   });
   console.log(data, "datas");
+  const {
+    data: getAllAppointmentsData,
+    refetch: getAllAppointmentsRefetch,
+  } = useQuery(getAllAppointmentsQuery, {
+    fetchPolicy: "no-cache",
+  });
+  console.log(getAllAppointmentsData, "datas2");
 
   const {
     currentScreenSize,
