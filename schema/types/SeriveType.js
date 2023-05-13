@@ -13,7 +13,7 @@ const ServiceType = new GraphQLObjectType({
     duration: { type: GraphQLInt },
     category: { type: GraphQLString },
     description: { type: GraphQLString },
-    img: { type: GraphQLUpload },
+    img: { type: GraphQLString },
   }),
 });
 

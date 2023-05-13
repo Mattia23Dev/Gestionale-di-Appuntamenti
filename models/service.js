@@ -7,7 +7,7 @@ const serviceSchema = new Schema({
   price: Number,
   category:String,
   description:String,
-  img:String
+  img: String,
 });
 
 module.exports = mongoose.model("Service", serviceSchema);

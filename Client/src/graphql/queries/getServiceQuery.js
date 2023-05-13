@@ -12,7 +12,7 @@ const getServiceQuery = gql`
       category
       description
       _id
-      
+      img
     }
   }
 `;
