@@ -177,6 +177,19 @@ const AdminMenu = (props) => {
             <h2>CALENDARIO</h2>
           </Link>
         </div>
+        <div className="admin_menu_box_container">
+          <Link
+            className="admin_menu_box_container_link"
+            to="/admin/service"
+            onClick={handleAdminResetNotifications}
+          >
+            <FontAwesomeIcon
+              icon={faCalendarWeek}
+              className="admin_menu_box_icon"
+            />
+            <h2>SERVIZI</h2>
+          </Link>
+        </div>
         
       </div>
     </div>
