@@ -172,7 +172,8 @@ const navigate = useHistory()
   }, [firstFocus]);
 
   const handleBackToAllStaff = () => {
-    navigate.go(0)
+   // navigate.go(0)
+   window.history.back();
 
     changeupdateServiceClicked(false);
     changeOtherRoles([]);

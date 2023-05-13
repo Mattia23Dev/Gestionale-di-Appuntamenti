@@ -20,6 +20,7 @@ import {
   faCalendarWeek,
   faBell,
   faCircle,
+  faIdBadge,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CanvasDraw from "@win11react/react-canvas-draw";
@@ -643,7 +644,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   }}
                 />
                 <FontAwesomeIcon
-                  icon={faBriefcase}
+                  icon={faIdBadge}
                   className="large_screen_side_menu_item_icon"
                 />
                 <h2>Personale</h2>
@@ -717,10 +718,10 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   }}
                 />
                 <FontAwesomeIcon
-                  icon={faUsers}
+                  icon={faBriefcase}
                   className="large_screen_side_menu_item_icon"
                 />
-                <h2>Services</h2>
+                <h2>Servizi</h2>
               </Link>
             </div>
               <div className="large_screen_side_menu_underline_separator" />

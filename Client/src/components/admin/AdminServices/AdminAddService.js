@@ -379,19 +379,23 @@ if (
                     zIndex: durationError ? 99999 : "auto",
                   }}
                 >
-                  <input
-                    type="text"
-                    autoComplete="off"
-                    aria-autocomplete="list"
-                    // onKeyDown={phoneNumberKeyTyping}
-                    // onChange={phoneNumberTyping}
-                    maxLength={16}
-                    // value={adminStaffMemberPhoneNumber}
-                    aria-controls="react-autowhatever-1"
-                    className="react-autosuggest__input"
-                    placeholder="Duration"
-                    onChange={(e) => {resetAllErrorStates();setDuration(e.target.value)}}
-                  />
+                  <select
+                      value={duration}
+                      onChange={(e) => {
+                        resetAllErrorStates();
+                        setDuration(e.target.value);
+                      }}
+                      aria-controls="react-autowhatever-1"
+                      className="react-autosuggest__input"
+                    >
+                      <option value="">Seleziona durata</option>
+                      <option value="15">15 minuti</option>
+                      <option value="30">30 minuti</option>
+                      <option value="45">45 minuti</option>
+                      <option value="60">60 minuti</option>
+                      <option value="75">75 minuti</option>
+                      <option value="90">90 minuti</option>
+                    </select>
                 </div>
               </div>
               <div className="admin_create_appointment_input_information_container">

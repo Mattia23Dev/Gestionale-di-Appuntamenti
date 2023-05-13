@@ -360,15 +360,10 @@ const add =()=>{
         if (changeEmployeeFilter) {
           changeFilteredAllEmployees(
             [...getEmployeesData.services].filter((x) => {
-              return new RegExp(employeeFilter, "gi").test(
-                x.name + " " + x.name
-              );
-              // ||
-              // new RegExp(employeeFilter, "gi").test(x.email) ||
-              // new RegExp(employeeFilter, "gi").test(x.phoneNumber) ||
-              // new RegExp(employeeFilter, "gi").test(
-              //   x.phoneNumber.split(/[\W_]+/g).join("")
-              // )
+              const nameStartsWith = x.name.toLowerCase().startsWith(employeeFilter.toLowerCase());
+              const categoryMatches = new RegExp(`^${employeeFilter}`, "gi").test(x.category);
+  
+              return (nameStartsWith || categoryMatches);
             })
           );
         }
@@ -629,13 +624,13 @@ const add =()=>{
             icon={faChevronLeft}
           />
         </Link>
-        <h1>Services</h1>
+        <h1>SERVIZI</h1>
       </div>
       <FormGroup>
-        {/* <div className="admin_clients_searchbar_container">
+        <div className="admin_clients_searchbar_container">
           <Input
             className="admin_clients_searchbar_input_field"
-            placeholder="Filtra lo staff per nome o telefono"
+            placeholder="Filtra i servizi per nome o categoria"
             onChange={handleChangeEmployeeFilter}
             maxLength={128}
             onKeyDown={preventKeys}
@@ -644,7 +639,7 @@ const add =()=>{
             className="admin_clients_searchbar_icon"
             icon={faSearch}
           />
-        </div> */}
+        </div> 
         <br />
         <br />
       </FormGroup>
@@ -778,7 +773,7 @@ const add =()=>{
           className="add_staff_member_button"
           onClick={addServiceNEW}
         >
-          Add Service
+          AGGIUNGI UN SERVIZIO CHE IL CLIENTE PRENOTA
         </button>
   
       </div>
