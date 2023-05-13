@@ -388,7 +388,7 @@ if (
                       aria-controls="react-autowhatever-1"
                       className="react-autosuggest__input"
                     >
-                      <option value="">Seleziona durata</option>
+                      <option disabled value="">Seleziona durata</option>
                       <option value="15">15 minuti</option>
                       <option value="30">30 minuti</option>
                       <option value="45">45 minuti</option>
@@ -414,8 +414,7 @@ if (
                     zIndex: categoryError ? 99999 : "auto",
                   }}
                 >
-                  <input
-                    type="text"
+                  <select
                     autoComplete="off"
                     aria-autocomplete="list"
                     aria-controls="react-autowhatever-1"
@@ -427,9 +426,13 @@ if (
                     //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
                     //   );
                     // }}
-                    onChange={(e) => {resetAllErrorStates();setCategory(e.target.value)}}
-                    placeholder="Categroy"
-                  />
+                    onChange={(e) => {resetAllErrorStates(); setCategory(e.target.value)}}
+                  >
+                    <option disabled value="">Seleziona una categoria</option>
+                    <option value="opzione1">Opzione 1</option>
+                    <option value="opzione2">Opzione 2</option>
+                    <option value="opzione3">Opzione 3</option>
+                  </select>
                 </div>
               </div>{" "}
               <div className="admin_create_appointment_input_information_container">
