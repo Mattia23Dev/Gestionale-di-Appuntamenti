@@ -10,7 +10,9 @@
   padding-top: 1.5rem;
   padding-bottom: 2vh;
 }
-
+.bottom_footer_container{
+  height: auto;
+}
 .bottom_footer_all_icons_container > div {
   padding-right: 0.75rem;
   padding-left: 0.75rem;

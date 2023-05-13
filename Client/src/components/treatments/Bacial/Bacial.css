@@ -6,7 +6,10 @@
   position: relative;
   z-index: 4;
 }
-
+.notification_removed_container,
+.notification_container{
+  height: 100px;
+}
 .bacial_icon_path {
   transform: scale(0.75);
 }
