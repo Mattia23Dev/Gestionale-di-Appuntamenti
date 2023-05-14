@@ -24,8 +24,9 @@ import { useMutation,useQuery } from "@apollo/react-hooks";
 import deleteServiceMutation from "../../../graphql/mutations/deleteServiceMutation";
 import getServiceQuery from "../../../graphql/queries/getServiceQuery"
 import updateServiceMutation from "../../../graphql/mutations/updateServiceMutation";
-
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import Chart from 'chart.js/dist/Chart.js';
 import updateAdminProfilePictureMutation from "../../../graphql/mutations/updateAdminProfilePictureMutation";
 import LZString from "lz-string";
 import { css } from "@emotion/css";
@@ -53,17 +54,13 @@ const AdminService = (props) => {
     getEmployeeData,
     getEmployeeError,
     getEmployeesError,
-    getEmployeesRefetch,
-    
-    getAllAppointmentsData,
-    currentScreenSize,
-    initialScreenSize,
+    getEmployeesRefetch,  
     getClientsData,
     getClientsLoading,
-    getAllAppointmentsRefetch,
     employeeDataRefetch,
-    randomColorArray,
     resetNotifications,
+    getAllAppointmentsData,
+    getAllAppointmentsRefetch,
   } = props;
 
   const dispatch = useDispatch();
@@ -118,6 +115,14 @@ const AdminService = (props) => {
   const imageUrl = `http://localhost:4000/uploads/`;
 
 
+  const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+  const [chartData, setChartData] = useState(null);
+  const [numberAppointments, setNumberAppointments] = useState();
+  const [numberClients, setNumberClients] = useState();
+  const [numberServices, setNumberServices] = useState();
+  const [totalPrice, setTotalPrice] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [takeAPhotoSelected, changeTakeAPhotoSelected] = useState(false);
   const [webcamURI, changeWebcamURI] = useState("");
   const [imageUploaded, changeImageUploaded] = useState("");
@@ -172,39 +177,7 @@ const AdminService = (props) => {
       dispatch(ACTION_ON_ACTIVITY_PAGE_RESET());
     }
   }, [onActivityPage, dispatch, resetNotifications, adminNotifications]);
- 
-  const [deleteService, { loading, data }] = useMutation(
-    deleteServiceMutation
-  );
-  const [updateService, { loading1, data1 }] = useMutation(
-    updateServiceMutation
-  );
-  const handleDeleteService = (service) => {
-    deleteService({
-      variables: { _id: service },
-    });
-    navigate.go(0)
-    //     const selectedEmployee = getEmployeesData.services.filter(
-//       (x) => x._id !== service
-//     );
 
-
-}
-
-const handleUpdateService = (service) => 
-{
-  changeupdateServiceClicked(true)
-  setId(service)
-  // updateService({
-  //   variables: { _id: service },
-  // });
-  // navigate.go(0)
-  //     const selectedEmployee = getEmployeesData.services.filter(
-//       (x) => x._id !== service
-//     );
-
-
-}
 useEffect(()=>{
   // navigate.go(0)
 
@@ -270,84 +243,6 @@ const add =()=>{
   //   }
   // }, [employeeNameToggled, getAllAppointmentsData]);
 
-  const handleDeletedPreviewImage = () => {
-    const deleteImageClass = document.getElementsByClassName("deleteImage");
-    const uploadPictureClass = document.getElementsByClassName("uploadPicture");
-
-    if (deleteImageClass) {
-      if (deleteImageClass[0]) {
-        deleteImageClass[0].style.display = "none";
-      }
-    }
-    if (uploadPictureClass) {
-      if (uploadPictureClass[0]) {
-        uploadPictureClass[0].style.display = "none";
-      }
-    }
-  };
-
-  const handleImageUploaded = async (picture) => {
-    dispatch(ACTION_IMAGE_LOADING());
-    if (picture[0] || typeof picture === "string") {
-      const reader = new FileReader();
-      changeImagePreviewAvailable(true);
-      try {
-        let compressedImage;
-
-        if (typeof picture === "object") {
-          compressedImage = await imageCompression(picture[0], {
-            maxSizeMB: 0.3,
-            maxWidthOrHeight: 300,
-          });
-        } else if (typeof picture === "string") {
-          await fetch(picture)
-            .then((res) => {
-              return res.blob();
-            })
-            .then(async (blob) => {
-              compressedImage = await imageCompression(blob, {
-                maxSizeMB: 0.3,
-                maxWidthOrHeight: 300,
-              });
-            });
-        }
-
-        reader.readAsDataURL(compressedImage);
-
-        reader.onloadend = async () => {
-          const base64data = reader.result;
-
-          const compressedBase64data = LZString.compressToEncodedURIComponent(
-            base64data
-          );
-          dispatch(ACTION_IMAGE_LOADING_RESET());
-          changeImageUploaded(compressedBase64data);
-        };
-      } catch (error) {
-        dispatch(ACTION_IMAGE_LOADING_RESET());
-        console.log(error);
-      }
-    } else {
-      dispatch(ACTION_IMAGE_LOADING_RESET());
-      changeImageUploaded("");
-      changeImagePreviewAvailable(false);
-      handleDeletedPreviewImage();
-    }
-  };
-
-  const preventKeys = (e) => {
-    if (
-      e.key === ")" ||
-      e.key === "(" ||
-      e.key === "[" ||
-      e.key === "]" ||
-      e.key === "\\" ||
-      e.key === "/"
-    ) {
-      e.preventDefault();
-    }
-  };
-
   useMemo(() => {
     if (getEmployeesData) {
       if (getEmployeesData.services.length > 0) {
@@ -365,71 +260,6 @@ const add =()=>{
     }
   }, [employeeFilter, getEmployeesData]);
 
-  // Allows click only if selected employee modal is not active
-  // console.log(getEmployeeData?.services,"da")
-
-  const handleEmployeeToggled = (e, item) => {
-    if (e.currentTarget && individualEmployeeRef) {
-      if (individualEmployeeRef.current) {
-        if (
-          individualEmployeeRef.current.className === e.currentTarget.className
-        ) {
-          if (selectedEmployeeBackRef) {
-            if (!selectedEmployeeBackRef.current) {
-              if (item) {
-                if (item._id) {
-                  changeEmployeeToggled(item._id);
-                }
-              }
-            }
-          }
-        }
-      } else {
-        if (
-          e.currentTarget.innerText.includes(
-            item.name[0].toUpperCase() + item.name.slice(1).toLowerCase()
-          ) &&
-          e.currentTarget.innerText.includes(
-            item.name[0].toUpperCase() + item.name.slice(1).toLowerCase()
-          )
-        ) {
-          if (selectedEmployeeBackRef) {
-            if (!selectedEmployeeBackRef.current) {
-              if (item) {
-                if (item._id) {
-                  changeEmployeeToggled(item._id);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  };
-
-  // Function for back arrow click to reset selected toggled employee
-
-  const handleEmployeeUntoggled = (e) => {
-    if (
-      (e.currentTarget && selectedEmployeeBackRef) ||
-      (e.currentTarget && backToClientsRef)
-    ) {
-      if (selectedEmployeeBackRef.current || backToClientsRef.current) {
-        if (
-          selectedEmployeeBackRef.current.className ===
-            e.currentTarget.className ||
-          backToClientsRef.current.className === e.currentTarget.className
-        ) {
-          changeEmployeeToggled("");
-
-          if (pdfLoading) {
-            changePDFLoading(false);
-          }
-        }
-      }
-    }
-  };
-
   // useEffect(() => {
   //   if (location.pathname || addProfilePhotoClicked || loadingSpinnerActive) {
   //     window.scrollTo(0, 0);
@@ -442,59 +272,6 @@ const add =()=>{
       dispatch(ACTION_LOGIN_IS_NOT_ACTIVE());
     }
   }, [dispatch, loginIsActive]);
-
-  const handleConfirmPhotoSubmit = () => {
-    updateAdminProfilePicture({
-      variables: {
-        id: employeeToggled,
-        profilePicture: imageUploaded,
-      },
-    });
-
-    dispatch(ACTION_IMAGE_LOADING());
-    changeImageUploaded("");
-    dispatch(ACTION_ADD_PROFILE_PHOTO_CLICKED_RESET());
-    changeImagePreviewAvailable(false);
-    changeTakeAPhotoSelected(false);
-    changeWebcamURI("");
-  };
-
-  const handleProfilePictureRender = (item) => {
-    if (item.profilePicture) {
-      return (
-        <img
-          className="admin_individual_client_picture_profile_avatar"
-          src={LZString.decompressFromEncodedURIComponent(item.profilePicture)}
-          alt={
-            item.name[0].toUpperCase() +
-            item.name.slice(1).toLowerCase() +
-            " " +
-            item.name[0].toUpperCase() +
-            item.name.slice(1).toLowerCase() +
-            " Profile Picture"
-          }
-        />
-      );
-    } else {
-      return (
-        <div
-          className="admin_individual_client_initials_profile_avatar"
-          style={{
-            background:
-              randomColorArray[
-                getEmployeesData.services.sort((a, b) =>
-                  a.name.localeCompare(b.name)
-                )
-                // .map((x) => x.email)
-                // .indexOf(item.email)
-              ],
-          }}
-        >
-          <p>{item.name[0].toUpperCase() + item.name[0].toUpperCase()}</p>
-        </div>
-      );
-    }
-  };
 
   useEffect(() => {
     if (updateAdminProfilePictureData) {
@@ -517,22 +294,6 @@ const add =()=>{
     employeeDataRefetch,
   ]);
 
-  const renderBarInContactInfo = () => {
-    if (!currentScreenSize) {
-      if (initialScreenSize >= 1200) {
-        return null;
-      } else {
-        return <p style={{ color: "rgb(200, 200, 200)" }}>|</p>;
-      }
-    } else {
-      if (currentScreenSize >= 1200) {
-        return null;
-      } else {
-        return <p style={{ color: "rgb(200, 200, 200)" }}>|</p>;
-      }
-    }
-  };
-
   useEffect(() => {
     if (getClientsLoading) {
       dispatch(ACTION_LOADING_SPINNER_ACTIVE());
@@ -552,10 +313,164 @@ const add =()=>{
       getEmployeesRefetch();
     }
   }, [getEmployeesError, getEmployeesRefetch]);
+
+  useMemo(() => {
+    if (getEmployeesData && getEmployeesData.services && getEmployeesData.services.length > 0) {
+        const totalServices = getEmployeesData.services.length;
+        setNumberServices(totalServices);
+    }
+
+    if (getClientsData && getClientsData.clients && getClientsData.clients.length > 0) {
+        const totalClients = getClientsData.clients.length;
+        setNumberClients(totalClients);
+    }
+
+    if (getAllAppointmentsData && getAllAppointmentsData.all_appointments && getAllAppointmentsData.all_appointments.length > 0) {
+        const totalAppointment = getAllAppointmentsData.all_appointments.length;
+        setNumberAppointments(totalAppointment);
+    }
+
+    if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+        const totalPrices = getAllAppointmentsData.all_appointments.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue.price;
+        }, 0);
+        setTotalPrice(totalPrices);
+      }
+    console.log(getAllAppointmentsData);
+  }, [getEmployeesData, getAllAppointmentsData, getClientsData])
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
+
+  const handleFilterClick = () => {
+    if (startDate && endDate) {
+      if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+        const filteredAppointments = getAllAppointmentsData.all_appointments.filter(appointment => {
+          const appointmentDate = new Date(appointment.date);
+          const formattedDate = appointmentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+          const appointmentTimestamp = new Date(formattedDate).getTime();
+          return appointmentTimestamp >= startDate.getTime() && appointmentTimestamp <= endDate.getTime();
+        });
+
+        setNumberAppointments(filteredAppointments.length);
+  
+        const totalPrices = filteredAppointments.reduce((accumulator, currentValue) => {
+          const price = parseFloat(currentValue.price);
+          return accumulator + price;
+        }, 0);
+  
+        console.log('Totale prezzi appuntamenti nel periodo selezionato: ' + totalPrices);
+        setTotalPrice(totalPrices);
+      }
+    }
+  };
+
+const handleNextWeek = () => {
+  setCurrentWeekIndex((prevIndex) => prevIndex + 1);
+};
+
+const handlePreviousWeek = () => {
+  setCurrentWeekIndex((prevIndex) => prevIndex - 1);
+};
+
+const graphicStartDate = moment().startOf('year');
+const graphicEndDate = moment().endOf('year');
+
+const daysOfYear = [];
+const currentDate = graphicStartDate.clone();
+
+while (currentDate.isSameOrBefore(graphicEndDate)) {
+  daysOfYear.push({
+    date: currentDate.format('YYYY-MM-DD'),
+    price: 0,
+  });
+
+  currentDate.add(1, 'day');
+}
+
+const daysInCurrentWeek = daysOfYear.slice(currentWeekIndex * 7, (currentWeekIndex + 1) * 7);
+
+useEffect(() => {
+  const totalPricePerDay = {};
+
+  // Calcola il prezzo totale degli appuntamenti per ogni giorno
+  if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+    getAllAppointmentsData.all_appointments.forEach((appointment) => {
+      const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
+      if (totalPricePerDay[appointmentDate]) {
+        totalPricePerDay[appointmentDate] += appointment.price;
+      } else {
+        totalPricePerDay[appointmentDate] = appointment.price;
+      }
+    });
+  }
+
+  // Aggiorna i prezzi totali degli appuntamenti nella settimana corrente
+  const updatedDaysInCurrentWeek = daysInCurrentWeek.map((day) => {
+    const price = totalPricePerDay[day.date] || 0;
+    return {
+      ...day,
+      price: price,
+    };
+  });
+
+  // Genera il grafico
+  if (chartRef.current) {
+    const chartElement = chartRef.current;
+    const context = chartElement.getContext('2d');
+
+    const maxPrice = Math.max(...updatedDaysInCurrentWeek.map((day) => day.price));
+
+    const data = {
+      labels: updatedDaysInCurrentWeek.map((day) => day.date),
+      datasets: [
+        {
+          label: 'Fatturato',
+          data: updatedDaysInCurrentWeek.map((day) => day.price),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    if (chart) {
+      // Se il grafico esiste, aggiorna solo i dati
+      chart.data = data;
+      chart.update();
+    } else {
+      // Altrimenti, crea un nuovo grafico
+      const newChart = new Chart(context, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true, // Imposta il valore minimo sull'asse Y a 0
+              suggestedMax: maxPrice + 100, // Imposta il valore massimo sull'asse Y leggermente superiore al massimo prezzo
+            },
+          },
+        },
+      });
+
+      setChart(newChart);
+    }
+  }
+}, [chart, daysInCurrentWeek, getAllAppointmentsData]);
+
+const chartRef = useRef(null);
+const [chart, setChart] = useState(null);
+
   return (
 
     <div className="admin_clients_container" style={{ overflow: "scroll" }}>
-          {/* <img src={`${imageUrl}${img1}`} alt="Uploaded Image" /> */}
 
       {redirectToAdminLogInPage()}
       <Modal
@@ -617,24 +532,44 @@ const add =()=>{
         <h1>PANORAMICA</h1>
       </div>
       <div className="dashboard-container">
+          <div className="card-dashboard-chart">
+                <button onClick={handlePreviousWeek}>Settimana precedente</button>
+                <button onClick={handleNextWeek}>Settimana successiva</button>
+                <canvas id="earningsChart" ref={chartRef}></canvas>
+          </div>
           <div className="card-dashboard">
-            <h4>Fatturato dagli appuntamenti</h4>
-            <h6>Filtra per intervallo di giorni</h6>
-            <p>Risultato</p>
+            <div>
+                <h4>Fatturato dagli appuntamenti</h4>
+                <div>
+                    <DatePicker selected={startDate} onChange={handleStartDateChange} placeholderText="Seleziona data di inizio" />
+                    <DatePicker selected={endDate} onChange={handleEndDateChange} placeholderText="Seleziona data di fine" />
+                    <button onClick={handleFilterClick}>Filtra</button>
+                </div>
+            </div>
+            <h4>{totalPrice}€</h4>
           </div> 
           <div className="card-dashboard">
-            <h4>Clienti totali</h4>
-            <h6>Filtra per intervallo di giorni</h6>
-            <p>Risultato</p>
+            <div>
+                <h4>Clienti totali</h4>
+            </div>
+            <h4>{numberClients}</h4>
           </div> 
           <div className="card-dashboard">
-            <h4>Servizi totali</h4>
-            <p>Risultato</p>
+            <div>
+              <h4>Servizi totali</h4>
+            </div>
+            <h4>{numberServices}</h4>
           </div> 
           <div className="card-dashboard">
-            <h4>Numero di appuntamenti</h4>
-            <h6>Filtra per intervallo di giorni</h6>
-            <p>Risultato</p>
+            <div>
+                <h4>Numero di appuntamenti</h4>
+                <div>
+                    <DatePicker selected={startDate} onChange={handleStartDateChange} placeholderText="Seleziona data di inizio" />
+                    <DatePicker selected={endDate} onChange={handleEndDateChange} placeholderText="Seleziona data di fine" />
+                    <button onClick={handleFilterClick}>Filtra</button>
+                </div>
+            </div>           
+            <h4>{numberAppointments}</h4>
           </div>  
       </div>
       

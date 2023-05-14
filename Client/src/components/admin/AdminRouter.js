@@ -319,7 +319,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
             <AdminDashboard
             initialScreenSize={initialScreenSize}
             currentScreenSize={currentScreenSize}
-            getClientsData={getServiceData ? getServiceData : null}
+            getClientsData={getClientsData ? getClientsData : null}
             getClientsLoading={getServiceLoading}
             getEmployeeData={getServiceData ? getServiceData : null}
             getEmployeeError={getEmployeeError}
