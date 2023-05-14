@@ -8,6 +8,7 @@ import {
   faCalendarWeek,
   faBell,
   faCircle,
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ACTION_SPLASH_SCREEN_COMPLETE from "../../../actions/SplashScreenComplete/ACTION_SPLASH_SCREEN_COMPLETE";
@@ -139,6 +140,16 @@ const AdminMenu = (props) => {
                 ) : null
               ) : null
             ) : null}
+          </Link>
+        </div>
+        <div className="admin_menu_box_container">
+          <Link
+            className="admin_menu_box_container_link"
+            to="/admin/dashboard"
+            onClick={handleAdminResetNotifications}
+          >
+            <FontAwesomeIcon icon={faChartLine} className="admin_menu_box_icon" />
+            <h2>PANORAMICA</h2>
           </Link>
         </div>
         <div className="admin_menu_box_container">

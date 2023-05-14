@@ -21,6 +21,7 @@ import {
   faBell,
   faCircle,
   faIdBadge,
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CanvasDraw from "@win11react/react-canvas-draw";
@@ -543,6 +544,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
             </div>
           </div>
           {getEmployeeData ? (
+            <>
             <div className="large_screen_side_menu_item_container">
               <Link
                 className="large_screen_side_menu_item"
@@ -584,6 +586,27 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 ) : null}
               </Link>
             </div>
+            <div
+              className="large_screen_side_menu_item_container"
+              // onClick={(e)=>{alert("yes")}}
+            >
+              <Link className="large_screen_side_menu_item" to="/admin/dashboard">
+                <div
+                  className="large_screen_side_menu_item_selected_border"
+                  style={{
+                    opacity: location.pathname.includes("/admin/dashboard")
+                      ? 1
+                      : 0,
+                  }}
+                />
+                <FontAwesomeIcon
+                  icon={faChartLine}
+                  className="large_screen_side_menu_item_icon"
+                />
+                <h2>Panoramica</h2>
+              </Link>
+            </div>
+            </>
           ) : null}
           {getEmployeeData ? (
             <>
