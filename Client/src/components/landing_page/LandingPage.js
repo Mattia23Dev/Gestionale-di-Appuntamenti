@@ -281,6 +281,7 @@ const LandingPage = React.forwardRef((props, ref) => {
   };
 
   return (
+    <>
     <div
       className="landing_page_container"
       ref={LandingPageRef}
@@ -328,11 +329,11 @@ const LandingPage = React.forwardRef((props, ref) => {
             height: !currentScreenSize
               ? initialScreenSize >= 550 &&
                 window.matchMedia("(orientation: landscape)").matches
-                ? "100%"
+                ? "92.5%"
                 : "42%"
               : currentScreenSize >= 550 &&
                 window.matchMedia("(orientation: landscape)").matches
-              ? "100%"
+              ? "92.5%"
               : "42%",
             width: !currentScreenSize
               ? initialScreenSize >= 550 &&
@@ -641,8 +642,9 @@ const LandingPage = React.forwardRef((props, ref) => {
           {/* Need for Lighthouse Not to Throw NO_LCP Error */}
           <h1 style={{ position: "absolute", zIndex: -1 }}>Glow Labs</h1>
         </div>
-      </section>
+      </section>  
     </div>
+    </>
   );
 });
 
