@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState} from "react";
 import { Suspense } from "react";
 import { Spring } from "react-spring/renderprops";
 import { useInView } from "react-intersection-observer";
@@ -49,6 +49,15 @@ const AllTreatments = React.forwardRef((props, ref) => {
     triggerOnce: true,
     threshold: initialScreenSize >= 1200 ? 0.7 : 0.2,
   });
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+  /*const filteredServices = selectedCategory
+    ? data.services.filter((service) => service.category === selectedCategory)
+    : data.services;*/
 
   return (
     <div className="all_treatments_container" id={name} ref={Treatments1Ref}>
@@ -207,21 +216,31 @@ const AllTreatments = React.forwardRef((props, ref) => {
             )}
           </Spring>
         ) : null}
+          <div>
+            <div className="button-filter-container">
+              <button onClick={() => setSelectedCategory(null)}>Guarda tutte</button>
+              <button onClick={() => handleCategoryClick('opzione1')}>Categoria 1</button>
+              <button onClick={() => handleCategoryClick('opzione2')}>Categoria 2</button>
+              <button onClick={() => handleCategoryClick('opzione3')}>Categoria 3</button>
+            </div>
+        </div>
       </header>
 
       <>
         <Suspense fallback={<></>}>
           {data
-            ? data.services.map((d) => {
-                return (
-                  <Bacial
-                    initialScreenSize={initialScreenSize}
-                    currentScreenSize={currentScreenSize}
-                    resetAllCartStates={resetAllCartStates}
-                    data={d}
-                  />
-                );
-              })
+            ? data.services
+                .filter(service => selectedCategory ? service.category === selectedCategory : true)
+                .map((d) => {
+                  return (
+                    <Bacial
+                      initialScreenSize={initialScreenSize}
+                      currentScreenSize={currentScreenSize}
+                      resetAllCartStates={resetAllCartStates}
+                      data={d}
+                    />
+                  );
+                })
             : ""}
         </Suspense>
       </>

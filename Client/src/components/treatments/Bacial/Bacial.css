@@ -10,6 +10,9 @@
 .notification_container{
   height: 100px;
 }
+.notification_removed_container{
+  padding: 0 20px;
+}
 .bacial_icon_path {
   transform: scale(0.75);
 }

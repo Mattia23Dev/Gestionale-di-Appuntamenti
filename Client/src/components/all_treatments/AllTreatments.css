@@ -105,6 +105,24 @@
   border-right: 1px solid rgba(0, 0, 0, 0.364);
 }
 
+.button-filter-container > button{
+  padding: 10px 30px;
+  border: none;
+  cursor: pointer;
+  margin: 20px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid pink;
+}
+
+.button-filter-container > button:hover{
+  color: white;
+  background-color: pink;
+  border: 1px solid pink;
+  transition: 0.2s;
+}
+
 @media only screen and (min-width: 375px) {
   .all_treatments_header h2 {
     font-size: 3vh;
