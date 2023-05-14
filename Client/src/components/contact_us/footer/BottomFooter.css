@@ -6,12 +6,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: auto;
   padding-top: 1.5rem;
-  padding-bottom: 2vh;
+  padding-bottom: 0;
 }
 .bottom_footer_container{
-  height: auto;
+  height: 300px !important;
 }
 .bottom_footer_all_icons_container > div {
   padding-right: 0.75rem;
