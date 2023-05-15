@@ -653,6 +653,7 @@ const add =()=>{
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((item, i) => {
                   return (
+                    
                     <div
                       style={{ overflow: "scroll" }}
                       className="admin_individual_client_container"
@@ -666,7 +667,7 @@ const add =()=>{
                       }}
                       ref={individualEmployeeRef}
                     >
-                    
+                    <div className="service-information">
                       <div
                         className="admin_individual_client_initials_square"
                         style={{
@@ -685,8 +686,7 @@ const add =()=>{
                         
                         </p>
                         <p>
-                          {item.name[0].toUpperCase() +
-                            item.name[0].toUpperCase()}
+                          {item.category[0].toUpperCase()}
                         </p>
                       </div>
                       <div className="admin_individual_client_full_name">
@@ -698,18 +698,37 @@ const add =()=>{
                           // item.name.slice(1).toLowerCase()
                           }
                         </p>
-                        {/* <p>
-                          {item.employeeRole.length > 0
-                            ? item.employeeRole.join(", ")
-                            : null}
-                        </p> */}
-                        <p>{item.price ? item.price : null}</p>
-                        <p>{item.duration ? item.duration : null}</p>
+                        <p>{item.price ? item.price : null},00 €</p>
+                        <p>{item.duration ? item.duration : null} minuti</p>
                         <p>{item.category ? item.category : null}</p>
                         {/* <p>{item.description ? item.description : null}</p> */}
                         {/* <p>{item._id}</p> */}
                        
-                        <p onClick={() => handleDeleteService(item._id)}>
+                        <p className="service-icon" onClick={() => handleDeleteService(item._id)}>
+                          <FontAwesomeIcon
+                            className="large_screen_side_menu_item_icon service-icon"
+                            icon={faTrash}
+                            style={{
+                              color: "rgba(0, 129, 177, 0.9)",
+                            }}
+                          />
+                       
+                        </p>
+                        <p>
+                        <div className="service-icon" onClick={() => handleUpdateService(item._id) }>
+                          <FontAwesomeIcon
+                            className="large_screen_side_menu_item_icon service-icon"
+                            icon={faEdit}
+                            style={{
+                              color: "rgba(0, 129, 177, 0.9)",
+                            }}
+                          />
+                        </div>
+                        </p>
+                      </div>
+                      </div>
+                      <div className="admin-service-icon">
+                      <p className="service-icon-mobile" onClick={() => handleDeleteService(item._id)}>
                           <FontAwesomeIcon
                             className="large_screen_side_menu_item_icon"
                             icon={faTrash}
@@ -719,8 +738,7 @@ const add =()=>{
                           />
                        
                         </p>
-                        <p>
-                        <div onClick={() => handleUpdateService(item._id) }>
+                        <p className="service-icon-mobile" onClick={() => handleUpdateService(item._id) }>
                           <FontAwesomeIcon
                             className="large_screen_side_menu_item_icon"
                             icon={faEdit}
@@ -728,7 +746,6 @@ const add =()=>{
                               color: "rgba(0, 129, 177, 0.9)",
                             }}
                           />
-                        </div>
                         </p>
                       </div>
                       <span className="admin_individual_client_spacer" />

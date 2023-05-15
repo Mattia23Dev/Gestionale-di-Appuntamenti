@@ -166,7 +166,7 @@ const AdminSchedule = (props) => {
             if (getEmployeesData.employees) {
               const allStaff = getEmployeesData.employees;
 
-              const newArr = ["Salt Cave Schedule"];
+              const newArr = [];
 
               if (allStaff) {
                 for (let i = 0; i < allStaff.length; i++) {
@@ -343,7 +343,21 @@ const AdminSchedule = (props) => {
         <h1>CALENDARIO</h1>
       </div>
       <div className="admin_calendar_top_buttons_container">
-        {getEmployeeData ? (
+          {getEmployeeData && getEmployeeData.employee && (
+            <select
+              onChange={(event) => changeCurrentScheduleShown(event.target.value)}
+              value={currentScheduleShown}
+              className='choose-calendar'
+            >
+              <option value="" disabled>Scegli calendario</option>
+              {renderScheduleSelectionDropdownOptions().map((option) => (
+                <option key={option.id} value={option} style={{color:'black'}}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          )}
+        {/*getEmployeeData ? (
           getEmployeeData.employee ? (
             <Dropdown
               options={renderScheduleSelectionDropdownOptions()}
@@ -363,7 +377,7 @@ const AdminSchedule = (props) => {
               }
             />
           ) : null
-        ) : null}
+            ) : null*/}
         <div
           className="admin_calendar_create_personal_event_button"
           onClick={() => changePersonalEventClicked(true)}

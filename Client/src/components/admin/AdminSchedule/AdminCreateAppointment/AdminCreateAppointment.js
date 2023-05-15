@@ -987,7 +987,7 @@ const AdminCreateAppointment = (props) => {
                 />
               </div>
               <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                Numero di telefono
+                Telefono
               </div>
               <div
                 role="combobox"

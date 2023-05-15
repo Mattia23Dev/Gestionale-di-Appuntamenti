@@ -365,7 +365,7 @@ if (
                   />
                 </div>
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Duration
+                  Durata
                 </div>
                 <div
                   role="combobox"
@@ -433,6 +433,7 @@ if (
                     <option value="opzione2">Opzione 2</option>
                     <option value="opzione3">Opzione 3</option>
                   </select>
+
                 </div>
               </div>{" "}
               <div className="admin_create_appointment_input_information_container">

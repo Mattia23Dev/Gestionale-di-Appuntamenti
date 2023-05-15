@@ -9,6 +9,7 @@ import {
   faBell,
   faCircle,
   faChartLine,
+  faIdBadge,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ACTION_SPLASH_SCREEN_COMPLETE from "../../../actions/SplashScreenComplete/ACTION_SPLASH_SCREEN_COMPLETE";
@@ -169,7 +170,7 @@ const AdminMenu = (props) => {
             onClick={handleAdminResetNotifications}
           >
             <FontAwesomeIcon
-              icon={faBriefcase}
+              icon={faIdBadge}
               className="admin_menu_box_icon"
             />
             <h2>PERSONALE</h2>
@@ -195,7 +196,7 @@ const AdminMenu = (props) => {
             onClick={handleAdminResetNotifications}
           >
             <FontAwesomeIcon
-              icon={faCalendarWeek}
+              icon={faBriefcase}
               className="admin_menu_box_icon"
             />
             <h2>SERVIZI</h2>

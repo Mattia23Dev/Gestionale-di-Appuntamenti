@@ -389,70 +389,53 @@ const navigate = useHistory()
                   />
                 </div>
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-              Duration
+              Durata
                 </div>
-                <div
-                  role="combobox"
-                  aria-haspopup="listbox"
-                  aria-owns="react-autowhatever-1"
-                  aria-controls="react-autowhatever-1"
-                  aria-expanded="false"
-                  className="react-autosuggest__container"
-                  // style={{
-                  //   outline: durationError ? "3px solid red" : "none",
-                  //   zIndex: durationError ? 99999 : "auto",
-                  // }}
-                >
-                  <input
-                    type="text"
-                    autoComplete="off"
-                    aria-autocomplete="list"
-                    // onKeyDown={phoneNumberKeyTyping}
-                    // onChange={phoneNumberTyping}
-                    maxLength={16}
-                    // value={adminStaffMemberPhoneNumber}
-                    aria-controls="react-autowhatever-1"
+                  <select
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
                     className="react-autosuggest__input"
-                    placeholder="Duration"
-                    onChange={(e)=>setDuration(e.target.value)}
-                  />
-                </div>
+                  >
+                      <option disabled value="">Seleziona durata</option>
+                      <option value="15">15 minuti</option>
+                      <option value="30">30 minuti</option>
+                      <option value="45">45 minuti</option>
+                      <option value="60">60 minuti</option>
+                      <option value="75">75 minuti</option>
+                      <option value="90">90 minuti</option>
+                  </select>
               </div>
 
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
                   Category
                 </div>
-                <div
-                  role="combobox"
-                  aria-haspopup="listbox"
-                  aria-owns="react-autowhatever-1"
-                  aria-controls="react-autowhatever-1"
-                  aria-expanded="false"
-                  className="react-autosuggest__container"
-                  style={{
-                    outline: firstNameError ? "3px solid red" : "none",
-                    zIndex: firstNameError ? 99999 : "auto",
-                  }}
-                >
-                  <input
-                    type="text"
-                    autoComplete="off"
-                    aria-autocomplete="list"
-                    aria-controls="react-autowhatever-1"
-                    className="react-autosuggest__input"
-                    // value={adminStaffMemberFirstName}
-                    // onChange={(e) => {
-                    //   resetAllErrorStates();
-                    //   dispatch(
-                    //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
-                    //   );
-                    // }}
-                    onChange={(e)=>setCategory(e.target.value)}
-
-                    placeholder="Categroy"
-                  />
-                </div>
+                    <div
+                      role="combobox"
+                      aria-haspopup="listbox"
+                      aria-owns="react-autowhatever-1"
+                      aria-controls="react-autowhatever-1"
+                      aria-expanded="false"
+                      className="react-autosuggest__container"
+                      style={{
+                        outline: firstNameError ? "3px solid red" : "none",
+                        zIndex: firstNameError ? 99999 : "auto",
+                      }}
+                    >
+                      <select
+                        autoComplete="off"
+                        aria-autocomplete="list"
+                        aria-controls="react-autowhatever-1"
+                        className="react-autosuggest__input"
+                        value={category}
+                        onChange={(e) => { setCategory(e.target.value); }}
+                      >
+                          <option disabled value="">Seleziona una categoria</option>
+                          <option value="opzione1">Opzione 1</option>
+                          <option value="opzione2">Opzione 2</option>
+                          <option value="opzione3">Opzione 3</option>
+                      </select>
+                    </div>
              
               
               </div>   <div className="admin_create_appointment_input_information_container">

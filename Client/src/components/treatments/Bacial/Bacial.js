@@ -527,7 +527,7 @@ const Bacial = (props) => {
             className="big_screen_card_description_icon"
             icon={faTag}
           />
-          <p className="big_screen_price">{props.data.price}€</p>
+          <p className="big_screen_price">{props.data.price},00 €</p>
         </div>
         <div className="big_screen_duration_wrapper">
           <FontAwesomeIcon
@@ -550,7 +550,7 @@ const Bacial = (props) => {
         }}
       >
         <p className="card_toggler" onClick={handleToggle}>
-          {bacialToggle ? "SEE DESCRIPTION" : "LEARN MORE"}
+          {bacialToggle ? "DESCRIZIONE" : "LEGGI"}
         </p>
         <span className="card_bottom_spacer" />
         {bookButtonBounce()}

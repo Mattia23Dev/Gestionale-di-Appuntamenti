@@ -2,13 +2,11 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
-  faSearch,
-  faEdit,
-  faTrash,
-  faUserEdit,
-  faEllipsisH,
-  faLongArrowAltLeft,
-  faTimes,
+  faUsers,
+  faMoneyBill,
+  faCalendarWeek,
+  faBriefcase,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import {  gql } from '@apollo/client';
 import { useSelector, useDispatch } from "react-redux";
@@ -521,7 +519,7 @@ useEffect(() => {
       labels: updatedDaysInCurrentWeek.map((day) => day.date),
       datasets: [
         {
-          label: 'Numero Appuntamenti',
+          label: 'Numero di appuntamenti',
           data: updatedDaysInCurrentWeek.map((day) => day.count),
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
@@ -625,56 +623,80 @@ const [chartNum, setChartNum] = useState(null);
         <h1>PANORAMICA</h1>
       </div>
       <div className="dashboard-container">
-      <div className="card-dashboard">
-            <h4>Fatturato dagli appuntamenti</h4>
+        <div className="card-panoramica">
+          <div className="card-panoramica-title">
+            <h3>Dati generali</h3>
+          </div>
+          <div className="card-panoramica-analisi">
             <div>
-                <div className="filter-date">
-                    <DatePicker selected={startDate} onChange={handleStartDateChange} className="custom-datepicker" placeholderText="Seleziona data di inizio" />
-                    <DatePicker selected={endDate} onChange={handleEndDateChange} className="custom-datepicker" placeholderText="Seleziona data di fine" />
-                    <button onClick={handleFilterClick}>
-                        {isFiltered ? 'Rimuovi filtro' : 'Filtra'}
-                    </button>
-                </div>
+                <FontAwesomeIcon
+                  icon={faWallet}
+                  size='3x'
+                  color="white"
+                />
+                <h6>{totalPrice},00 €</h6>
+                <p>Fatturato dagli appuntamenti</p>
             </div>
-            <h4>{totalPrice}€</h4>
-          </div> 
-          <div className="card-dashboard">
             <div>
-                <h4>Clienti totali</h4>
+              <FontAwesomeIcon
+                  icon={faUsers}
+                  size='3x'
+                  color="white"
+                />
+                <h6>{numberClients}</h6>
+                <p>Clienti totali</p>
             </div>
-            <h4>{numberClients}</h4>
-          </div> 
+            <div>
+              <FontAwesomeIcon
+                  icon={faCalendarWeek}
+                  size='3x'
+                  color="white"
+                />
+                <h6>{numberAppointments}</h6>
+                <p>Numero di appuntamenti</p>
+            </div>
+            <div>
+              <FontAwesomeIcon
+                  icon={faBriefcase}
+                  size='3x'
+                  color="white"
+                />
+                <h6>{numberServices}</h6>
+                <p>Servizi offerti</p>
+            </div>
+          </div>
+        </div>
           <div className="card-dashboard-chart">
+            <h2>Fatturato totale a settimana</h2>
                 <button onClick={handlePreviousWeek}>Settimana precedente</button>
                 <button onClick={handleNextWeek}>Settimana successiva</button>
                 <canvas id="earningsChart" ref={chartRef}></canvas>
           </div>
-          <div className="card-dashboard">
-            <h4>Numero di appuntamenti</h4>
-            <div>
-                <div className="filter-date">
-                    <DatePicker selected={startDate} onChange={handleStartDateChange} className="custom-datepicker" placeholderText="Seleziona data di inizio" />
-                    <DatePicker selected={endDate} onChange={handleEndDateChange} className="custom-datepicker" placeholderText="Seleziona data di fine" />
-                    <button onClick={handleFilterClick}>
-                      {isFiltered ? 'Rimuovi filtro' : 'Filtra'}
-                    </button>
-                </div>
-            </div>           
-            <h4>{numberAppointments}</h4>
-          </div>
-          <div className="card-dashboard">
-            <div>
-              <h4>Servizi totali</h4>
+          <div className="dashboard-middle-container">
+            <div className="card-dashboard">
+              <h2>Filtra il fatturato e il numero di appuntamenti</h2>
+              <div>
+                  <div className="filter-date">
+                      <h4>Da</h4>
+                      <DatePicker selected={startDate} onChange={handleStartDateChange} className="custom-datepicker" placeholderText="Seleziona data di inizio" />
+                      <h4>a</h4>
+                      <DatePicker selected={endDate} onChange={handleEndDateChange} className="custom-datepicker" placeholderText="Seleziona data di fine" />
+                      <button onClick={handleFilterClick}>
+                        {isFiltered ? 'Rimuovi' : 'Filtra'}
+                      </button>
+                  </div>
+              </div>           
+              <h4>Hai un fatturato di <span>{totalPrice},00 €</span> da <span>{numberAppointments}</span> appuntamenti.</h4>
             </div>
-            <h4>{numberServices}</h4>
-          </div> 
+          </div>
+
           <div className="card-dashboard-chart">
+            <h2>Numero di appuntamenti a settimana</h2>
                 <button onClick={handlePreviousWeek}>Settimana precedente</button>
                 <button onClick={handleNextWeek}>Settimana successiva</button>
                 <canvas id="ChartNum" ref={chartRefNum}></canvas>
           </div>  
-      </div>
-      
+        </div>
       </div>
   );
 };

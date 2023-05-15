@@ -60,6 +60,7 @@
   margin-top: 6rem;
   justify-content: center;
   margin-bottom: 10rem;
+  flex-wrap: wrap;
 }
 .who-left{
   flex-basis: 100%;
@@ -77,11 +78,13 @@
   flex-direction: column;
   gap: 0;
   width: 100%;
+  flex-wrap: wrap;
 }
 .who-right-item{
   display: flex;
   flex-direction: row;
   gap: 0;
+  flex-wrap: wrap;
 }
 .who-right-item-card{
   width: 50%;
@@ -306,5 +309,23 @@
 @media only screen and (min-width: 2400px) {
   .card_container {
     height: 36vh;
+  }
+}
+
+@media only screen and (max-width:1000px) {
+  .who-we-are{
+    gap: 3rem;
+  }
+}
+@media only screen and (max-width:750px) {
+  .who-we-are{
+    gap: 3rem;
+  }
+  .who-right-item-card{
+    width: 80%;
+    border: none !important;
+  }
+  .who-right-item{
+    justify-content: center;
   }
 }
