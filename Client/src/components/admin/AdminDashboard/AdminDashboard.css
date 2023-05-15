@@ -8,8 +8,8 @@
     margin-top: 10rem;
 }
 .card-dashboard{
-    border: 1px solid rgb(53, 134, 0);
-    padding: 10px;
+    border: 1px solid rgb(46, 114, 0);
+    padding: 3px;
     width: 40%;
     height: 200px;
     border-radius: 5px;
@@ -18,11 +18,12 @@
     gap: 3rem;
     justify-content: center;
     align-items: center;
+    margin-top: 80px;
 }
 .card-dashboard > h4 {
     padding: 20px;
     border-radius: 5px;
-    background-color: rgb(0, 68, 227);
+    background-color: rgb(0, 117, 227);
     color: white;
 }
 .card-dashboard-chart{
@@ -45,5 +46,29 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
+.filter-date{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+.filter-date > button {
+    padding: 6px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    cursor: pointer;
+}
+.custom-datepicker {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }

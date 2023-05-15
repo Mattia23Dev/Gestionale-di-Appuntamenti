@@ -114,13 +114,18 @@ const AdminService = (props) => {
 
   const imageUrl = `http://localhost:4000/uploads/`;
 
+  const currentWeekIndexToday = moment().isoWeek() - 1;
 
-  const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [currentWeekIndex, setCurrentWeekIndex] = useState(currentWeekIndexToday);
+  const [currentWeekIndexNum, setCurrentWeekIndexNum] = useState(currentWeekIndexToday);
   const [chartData, setChartData] = useState(null);
   const [numberAppointments, setNumberAppointments] = useState();
   const [numberClients, setNumberClients] = useState();
   const [numberServices, setNumberServices] = useState();
   const [totalPrice, setTotalPrice] = useState();
+  const [totalPriceRestart, setTotalPriceRestart] = useState();
+  const [numberAppointmentsRestart, setNumberAppointmentsRestart] = useState();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [takeAPhotoSelected, changeTakeAPhotoSelected] = useState(false);
@@ -328,6 +333,7 @@ const add =()=>{
     if (getAllAppointmentsData && getAllAppointmentsData.all_appointments && getAllAppointmentsData.all_appointments.length > 0) {
         const totalAppointment = getAllAppointmentsData.all_appointments.length;
         setNumberAppointments(totalAppointment);
+        setNumberAppointmentsRestart(totalAppointment);
     }
 
     if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
@@ -335,6 +341,7 @@ const add =()=>{
           return accumulator + currentValue.price;
         }, 0);
         setTotalPrice(totalPrices);
+        setTotalPriceRestart(totalPrices);
       }
     console.log(getAllAppointmentsData);
   }, [getEmployeesData, getAllAppointmentsData, getClientsData])
@@ -348,34 +355,47 @@ const add =()=>{
   };
 
   const handleFilterClick = () => {
-    if (startDate && endDate) {
-      if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
-        const filteredAppointments = getAllAppointmentsData.all_appointments.filter(appointment => {
-          const appointmentDate = new Date(appointment.date);
-          const formattedDate = appointmentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-          const appointmentTimestamp = new Date(formattedDate).getTime();
-          return appointmentTimestamp >= startDate.getTime() && appointmentTimestamp <= endDate.getTime();
-        });
 
-        setNumberAppointments(filteredAppointments.length);
-  
-        const totalPrices = filteredAppointments.reduce((accumulator, currentValue) => {
-          const price = parseFloat(currentValue.price);
-          return accumulator + price;
-        }, 0);
-  
-        console.log('Totale prezzi appuntamenti nel periodo selezionato: ' + totalPrices);
-        setTotalPrice(totalPrices);
-      }
+    if (isFiltered) {
+      setStartDate(null);
+      setEndDate(null);
+      setIsFiltered(false);
+      setTotalPrice(totalPriceRestart);
+      setNumberAppointments(numberAppointmentsRestart);
+    } else {
+          if (startDate && endDate) {
+            if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+              const filteredAppointments = getAllAppointmentsData.all_appointments.filter(appointment => {
+                const appointmentDate = new Date(appointment.date);
+                const formattedDate = appointmentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                const appointmentTimestamp = new Date(formattedDate).getTime();
+                return appointmentTimestamp >= startDate.getTime() && appointmentTimestamp <= endDate.getTime();
+              });
+
+              setNumberAppointments(filteredAppointments.length);
+        
+              const totalPrices = filteredAppointments.reduce((accumulator, currentValue) => {
+                const price = parseFloat(currentValue.price);
+                return accumulator + price;
+              }, 0);
+        
+              setIsFiltered(true);
+              console.log('Totale prezzi appuntamenti nel periodo selezionato: ' + totalPrices);
+              setTotalPrice(totalPrices);
+            }
+        }
     }
+
   };
 
 const handleNextWeek = () => {
   setCurrentWeekIndex((prevIndex) => prevIndex + 1);
+  setCurrentWeekIndexNum((prevIndex) => prevIndex + 1)
 };
 
 const handlePreviousWeek = () => {
   setCurrentWeekIndex((prevIndex) => prevIndex - 1);
+  setCurrentWeekIndexNum((prevIndex) => prevIndex - 1)
 };
 
 const graphicStartDate = moment().startOf('year');
@@ -394,6 +414,7 @@ while (currentDate.isSameOrBefore(graphicEndDate)) {
 }
 
 const daysInCurrentWeek = daysOfYear.slice(currentWeekIndex * 7, (currentWeekIndex + 1) * 7);
+const daysInCurrentWeekNum = daysOfYear.slice(currentWeekIndexNum * 7, (currentWeekIndexNum + 1) * 7);
 
 useEffect(() => {
   const totalPricePerDay = {};
@@ -465,8 +486,80 @@ useEffect(() => {
   }
 }, [chart, daysInCurrentWeek, getAllAppointmentsData]);
 
+useEffect(() => {
+  const totalAppointmentsPerDay = {};
+
+  // Calcola il numero di appuntamenti per ogni giorno
+  if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+    getAllAppointmentsData.all_appointments.forEach((appointment) => {
+      const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
+      if (totalAppointmentsPerDay[appointmentDate]) {
+        totalAppointmentsPerDay[appointmentDate]++;
+      } else {
+        totalAppointmentsPerDay[appointmentDate] = 1;
+      }
+    });
+  }
+
+  // Aggiorna il numero di appuntamenti nella settimana corrente
+  const updatedDaysInCurrentWeek = daysInCurrentWeekNum.map((day) => {
+    const count = totalAppointmentsPerDay[day.date] || 0;
+    return {
+      ...day,
+      count: count,
+    };
+  });
+
+  // Genera il grafico
+  if (chartRefNum.current) {
+    const chartElement = chartRefNum.current;
+    const context = chartElement.getContext('2d');
+
+    const maxCount = Math.max(...updatedDaysInCurrentWeek.map((day) => day.count));
+
+    const data = {
+      labels: updatedDaysInCurrentWeek.map((day) => day.date),
+      datasets: [
+        {
+          label: 'Numero Appuntamenti',
+          data: updatedDaysInCurrentWeek.map((day) => day.count),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    if (chartNum) {
+      // Se il grafico esiste, aggiorna solo i dati
+      chartNum.data = data;
+      chartNum.update();
+    } else {
+      // Altrimenti, crea un nuovo grafico
+      const newChart = new Chart(context, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true, 
+              suggestedMax: maxCount + 30,
+            },
+          },
+        },
+      });
+
+      setChartNum(newChart);
+    }
+  }
+}, [chartNum, daysInCurrentWeekNum, getAllAppointmentsData]);
+
+const chartRefNum = useRef(null);
 const chartRef = useRef(null);
 const [chart, setChart] = useState(null);
+const [chartNum, setChartNum] = useState(null);
 
   return (
 
@@ -532,18 +625,15 @@ const [chart, setChart] = useState(null);
         <h1>PANORAMICA</h1>
       </div>
       <div className="dashboard-container">
-          <div className="card-dashboard-chart">
-                <button onClick={handlePreviousWeek}>Settimana precedente</button>
-                <button onClick={handleNextWeek}>Settimana successiva</button>
-                <canvas id="earningsChart" ref={chartRef}></canvas>
-          </div>
-          <div className="card-dashboard">
+      <div className="card-dashboard">
+            <h4>Fatturato dagli appuntamenti</h4>
             <div>
-                <h4>Fatturato dagli appuntamenti</h4>
-                <div>
-                    <DatePicker selected={startDate} onChange={handleStartDateChange} placeholderText="Seleziona data di inizio" />
-                    <DatePicker selected={endDate} onChange={handleEndDateChange} placeholderText="Seleziona data di fine" />
-                    <button onClick={handleFilterClick}>Filtra</button>
+                <div className="filter-date">
+                    <DatePicker selected={startDate} onChange={handleStartDateChange} className="custom-datepicker" placeholderText="Seleziona data di inizio" />
+                    <DatePicker selected={endDate} onChange={handleEndDateChange} className="custom-datepicker" placeholderText="Seleziona data di fine" />
+                    <button onClick={handleFilterClick}>
+                        {isFiltered ? 'Rimuovi filtro' : 'Filtra'}
+                    </button>
                 </div>
             </div>
             <h4>{totalPrice}€</h4>
@@ -554,22 +644,34 @@ const [chart, setChart] = useState(null);
             </div>
             <h4>{numberClients}</h4>
           </div> 
+          <div className="card-dashboard-chart">
+                <button onClick={handlePreviousWeek}>Settimana precedente</button>
+                <button onClick={handleNextWeek}>Settimana successiva</button>
+                <canvas id="earningsChart" ref={chartRef}></canvas>
+          </div>
+          <div className="card-dashboard">
+            <h4>Numero di appuntamenti</h4>
+            <div>
+                <div className="filter-date">
+                    <DatePicker selected={startDate} onChange={handleStartDateChange} className="custom-datepicker" placeholderText="Seleziona data di inizio" />
+                    <DatePicker selected={endDate} onChange={handleEndDateChange} className="custom-datepicker" placeholderText="Seleziona data di fine" />
+                    <button onClick={handleFilterClick}>
+                      {isFiltered ? 'Rimuovi filtro' : 'Filtra'}
+                    </button>
+                </div>
+            </div>           
+            <h4>{numberAppointments}</h4>
+          </div>
           <div className="card-dashboard">
             <div>
               <h4>Servizi totali</h4>
             </div>
             <h4>{numberServices}</h4>
           </div> 
-          <div className="card-dashboard">
-            <div>
-                <h4>Numero di appuntamenti</h4>
-                <div>
-                    <DatePicker selected={startDate} onChange={handleStartDateChange} placeholderText="Seleziona data di inizio" />
-                    <DatePicker selected={endDate} onChange={handleEndDateChange} placeholderText="Seleziona data di fine" />
-                    <button onClick={handleFilterClick}>Filtra</button>
-                </div>
-            </div>           
-            <h4>{numberAppointments}</h4>
+          <div className="card-dashboard-chart">
+                <button onClick={handlePreviousWeek}>Settimana precedente</button>
+                <button onClick={handleNextWeek}>Settimana successiva</button>
+                <canvas id="ChartNum" ref={chartRefNum}></canvas>
           </div>  
       </div>
       
