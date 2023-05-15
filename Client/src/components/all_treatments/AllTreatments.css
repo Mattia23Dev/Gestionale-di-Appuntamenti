@@ -60,7 +60,6 @@
   margin-top: 6rem;
   justify-content: center;
   margin-bottom: 10rem;
-  flex-wrap: wrap;
 }
 .who-left{
   flex-basis: 100%;
@@ -315,6 +314,7 @@
 @media only screen and (max-width:1000px) {
   .who-we-are{
     gap: 3rem;
+    flex-wrap: wrap;
   }
 }
 @media only screen and (max-width:750px) {

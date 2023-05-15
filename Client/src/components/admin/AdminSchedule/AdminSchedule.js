@@ -161,7 +161,7 @@ const AdminSchedule = (props) => {
   const renderScheduleSelectionDropdownOptions = () => {
     if (getEmployeeData) {
       if (getEmployeeData.employee) {
-        if (getEmployeeData.employee.employeeRole.includes("Admin")) {
+        if (getEmployeeData.employee.employeeRole.includes("Admin") || getEmployeeData.employee.employeeRole.includes("Esthetician")) {
           if (getEmployeesData) {
             if (getEmployeesData.employees) {
               const allStaff = getEmployeesData.employees;

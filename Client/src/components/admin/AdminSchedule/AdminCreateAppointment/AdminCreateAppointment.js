@@ -1072,7 +1072,7 @@ const AdminCreateAppointment = (props) => {
                 options={
                   getEmployeeData
                     ? getEmployeeData.employee
-                      ? getEmployeeData.employee.employeeRole.includes("Admin")
+                      ? getEmployeeData.employee.employeeRole.includes("Admin") || getEmployeeData.employee.employeeRole.includes("Esthetician")
                         ? allEmployeeOptions()
                         : renderLoggedInStaffName()
                       : renderLoggedInStaffName()
@@ -1099,7 +1099,7 @@ const AdminCreateAppointment = (props) => {
 
             <div className="admin_create_appointment_input_information_container">
               <div className="admin_create_appointment_label">
-                Note appuntamento
+                Note
               </div>
               <div
                 role="combobox"

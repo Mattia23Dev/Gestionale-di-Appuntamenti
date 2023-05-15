@@ -44,7 +44,7 @@ const TreatmentAutosuggest = (props) => {
         <p>{suggestion.props.children[0].props.children}</p>
         <p>
           {suggestion.props.children[3].props.children
-            ? "$" + suggestion.props.children[3].props.children + ".00"
+            ?  suggestion.props.children[3].props.children + ",00 €"
             : null}
         </p>
       </div>
@@ -84,7 +84,7 @@ const TreatmentAutosuggest = (props) => {
   };
 
   const treatmentInputProps = {
-    placeholder: "Add a Treatment",
+    placeholder: "Aggiungi servizio",
     value: treatmentInput,
     onChange: treatmentInputChange,
     style: { borderRight: "1px solid transparent" },
