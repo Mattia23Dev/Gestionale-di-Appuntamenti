@@ -87,7 +87,7 @@ const Bacial = (props) => {
   const microneedleInCart = useSelector(
     (state) => state.microneedleInCart.in_cart
   );
-  const imageUrl = process.env.SERVER_URL || "http://localhost:4000/uploads/";
+  const imageUrl = `http://localhost:4000/uploads/`;
 
   const quenchInCart = useSelector((state) => state.quenchInCart.in_cart);
   const quickieInCart = useSelector((state) => state.quickieInCart.in_cart);
@@ -158,10 +158,10 @@ const Bacial = (props) => {
                   className="card_description_icon"
                   icon={faClock}
                 />
-                <p className="card_description_paragraph_title">Durata</p>
+                <p className="card_description_paragraph_title">Duration</p>
               </div>
               <div className="card_description_paragraph_value">
-                <p>{props.data.duration} minuti</p>
+                <p>{props.data.duration} minutes</p>
               </div>
               <div className="card_description_paragraph_icon_wrapper">
                 <FontAwesomeIcon
@@ -171,7 +171,7 @@ const Bacial = (props) => {
                 <p className="card_description_paragraph_title">Price</p>
               </div>
               <div className="card_description_paragraph_value">
-                <p>{props.data.price}€</p>
+                <p>${props.data.price}</p>
               </div>
             </div>
           </div>
@@ -527,14 +527,14 @@ const Bacial = (props) => {
             className="big_screen_card_description_icon"
             icon={faTag}
           />
-          <p className="big_screen_price">{props.data.price},00 €</p>
+          <p className="big_screen_price">${props.data.price}</p>
         </div>
         <div className="big_screen_duration_wrapper">
           <FontAwesomeIcon
             className="big_screen_card_description_icon"
             icon={faClock}
           />
-          <p className="big_screen_duration">{props.data.duration} minuti</p>
+          <p className="big_screen_duration">{props.data.duration} minutes</p>
         </div>
       </div>
     );
@@ -550,7 +550,7 @@ const Bacial = (props) => {
         }}
       >
         <p className="card_toggler" onClick={handleToggle}>
-          {bacialToggle ? "DESCRIZIONE" : "LEGGI"}
+          {bacialToggle ? "SEE DESCRIPTION" : "LEARN MORE"}
         </p>
         <span className="card_bottom_spacer" />
         {bookButtonBounce()}
@@ -615,7 +615,7 @@ const Bacial = (props) => {
       return (
         <>
           {checkMark()}
-          <p className="big_screen_in_cart">AGGIUNTO</p>
+          <p className="big_screen_in_cart">IN CART</p>
         </>
       );
     } else {
@@ -625,7 +625,7 @@ const Bacial = (props) => {
             className="big_screen_card_description_suitcase"
             icon={faSuitcase}
           />
-          <p>PRENOTA ORA</p>
+          <p>BOOK NOW</p>
         </>
       );
     }
@@ -800,7 +800,7 @@ const Bacial = (props) => {
                             
                             src= {`${imageUrl}${props.data.img}`}
                             
-                            style={{borderRadius:"5px" , maxWidth:"90%", maxHeight:"40%", marginTop:"10px", minHeight:"20%", minWidth:"75%", width:'auto', height: 'auto'}}
+                            style={{borderRadius:"50%" , width:"100px", height:"100px", marginTop:"10px"}}
                         />
                             {/* <circle
                               cx="28"
@@ -854,7 +854,7 @@ const Bacial = (props) => {
                         className="card_description_subheader"
                         style={{ opacity: 0.6 }}
                       >
-                        {props.data.category}
+                        Back acne-fighting
                       </p>
                       {cardDescriptionHandler()}
                       {dynamicScreenSizeBottomCardRender()}

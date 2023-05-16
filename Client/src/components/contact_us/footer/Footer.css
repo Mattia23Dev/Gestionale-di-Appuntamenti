@@ -7,7 +7,7 @@
   top: auto;
   bottom: 0;
   overflow: hidden;
-  height: auto;
+  height: 20vh;
   padding-bottom: 10vh;
 }
 
@@ -18,9 +18,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  height: auto;
+  height: 20vh;
   padding-top: 1.5rem;
-  padding-bottom: 0rem;
+  padding-bottom: 1.5rem;
 }
 
 .footer_insta_wrapping,

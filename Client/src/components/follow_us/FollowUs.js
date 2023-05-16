@@ -126,7 +126,7 @@ const FollowUs = React.forwardRef((props, ref) => {
                     opacity: `${propstyles.opacity}`,
                   }}
                 >
-                  <p style={{fontWeight: '450', color: 'rgba(0, 0, 0, 0.546)'}}>
+                  <p>
                     Connettiti con noi <br />
                     su Instagram <br />
                     per vedere i <br />

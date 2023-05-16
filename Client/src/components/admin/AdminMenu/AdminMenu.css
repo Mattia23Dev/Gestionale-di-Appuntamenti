@@ -1,7 +1,6 @@
 .admin_menu_container {
-  min-height: 100vh;
+  height: 100vh;
   padding-top: 8vh;
-  padding-bottom: 3vh;
   background: rgb(255, 255, 255);
 }
 

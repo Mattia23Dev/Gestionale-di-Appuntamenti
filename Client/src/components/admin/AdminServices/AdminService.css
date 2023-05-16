@@ -7,16 +7,7 @@
   text-align: center;
   width: 85%;
 }
-.service-icon-mobile{
-  display: none;
-}
-.service-information{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
+
 .add_staff_member_button {
   display: flex;
   flex-direction: column;
@@ -115,29 +106,5 @@
 @media only screen and (min-width: 1200px) and (max-height: 950px) {
   .add_staff_member_button_container {
     bottom: 5vh;
-  }
-}
-
-@media only screen and (max-width: 1200px) { 
-  .service-icon{
-    display: none;
-  }
-  .service-icon-mobile{
-    display: block;
-  }
-  .admin-service-icon{
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-  }
-  .service-information{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
   }
 }

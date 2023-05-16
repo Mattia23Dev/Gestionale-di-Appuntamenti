@@ -29,8 +29,6 @@
   align-items: center;
   width: 100%;
   z-index: 0;
-  margin-top: 40px;
-  font-family: 'Montserrat';
 }
 
 .all_treatments_header h2 {
@@ -50,79 +48,6 @@
   color: rgba(0, 0, 0, 0.8);
   text-align: center;
   padding-top: 2vh;
-}
-
-.who-we-are{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 0rem;
-  margin-top: 6rem;
-  justify-content: center;
-  margin-bottom: 10rem;
-}
-.who-left{
-  flex-basis: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.who-left > img {
-  width: 98%;
-  border-radius: 5px;
-}
-.who-right{
-  flex-basis: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.who-right-item{
-  display: flex;
-  flex-direction: row;
-  gap: 0;
-  flex-wrap: wrap;
-}
-.who-right-item-card{
-  width: 50%;
-  height: 310px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 10px 20px;
-}
-.who-right-item-card > p {
-  color: rgba(0, 0, 0, 0.546);
-  font-weight: 450;
-  line-height: 28px;
-}
-.who-right-item:nth-of-type(1) {
-   border-bottom: 1px solid rgba(0, 0, 0, 0.364);
-}
-.who-right-item-card:nth-of-type(1) {
-  border-right: 1px solid rgba(0, 0, 0, 0.364);
-}
-
-.button-filter-container > button{
-  padding: 10px 30px;
-  border: none;
-  cursor: pointer;
-  margin: 20px 10px;
-  border-radius: 5px;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid pink;
-}
-
-.button-filter-container > button:hover{
-  color: white;
-  background-color: pink;
-  border: 1px solid pink;
-  transition: 0.2s;
 }
 
 @media only screen and (min-width: 375px) {
@@ -308,24 +233,5 @@
 @media only screen and (min-width: 2400px) {
   .card_container {
     height: 36vh;
-  }
-}
-
-@media only screen and (max-width:1000px) {
-  .who-we-are{
-    gap: 3rem;
-    flex-wrap: wrap;
-  }
-}
-@media only screen and (max-width:750px) {
-  .who-we-are{
-    gap: 3rem;
-  }
-  .who-right-item-card{
-    width: 80%;
-    border: none !important;
-  }
-  .who-right-item{
-    justify-content: center;
   }
 }

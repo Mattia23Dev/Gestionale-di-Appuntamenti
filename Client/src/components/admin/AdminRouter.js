@@ -4,7 +4,6 @@ import AdminLoginPage from "./AdminLogin/AdminLoginPage";
 import AdminMenu from "./AdminMenu/AdminMenu";
 import AdminClients from "./AdminClients/AdminClients";
 import AdminService from "./AdminServices/AdminService";
-import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminSchedule from "./AdminSchedule/AdminSchedule";
 import AdminStaff from "./AdminStaff/AdminStaff";
 import AdminNotifications from "./AdminNotifications/AdminNotifications";
@@ -297,29 +296,6 @@ const AdminRouter = React.forwardRef((props, ref) => {
             initialScreenSize={initialScreenSize}
             currentScreenSize={currentScreenSize}
             getClientsData={getServiceData ? getServiceData : null}
-            getClientsLoading={getServiceLoading}
-            getEmployeeData={getServiceData ? getServiceData : null}
-            getEmployeeError={getEmployeeError}
-            getEmployeesError={getEmployeesError}
-            employeeDataRefetch={employeeDataRefetch}
-            getEmployeesData={getServiceData}
-            getEmployeesRefetch={getServiceRefetch}
-            getAllAppointmentsData={getAllAppointmentsData}
-            getAllAppointmentsRefetch={getAllAppointmentsRefetch}
-            randomColorArray={randomColorArray ? randomColorArray : null}
-            resetNotifications={resetNotifications}
-            />
-          )}
-        />
-        <Route
-          exact
-          path={path + "/dashboard"}
-          onLeave={() => resetNotifications()}
-          render={() => (
-            <AdminDashboard
-            initialScreenSize={initialScreenSize}
-            currentScreenSize={currentScreenSize}
-            getClientsData={getClientsData ? getClientsData : null}
             getClientsLoading={getServiceLoading}
             getEmployeeData={getServiceData ? getServiceData : null}
             getEmployeeError={getEmployeeError}
