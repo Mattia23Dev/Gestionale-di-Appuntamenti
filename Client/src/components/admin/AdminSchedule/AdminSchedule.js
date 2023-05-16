@@ -16,7 +16,7 @@ import ACTION_ADMIN_PERSONAL_EVENT_START_TIME from "../../../actions/Admin/Admin
 import ACTION_ADMIN_PERSONAL_EVENT_END_TIME from "../../../actions/Admin/AdminPersonalEvent/AdminPersonalEventEndTime/ACTION_ADMIN_PERSONAL_EVENT_END_TIME";
 import ACTION_ON_ACTIVITY_PAGE_RESET from "../../../actions/Admin/OnActivityPage/ACTION_ON_ACTIVITY_PAGE_RESET";
 import "./AdminSchedule.css";
-import "../../payment_info/PaymentInfo.css"
+import "../../payment_info/PaymentInfo.css";
 
 const AdminSchedule = (props) => {
   const dispatch = useDispatch();
