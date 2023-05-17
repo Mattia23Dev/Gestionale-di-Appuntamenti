@@ -278,6 +278,7 @@ const AdminCalendarComponent = (props) => {
     };
 
     changeAllAdminAppointments(currentAdminAppointments());
+    console.log(allAdminAppointments);
   }, [getAllAppointmentsData, getEmployeeData, currentScheduleShown]);
 
   useEffect(() => {

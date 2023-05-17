@@ -49,6 +49,7 @@ const AdminService = (props) => {
   const navigate = useHistory();
   const [ServiceID, setId ] = useState()
   const {
+    getEmployeeDataNow,
     getEmployeeData,
     getEmployeeError,
     getEmployeesError,
@@ -126,6 +127,7 @@ const AdminService = (props) => {
   const [numberAppointmentsRestart, setNumberAppointmentsRestart] = useState();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [adminDash, setAdminDash] = useState(true);
   const [takeAPhotoSelected, changeTakeAPhotoSelected] = useState(false);
   const [webcamURI, changeWebcamURI] = useState("");
   const [imageUploaded, changeImageUploaded] = useState("");
@@ -556,8 +558,95 @@ useEffect(() => {
 
 const chartRefNum = useRef(null);
 const chartRef = useRef(null);
+const chartRefNumStaff = useRef(null);
 const [chart, setChart] = useState(null);
 const [chartNum, setChartNum] = useState(null);
+const [chartNumStaff, setChartNumStaff] = useState(null);
+
+/*
+const getAdmin = () => {
+  if (getEmployeeDataNow.employee.employeeRole.includes("Admin")) {
+    setAdminDash(true);
+}
+}
+getAdmin();
+
+useEffect(()=> {
+  const totalAppointmentsPerDayStaff = {};
+  if (getEmployeeDataNow) {
+    if (getEmployeeDataNow.employee && getEmployeeDataNow.employee > 0 ) {
+      const currentEmployee = getEmployeeDataNow.employee;
+
+      if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+        getAllAppointmentsData.all_appointments.forEach((appointment) => {
+          if (currentEmployee && appointment.esthetician === currentEmployee) {
+            const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
+            if (totalAppointmentsPerDayStaff[appointmentDate]) {
+              totalAppointmentsPerDayStaff[appointmentDate]++;
+            } else {
+              totalAppointmentsPerDayStaff[appointmentDate] = 1;
+            }
+          }
+        });
+      }
+    
+    }
+  }
+
+  const updatedDaysInCurrentWeek = daysInCurrentWeekNum.map((day) => {
+    const count = totalAppointmentsPerDayStaff[day.date] || 0;
+    return {
+      ...day,
+      count: count,
+    };
+  });
+
+  if (chartRefNumStaff.current) {
+    const chartElement = chartRefNumStaff.current;
+    const context = chartElement.getContext('2d');
+
+    const maxCount = Math.max(...updatedDaysInCurrentWeek.map((day) => day.count));
+
+    const data = {
+      labels: updatedDaysInCurrentWeek.map((day) => day.date),
+      datasets: [
+        {
+          label: 'Numero di appuntamenti',
+          data: updatedDaysInCurrentWeek.map((day) => day.count),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    if (chartNumStaff) {
+      // Se il grafico esiste, aggiorna solo i dati
+      chartNumStaff.data = data;
+      chartNumStaff.update();
+    } else {
+      // Altrimenti, crea un nuovo grafico
+      const newChart = new Chart(context, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true, 
+              suggestedMax: maxCount + 30,
+            },
+          },
+        },
+      });
+
+      setChartNumStaff(newChart);
+    }
+  }
+
+}, [chartNumStaff, daysInCurrentWeekNum, getAllAppointmentsData])
+*/
 
   return (
 
@@ -622,6 +711,7 @@ const [chartNum, setChartNum] = useState(null);
         </Link>
         <h1>PANORAMICA</h1>
       </div>
+      {adminDash ? 
       <div className="dashboard-container">
         <div className="card-panoramica">
           <div className="card-panoramica-title">
@@ -697,6 +787,22 @@ const [chartNum, setChartNum] = useState(null);
                 <canvas id="ChartNum" ref={chartRefNum}></canvas>
           </div>  
         </div>
+      :
+      <div className="dashboard-container">
+        <div className="card-panoramica">
+          <div className="card-panoramica-title">
+            <h3>Dati generali</h3>
+          </div>
+        </div>
+        <div className="card-dashboard-chart">
+            <h2>Numero di appuntamenti a settimana</h2>
+                <button onClick={handlePreviousWeek}>Settimana precedente</button>
+                <button onClick={handleNextWeek}>Settimana successiva</button>
+                <canvas id="ChartNum" ref={chartRefNumStaff}></canvas>
+        </div> 
+      </div>
+      }
+
       </div>
   );
 };

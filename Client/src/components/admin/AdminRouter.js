@@ -285,6 +285,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
               resetNotifications={resetNotifications}
               employeeDataRefetch={employeeDataRefetch}
               getEmployeesRefetch={getEmployeesRefetch}
+              getServiceData={getServiceData}
             />
           )}
         />
@@ -331,6 +332,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
             getAllAppointmentsRefetch={getAllAppointmentsRefetch}
             randomColorArray={randomColorArray ? randomColorArray : null}
             resetNotifications={resetNotifications}
+            getEmployeeDataNow={getEmployeeData ? getEmployeeData : null}
             />
           )}
         />

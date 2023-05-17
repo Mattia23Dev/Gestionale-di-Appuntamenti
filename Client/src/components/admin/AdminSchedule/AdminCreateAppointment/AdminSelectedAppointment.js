@@ -98,6 +98,7 @@ const AdminSelectedAppointment = React.forwardRef((props, ref) => {
     }
   }, [loading, data, dispatch]);
 
+
   return (
     <Transition
       items={currentToggledAppointment}
@@ -424,25 +425,14 @@ const AdminSelectedAppointment = React.forwardRef((props, ref) => {
                 </div>
                 <div className="selected_appointment_treatments_header">
                   <p>Trattamento</p>
+                  <p>
+                     {allAdminAppointments.filter(
+                            (x) => x.id === currentToggledAppointment
+                          )[0].treatments[0].name
+                      }
+                  </p>
+
                 </div>
-                {renderSummaryCardTreatments()}
-                {allAdminAppointments.filter(
-                  (x) => x.id === currentToggledAppointment
-                )[0].addOns.length === 0 ? null : (
-                  <>
-                    <div className="selected_appointment_add_ons_header">
-                      <p>
-                        Aggiuntivo
-                        {allAdminAppointments.filter(
-                          (x) => x.id === currentToggledAppointment
-                        )[0].addOns.length > 1
-                          ? "s"
-                          : null}
-                      </p>
-                    </div>
-                    {renderSummaryCardAddOns()}
-                  </>
-                )}
                 <div className="selected_appointment_total_header admin_side_total_header">
                   <p>Totale</p>
                   <p>
