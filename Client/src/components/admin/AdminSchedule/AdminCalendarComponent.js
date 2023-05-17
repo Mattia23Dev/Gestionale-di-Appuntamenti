@@ -353,6 +353,15 @@ const AdminCalendarComponent = (props) => {
     changeAllPersonalEvents(currentAdminPersonalEvents());
   }, [getAllPersonalEventsData, getEmployeeData, currentScheduleShown]);
 
+  const durationColors = {
+    15: "#AE44E1", 
+    45: "#B82002",   
+    75: "#1D8C01",
+    30: "#5B66F4", 
+    60: "#AD9F00",
+    90: "#D68B00",
+  };
+
   const events = () => {
     if (allAdminAppointments) {
       if (allAdminAppointments.length > 0) {
@@ -377,7 +386,6 @@ const AdminCalendarComponent = (props) => {
                     ? "Chemical Peel"
                     : x.treatments[0].name) +
                   " " +
-                  "Facial" +
                   (x.addOns.length === 0
                     ? ""
                     : x.addOns.map(
@@ -390,6 +398,8 @@ const AdminCalendarComponent = (props) => {
                       ))}
               </>
             ),
+            backgroundColor: durationColors[x.duration] || "rgb(211, 211, 211)",
+            color: "#fff",
             text:
               x.client.firstName[0].toUpperCase() +
               x.client.firstName.slice(1).toLowerCase() +
@@ -399,7 +409,6 @@ const AdminCalendarComponent = (props) => {
               " - " +
               x.treatments[0].name +
               " " +
-              "Facial" +
               (x.addOns === []
                 ? null
                 : x.addOns.map((x) => `${x.name}, Add-On`)),
@@ -432,6 +441,7 @@ const AdminCalendarComponent = (props) => {
       return [];
     }
   };
+
 
   const personalEvents = () => {
     if (allPersonalEvents) {

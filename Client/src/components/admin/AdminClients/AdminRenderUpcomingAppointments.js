@@ -588,43 +588,25 @@ const AdminRenderUpcomingAppointments = (props) => {
                                 {item.treatments[0].name === "Salt Cave"
                                   ? null
                                   : item.esthetician
-                                  ? "(with " + item.esthetician + ")"
+                                  ? "con " + item.esthetician
                                   : null}
+                              </p>
+                              <p>
+                              {item.treatments ? item.treatments[0].name : null}
                               </p>
                             </div>
                             {renderSummaryCardTreatments(i)}
-                            {props.data ? (
-                              props.data.own_appointments ? (
-                                props.data.own_appointments[i].addOns.length ===
-                                0 ? null : (
-                                  <>
-                                    <div className="selected_appointment_add_ons_header">
-                                      <p>
-                                        Aggiuntivo
-                                        {props.data
-                                          ? props.data.own_appointments[i]
-                                              .addOns.length > 1
-                                            ? "s"
-                                            : null
-                                          : null}
-                                      </p>
-                                    </div>
-                                    {renderSummaryCardAddOns(i)}
-                                  </>
-                                )
-                              ) : null
-                            ) : null}
                             <div className="selected_appointment_total_header admin_side_total_header">
                               <p>Totale</p>
                               <p>
-                                $
+                                
                                 {props.data
                                   ? props.data.own_appointments
                                     ? props.data.own_appointments[i].price
                                       ? props.data.own_appointments[i].price
                                       : null
                                     : null
-                                  : null}
+                                  : null},00 €
                               </p>
                             </div>
                             <div className="selected_appointment_date_and_time_header">

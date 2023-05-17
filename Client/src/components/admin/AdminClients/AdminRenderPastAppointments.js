@@ -443,35 +443,17 @@ const AdminRenderUpcomingAppointments = (props) => {
                                 {item.treatments[0].name === "Salt Cave"
                                   ? null
                                   : item.esthetician
-                                  ? "(with " + item.esthetician + ")"
+                                  ? "con " + item.esthetician
                                   : null}
+                              </p>
+                              <p>
+                              {item.treatments ? item.treatments[0].name : null}
                               </p>
                             </div>
                             {renderSummaryCardTreatments(i)}
-                            {props.data ? (
-                              props.data.own_past_appointments ? (
-                                props.data.own_past_appointments[i].addOns
-                                  .length === 0 ? null : (
-                                  <>
-                                    <div className="selected_appointment_add_ons_header">
-                                      <p>
-                                        Aggiuntivo
-                                        {props.data
-                                          ? props.data.own_past_appointments[i]
-                                              .addOns.length > 1
-                                            ? "s"
-                                            : null
-                                          : null}
-                                      </p>
-                                    </div>
-                                    {renderSummaryCardAddOns(i)}
-                                  </>
-                                )
-                              ) : null
-                            ) : null}
                             <div className="selected_appointment_total_header admin_side_total_header">
                               <p>Totale</p>
-                              <p>${item.price}</p>
+                              <p>{item.price},00 €</p>
                             </div>
                             <div className="selected_appointment_date_and_time_header">
                               <p>Note</p>
