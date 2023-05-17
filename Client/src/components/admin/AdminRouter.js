@@ -333,6 +333,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
             randomColorArray={randomColorArray ? randomColorArray : null}
             resetNotifications={resetNotifications}
             getEmployeeDataNow={getEmployeeData ? getEmployeeData : null}
+            getEmployeesDataStaff={getEmployeesData}
             />
           )}
         />

@@ -511,3 +511,9 @@
   }
 }
 
+@media only screen and (max-width:1000px) {
+  .admin_create_appointment_label{
+      display: none;
+  }
+}
+

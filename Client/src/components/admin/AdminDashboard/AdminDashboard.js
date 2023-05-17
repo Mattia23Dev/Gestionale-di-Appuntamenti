@@ -49,6 +49,7 @@ const AdminService = (props) => {
   const navigate = useHistory();
   const [ServiceID, setId ] = useState()
   const {
+    getEmployeesDataStaff,
     getEmployeeDataNow,
     getEmployeeData,
     getEmployeeError,
@@ -127,12 +128,23 @@ const AdminService = (props) => {
   const [numberAppointmentsRestart, setNumberAppointmentsRestart] = useState();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [adminDash, setAdminDash] = useState(true);
+  const [adminDash, setAdminDash] = useState(false);
   const [takeAPhotoSelected, changeTakeAPhotoSelected] = useState(false);
   const [webcamURI, changeWebcamURI] = useState("");
   const [imageUploaded, changeImageUploaded] = useState("");
   const [imagePreviewAvailable, changeImagePreviewAvailable] = useState(false);
   const [pdfLoading, changePDFLoading] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+
+  useEffect(() => {
+    const getAdmin = () => {
+      if (getEmployeeDataNow && getEmployeeDataNow.employee && getEmployeeDataNow.employee.employeeRole.includes("Admin")) {
+        setAdminDash(true);
+      }
+    };
+
+    getAdmin();
+  }, [getEmployeeDataNow]);
 
   const [
     updateAdminProfilePicture,
@@ -336,6 +348,17 @@ const add =()=>{
         setNumberAppointmentsRestart(totalAppointment);
     }
 
+    if (getEmployeesDataStaff && getEmployeesDataStaff.employees && getAllAppointmentsData && getAllAppointmentsData.all_appointments) {
+      const employees = getEmployeesDataStaff.employees;
+      const appointments = getAllAppointmentsData.all_appointments;
+    
+      employees.forEach((employee) => {
+        const filteredAppointments = appointments.filter((appointment) => appointment.esthetician === employee.firstName + " " + employee.lastName);
+    
+        console.log(`Appointments for employee ${employee.firstName}:`, filteredAppointments);
+      });
+    }
+
     if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
         const totalPrices = getAllAppointmentsData.all_appointments.reduce((accumulator, currentValue) => {
           return accumulator + currentValue.price;
@@ -417,11 +440,21 @@ const daysInCurrentWeek = daysOfYear.slice(currentWeekIndex * 7, (currentWeekInd
 const daysInCurrentWeekNum = daysOfYear.slice(currentWeekIndexNum * 7, (currentWeekIndexNum + 1) * 7);
 
 useEffect(() => {
+  let filteredAppointments = [];
   const totalPricePerDay = {};
 
-  // Calcola il prezzo totale degli appuntamenti per ogni giorno
-  if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
-    getAllAppointmentsData.all_appointments.forEach((appointment) => {
+  if (selectedEmployee === "") {
+    filteredAppointments = getAllAppointmentsData && getAllAppointmentsData.all_appointments ? getAllAppointmentsData.all_appointments : [];
+  } else {
+    if (getAllAppointmentsData && getAllAppointmentsData.all_appointments) {
+      filteredAppointments = getAllAppointmentsData.all_appointments.filter(
+        (appointment) => appointment.esthetician === selectedEmployee
+      );
+    }
+  }
+
+  if (filteredAppointments && filteredAppointments.length > 0) {
+    filteredAppointments.forEach((appointment) => {
       const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
       if (totalPricePerDay[appointmentDate]) {
         totalPricePerDay[appointmentDate] += appointment.price;
@@ -430,6 +463,18 @@ useEffect(() => {
       }
     });
   }
+
+  // Calcola il prezzo totale degli appuntamenti per ogni giorno
+ /* if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+    getAllAppointmentsData.all_appointments.forEach((appointment) => {
+      const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
+      if (totalPricePerDay[appointmentDate]) {
+        totalPricePerDay[appointmentDate] += appointment.price;
+      } else {
+        totalPricePerDay[appointmentDate] = appointment.price;
+      }
+    });
+  }*/
 
   // Aggiorna i prezzi totali degli appuntamenti nella settimana corrente
   const updatedDaysInCurrentWeek = daysInCurrentWeek.map((day) => {
@@ -451,7 +496,9 @@ useEffect(() => {
       labels: updatedDaysInCurrentWeek.map((day) => day.date),
       datasets: [
         {
-          label: 'Fatturato',
+          label: `Fatturato ${
+            selectedEmployee ? `di ${selectedEmployee}` : "totale"
+          }`,
           data: updatedDaysInCurrentWeek.map((day) => day.price),
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
@@ -486,13 +533,28 @@ useEffect(() => {
   }
 }, [chart, daysInCurrentWeek, getAllAppointmentsData]);
 
+const handleEmployeeChange = (event) => {
+  setSelectedEmployee(event.target.value);
+  console.log(selectedEmployee);
+};
+
 useEffect(() => {
+  let filteredAppointments = [];
   const totalAppointmentsPerDay = {};
 
-  // Calcola il numero di appuntamenti per ogni giorno
-  if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
-    getAllAppointmentsData.all_appointments.forEach((appointment) => {
-      const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
+  if (selectedEmployee === "") {
+    filteredAppointments = getAllAppointmentsData && getAllAppointmentsData.all_appointments ? getAllAppointmentsData.all_appointments : [];
+  } else {
+    if (getAllAppointmentsData && getAllAppointmentsData.all_appointments) {
+      filteredAppointments = getAllAppointmentsData.all_appointments.filter(
+        (appointment) => appointment.esthetician === selectedEmployee
+      );
+    }
+  }
+
+  if (filteredAppointments && filteredAppointments.length > 0) {
+    filteredAppointments.forEach((appointment) => {
+      const appointmentDate = moment(appointment.date).format("YYYY-MM-DD");
       if (totalAppointmentsPerDay[appointmentDate]) {
         totalAppointmentsPerDay[appointmentDate]++;
       } else {
@@ -500,6 +562,18 @@ useEffect(() => {
       }
     });
   }
+
+  // Calcola il numero di appuntamenti per ogni giorno
+   /*if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
+    filteredAppointments.forEach((appointment) => {
+      const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
+      if (totalAppointmentsPerDay[appointmentDate]) {
+        totalAppointmentsPerDay[appointmentDate]++;
+      } else {
+        totalAppointmentsPerDay[appointmentDate] = 1;
+      }
+    });
+  }*/
 
   // Aggiorna il numero di appuntamenti nella settimana corrente
   const updatedDaysInCurrentWeek = daysInCurrentWeekNum.map((day) => {
@@ -521,8 +595,13 @@ useEffect(() => {
       labels: updatedDaysInCurrentWeek.map((day) => day.date),
       datasets: [
         {
-          label: 'Numero di appuntamenti',
-          data: updatedDaysInCurrentWeek.map((day) => day.count),
+          label: `Numero di appuntamenti ${
+            selectedEmployee ? `di ${selectedEmployee}` : "totali"
+          }`,
+          data: updatedDaysInCurrentWeek.map((day) => {
+            const count = totalAppointmentsPerDay[day.date] || 0;
+            return count;
+          }),
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
@@ -558,95 +637,10 @@ useEffect(() => {
 
 const chartRefNum = useRef(null);
 const chartRef = useRef(null);
-const chartRefNumStaff = useRef(null);
 const [chart, setChart] = useState(null);
 const [chartNum, setChartNum] = useState(null);
-const [chartNumStaff, setChartNumStaff] = useState(null);
 
-/*
-const getAdmin = () => {
-  if (getEmployeeDataNow.employee.employeeRole.includes("Admin")) {
-    setAdminDash(true);
-}
-}
-getAdmin();
 
-useEffect(()=> {
-  const totalAppointmentsPerDayStaff = {};
-  if (getEmployeeDataNow) {
-    if (getEmployeeDataNow.employee && getEmployeeDataNow.employee > 0 ) {
-      const currentEmployee = getEmployeeDataNow.employee;
-
-      if (getAllAppointmentsData && getAllAppointmentsData.all_appointments.length > 0) {
-        getAllAppointmentsData.all_appointments.forEach((appointment) => {
-          if (currentEmployee && appointment.esthetician === currentEmployee) {
-            const appointmentDate = moment(appointment.date).format('YYYY-MM-DD');
-            if (totalAppointmentsPerDayStaff[appointmentDate]) {
-              totalAppointmentsPerDayStaff[appointmentDate]++;
-            } else {
-              totalAppointmentsPerDayStaff[appointmentDate] = 1;
-            }
-          }
-        });
-      }
-    
-    }
-  }
-
-  const updatedDaysInCurrentWeek = daysInCurrentWeekNum.map((day) => {
-    const count = totalAppointmentsPerDayStaff[day.date] || 0;
-    return {
-      ...day,
-      count: count,
-    };
-  });
-
-  if (chartRefNumStaff.current) {
-    const chartElement = chartRefNumStaff.current;
-    const context = chartElement.getContext('2d');
-
-    const maxCount = Math.max(...updatedDaysInCurrentWeek.map((day) => day.count));
-
-    const data = {
-      labels: updatedDaysInCurrentWeek.map((day) => day.date),
-      datasets: [
-        {
-          label: 'Numero di appuntamenti',
-          data: updatedDaysInCurrentWeek.map((day) => day.count),
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-        },
-      ],
-    };
-
-    if (chartNumStaff) {
-      // Se il grafico esiste, aggiorna solo i dati
-      chartNumStaff.data = data;
-      chartNumStaff.update();
-    } else {
-      // Altrimenti, crea un nuovo grafico
-      const newChart = new Chart(context, {
-        type: 'bar',
-        data: data,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true, 
-              suggestedMax: maxCount + 30,
-            },
-          },
-        },
-      });
-
-      setChartNumStaff(newChart);
-    }
-  }
-
-}, [chartNumStaff, daysInCurrentWeekNum, getAllAppointmentsData])
-*/
 
   return (
 
@@ -757,6 +751,18 @@ useEffect(()=> {
           </div>
         </div>
           <div className="card-dashboard-chart">
+          <select onChange={handleEmployeeChange} className="selectEmployee">
+                <option value="">Tutti i dipendenti (scegli il dipendente)</option>
+                    {getEmployeesDataStaff && getEmployeesDataStaff.employees.length > 0 ? (
+                        getEmployeesDataStaff.employees.map((employee) => (
+                          <option key={employee.id} value={`${employee.firstName} ${employee.lastName}`}>
+                            {employee.firstName} {employee.lastName}
+                          </option>
+                        ))
+                      ) : (
+                        null
+                      )}
+          </select>
             <h2>Fatturato totale a settimana</h2>
                 <button onClick={handlePreviousWeek}>Settimana precedente</button>
                 <button onClick={handleNextWeek}>Settimana successiva</button>
@@ -780,29 +786,31 @@ useEffect(()=> {
             </div>
           </div>
 
-          <div className="card-dashboard-chart">
-            <h2>Numero di appuntamenti a settimana</h2>
-                <button onClick={handlePreviousWeek}>Settimana precedente</button>
-                <button onClick={handleNextWeek}>Settimana successiva</button>
-                <canvas id="ChartNum" ref={chartRefNum}></canvas>
-          </div>  
-        </div>
-      :
-      <div className="dashboard-container">
-        <div className="card-panoramica">
-          <div className="card-panoramica-title">
-            <h3>Dati generali</h3>
-          </div>
-        </div>
-        <div className="card-dashboard-chart">
-            <h2>Numero di appuntamenti a settimana</h2>
-                <button onClick={handlePreviousWeek}>Settimana precedente</button>
-                <button onClick={handleNextWeek}>Settimana successiva</button>
-                <canvas id="ChartNum" ref={chartRefNumStaff}></canvas>
         </div> 
-      </div>
+      :
+        null
       }
+      <div className="dashboard-container">
+        <div className="card-dashboard-chart">
+        <select onChange={handleEmployeeChange} className="selectEmployee">
+              <option value="">Tutti i dipendenti (scegli il dipendente)</option>
+                  {getEmployeesDataStaff && getEmployeesDataStaff.employees.length > 0 ? (
+                      getEmployeesDataStaff.employees.map((employee) => (
+                        <option key={employee.id} value={`${employee.firstName} ${employee.lastName}`}>
+                          {employee.firstName} {employee.lastName}
+                        </option>
+                      ))
+                    ) : (
+                      null
+                    )}
+        </select>
+          <h2>Numero di appuntamenti a settimana</h2>
+              <button onClick={handlePreviousWeek}>Settimana precedente</button>
+              <button onClick={handleNextWeek}>Settimana successiva</button>
+              <canvas id="ChartNum" ref={chartRefNum}></canvas>
+        </div>  
 
+      </div>
       </div>
   );
 };

@@ -522,7 +522,7 @@ const AdminPersonalEvent = (props) => {
             <div className="admin_create_appointment_section_header">
               <h2>Orario evento</h2>
 
-              <div className="admin_personal_event_checkbox_container">
+              {/*<div className="admin_personal_event_checkbox_container">
                 <p>Tutto il giorno?</p>
                 <span
                   className="fa-layers fa-fw client_consent_form_checkbox"
@@ -547,7 +547,7 @@ const AdminPersonalEvent = (props) => {
                   />
                   {adminPersonalEventBlockTime ? checkMark() : null}
                 </span>
-              </div>
+              </div>*/}
             </div>
             <div
               className="admin_create_appointment_input_information_container"

@@ -266,6 +266,7 @@ const AdminCreateAppointment = (props) => {
   }, [clickOutsideDayPicker]);
 
   const renderSelectedTreatments = () => {
+    console.log(adminSelectedTreatments);
     if (adminSelectedTreatments.length < 1) {
       return null;
     } else {
@@ -336,10 +337,10 @@ const AdminCreateAppointment = (props) => {
                     ? ""
                     : item.props
                     ? item.props.children.length === 4
-                      ? item.props.children[1]
-                        ? item.props.children[1].props
-                          ? item.props.children[1].props.children
-                            ? item.props.children[1].props.children + " minuti"
+                      ? item.props.children[2]
+                        ? item.props.children[2].props
+                          ? item.props.children[2].props.children
+                            ? item.props.children[2].props.children + " minuti "
                             : ""
                           : ""
                         : ""
@@ -384,18 +385,18 @@ const AdminCreateAppointment = (props) => {
                         ? item.props.children[2]
                           ? item.props.children[2].props
                             ? item.props.children[2].props.children
-                              ? "$" +
+                              ? "" +
                                 item.props.children[2].props.children +
-                                ".00"
+                                ".00 €"
                               : ""
                             : ""
                           : ""
                         : item.props.children[3]
                         ? item.props.children[3].props
                           ? item.props.children[3].props.children
-                            ? "$" +
+                            ? "" +
                               item.props.children[3].props.children +
-                              ".00"
+                              ".00 €"
                             : ""
                           : ""
                         : ""
@@ -1116,7 +1117,7 @@ const AdminCreateAppointment = (props) => {
                   aria-controls="react-autowhatever-1"
                   className="react-autosuggest__input"
                   placeholder={
-                    "Inserisci una nota addizionale sulla prenotaione (opzionale)"
+                    "Inserisci una nota (opzionale)"
                   }
                   value={adminAppointmentNotes}
                   maxLength={200}
@@ -1164,7 +1165,7 @@ const AdminCreateAppointment = (props) => {
                   borderRight: "1px solid rgb(211, 211, 211)",
                 }}
               >
-                {!totalPrice ? "$0.00" : "$" + totalPrice + ".00"}
+                {!totalPrice ? "€0.00" : "€" + totalPrice + ".00"}
               </div>
             </div>
             <div className="admin_create_appointment_section_header">
