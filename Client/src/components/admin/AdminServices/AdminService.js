@@ -360,10 +360,15 @@ const add =()=>{
         if (changeEmployeeFilter) {
           changeFilteredAllEmployees(
             [...getEmployeesData.services].filter((x) => {
-              const nameStartsWith = x.name.toLowerCase().startsWith(employeeFilter.toLowerCase());
-              const categoryMatches = new RegExp(`^${employeeFilter}`, "gi").test(x.category);
-  
-              return (nameStartsWith || categoryMatches);
+              return new RegExp(employeeFilter, "gi").test(
+                x.name + " " + x.name
+              );
+              // ||
+              // new RegExp(employeeFilter, "gi").test(x.email) ||
+              // new RegExp(employeeFilter, "gi").test(x.phoneNumber) ||
+              // new RegExp(employeeFilter, "gi").test(
+              //   x.phoneNumber.split(/[\W_]+/g).join("")
+              // )
             })
           );
         }
@@ -624,13 +629,13 @@ const add =()=>{
             icon={faChevronLeft}
           />
         </Link>
-        <h1>SERVIZI</h1>
+        <h1>Services</h1>
       </div>
       <FormGroup>
-        <div className="admin_clients_searchbar_container">
+        {/* <div className="admin_clients_searchbar_container">
           <Input
             className="admin_clients_searchbar_input_field"
-            placeholder="Filtra i servizi per nome o categoria"
+            placeholder="Filtra lo staff per nome o telefono"
             onChange={handleChangeEmployeeFilter}
             maxLength={128}
             onKeyDown={preventKeys}
@@ -639,7 +644,7 @@ const add =()=>{
             className="admin_clients_searchbar_icon"
             icon={faSearch}
           />
-        </div> 
+        </div> */}
         <br />
         <br />
       </FormGroup>
@@ -653,7 +658,6 @@ const add =()=>{
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((item, i) => {
                   return (
-                    
                     <div
                       style={{ overflow: "scroll" }}
                       className="admin_individual_client_container"
@@ -667,7 +671,7 @@ const add =()=>{
                       }}
                       ref={individualEmployeeRef}
                     >
-                    <div className="service-information">
+                    
                       <div
                         className="admin_individual_client_initials_square"
                         style={{
@@ -686,7 +690,8 @@ const add =()=>{
                         
                         </p>
                         <p>
-                          {item.category[0].toUpperCase()}
+                          {item.name[0].toUpperCase() +
+                            item.name[0].toUpperCase()}
                         </p>
                       </div>
                       <div className="admin_individual_client_full_name">
@@ -698,15 +703,20 @@ const add =()=>{
                           // item.name.slice(1).toLowerCase()
                           }
                         </p>
-                        <p>{item.price ? item.price : null},00 €</p>
-                        <p>{item.duration ? item.duration : null} minuti</p>
+                        {/* <p>
+                          {item.employeeRole.length > 0
+                            ? item.employeeRole.join(", ")
+                            : null}
+                        </p> */}
+                        <p>{item.price ? item.price : null}</p>
+                        <p>{item.duration ? item.duration : null}</p>
                         <p>{item.category ? item.category : null}</p>
                         {/* <p>{item.description ? item.description : null}</p> */}
                         {/* <p>{item._id}</p> */}
                        
-                        <p className="service-icon" onClick={() => handleDeleteService(item._id)}>
+                        <p onClick={() => handleDeleteService(item._id)}>
                           <FontAwesomeIcon
-                            className="large_screen_side_menu_item_icon service-icon"
+                            className="large_screen_side_menu_item_icon"
                             icon={faTrash}
                             style={{
                               color: "rgba(0, 129, 177, 0.9)",
@@ -715,37 +725,15 @@ const add =()=>{
                        
                         </p>
                         <p>
-                        <div className="service-icon" onClick={() => handleUpdateService(item._id) }>
+                        <div onClick={() => handleUpdateService(item._id) }>
                           <FontAwesomeIcon
-                            className="large_screen_side_menu_item_icon service-icon"
+                            className="large_screen_side_menu_item_icon"
                             icon={faEdit}
                             style={{
                               color: "rgba(0, 129, 177, 0.9)",
                             }}
                           />
                         </div>
-                        </p>
-                      </div>
-                      </div>
-                      <div className="admin-service-icon">
-                      <p className="service-icon-mobile" onClick={() => handleDeleteService(item._id)}>
-                          <FontAwesomeIcon
-                            className="large_screen_side_menu_item_icon"
-                            icon={faTrash}
-                            style={{
-                              color: "rgba(0, 129, 177, 0.9)",
-                            }}
-                          />
-                       
-                        </p>
-                        <p className="service-icon-mobile" onClick={() => handleUpdateService(item._id) }>
-                          <FontAwesomeIcon
-                            className="large_screen_side_menu_item_icon"
-                            icon={faEdit}
-                            style={{
-                              color: "rgba(0, 129, 177, 0.9)",
-                            }}
-                          />
                         </p>
                       </div>
                       <span className="admin_individual_client_spacer" />
@@ -790,7 +778,7 @@ const add =()=>{
           className="add_staff_member_button"
           onClick={addServiceNEW}
         >
-          AGGIUNGI UN SERVIZIO CHE IL CLIENTE PRENOTA
+          Add Service
         </button>
   
       </div>

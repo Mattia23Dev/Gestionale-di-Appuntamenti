@@ -477,7 +477,7 @@ const AdminAddStaffMember = (props) => {
                   />
                 </div>
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                Telefono
+                Numero di telefono
                 </div>
                 <div
                   role="combobox"

@@ -8,8 +8,6 @@ import {
   faCalendarWeek,
   faBell,
   faCircle,
-  faChartLine,
-  faIdBadge,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ACTION_SPLASH_SCREEN_COMPLETE from "../../../actions/SplashScreenComplete/ACTION_SPLASH_SCREEN_COMPLETE";
@@ -146,16 +144,6 @@ const AdminMenu = (props) => {
         <div className="admin_menu_box_container">
           <Link
             className="admin_menu_box_container_link"
-            to="/admin/dashboard"
-            onClick={handleAdminResetNotifications}
-          >
-            <FontAwesomeIcon icon={faChartLine} className="admin_menu_box_icon" />
-            <h2>PANORAMICA</h2>
-          </Link>
-        </div>
-        <div className="admin_menu_box_container">
-          <Link
-            className="admin_menu_box_container_link"
             to="/admin/clients"
             onClick={handleAdminResetNotifications}
           >
@@ -170,7 +158,7 @@ const AdminMenu = (props) => {
             onClick={handleAdminResetNotifications}
           >
             <FontAwesomeIcon
-              icon={faIdBadge}
+              icon={faBriefcase}
               className="admin_menu_box_icon"
             />
             <h2>PERSONALE</h2>
@@ -187,19 +175,6 @@ const AdminMenu = (props) => {
               className="admin_menu_box_icon"
             />
             <h2>CALENDARIO</h2>
-          </Link>
-        </div>
-        <div className="admin_menu_box_container">
-          <Link
-            className="admin_menu_box_container_link"
-            to="/admin/service"
-            onClick={handleAdminResetNotifications}
-          >
-            <FontAwesomeIcon
-              icon={faBriefcase}
-              className="admin_menu_box_icon"
-            />
-            <h2>SERVIZI</h2>
           </Link>
         </div>
         

@@ -616,7 +616,7 @@ const AdminCalendarComponent = (props) => {
           ) {
             let newStyle = {
               backgroundColor: "rgb(222, 222, 222)",
-              borderTop: "1px solid rgb(210, 212, 212)",
+              borderTop: "1px solid rgb(212, 212, 212)",
             };
 
             return {

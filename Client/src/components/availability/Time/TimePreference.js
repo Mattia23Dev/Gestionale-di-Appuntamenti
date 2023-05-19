@@ -375,7 +375,6 @@ const TimePreference = (props) => {
 
   console.log(bookedTimes);
   console.log(alreadyBookedAppointments);
-  console.log(totalDuration);
 
   useEffect(() => {
     if (!appointmentsLoading && !personalEventsLoading) {
