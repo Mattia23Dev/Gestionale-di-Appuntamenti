@@ -47,6 +47,7 @@ const AdminService = (props) => {
 
 // console.log(getServiceData1, "hhh")S
   const navigate = useHistory();
+  
   const [ServiceID, setId ] = useState()
   const {
     getEmployeesDataStaff,
