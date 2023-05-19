@@ -7,7 +7,7 @@ const Service = require("../../models/service");
 const serviceType = require("../types/SeriveType");
 const { GraphQLUpload } = require("graphql-upload");
 const fs = require("fs");
-const { GraphQLString, GraphQLBoolean, GraphQLID, GraphQLInt } = graphql;
+const { GraphQLString, GraphQLBoolean,GraphQLList, GraphQLID, GraphQLInt } = graphql;
 
 require("dotenv").config();
 
@@ -22,8 +22,10 @@ const updateServiceMutation = {
     duration: { type: GraphQLInt },
     price: { type: GraphQLInt },
     img: { type: GraphQLUpload },
+    employees:{type:GraphQLList(GraphQLString)}
   },
   async resolve(parent, args, context) {
+
     const adminAccessToken = context.cookies["admin-access-token"];
 
     if (!adminAccessToken) {
@@ -52,7 +54,6 @@ const updateServiceMutation = {
               resolve();
             });
         });
-
         const update = {
           name: args.name ? args.name : service.name,
           category: args.category ? args.category : service.category,
@@ -62,7 +63,9 @@ const updateServiceMutation = {
           duration: args.duration ? args.duration : service.duration,
           price: args.price ? args.price : service.price,
           img: filename.img ? filename.img : service.img,
-        };
+          employees: args.employees ? args.employees : service.employees,
+       
+       };
 
         const updateService = await Service.findOneAndUpdate(
           {
@@ -89,6 +92,8 @@ const updateServiceMutation = {
           duration: args.duration ? args.duration : service.duration,
           price: args.price ? args.price : service.price,
           img: service?.img,
+          employees: args.employees ? args.employees : service.employees,
+
         };
 
         const updateService = await Service.findOneAndUpdate(

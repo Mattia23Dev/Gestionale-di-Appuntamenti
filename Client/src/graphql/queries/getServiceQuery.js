@@ -3,8 +3,6 @@ import { gql } from "apollo-boost";
 const getServiceQuery = gql`
   {
     services {
-      
-
       name
 
       price
@@ -13,6 +11,7 @@ const getServiceQuery = gql`
       description
       _id
       img
+      employees
     }
   }
 `;

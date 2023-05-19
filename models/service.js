@@ -8,6 +8,7 @@ const serviceSchema = new Schema({
   category:String,
   description:String,
   img: String,
+  employees: { type: Array, default: [] },
 });
 
 module.exports = mongoose.model("Service", serviceSchema);

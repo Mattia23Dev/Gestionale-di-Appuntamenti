@@ -9,6 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import CalmCard from "./Treatment_Cards/Calm/CalmCard";
+// import getServiceQuery from "../../graphql/queries/getServiceQuery";
+// import getEmployeesQuery from "../../../graphql/queries/getEmployeesQuery";
+import getServiceQuery from "../../graphql/queries/getServiceQuery"
+import { useQuery } from "@apollo/react-hooks";
 import ClarifyCard from "./Treatment_Cards/Clarify/ClarifyCard";
 import CBDCard from "./Treatment_Cards/CBD/CBDCard";
 import GlowCard from "./Treatment_Cards/Glow/GlowCard";
@@ -104,6 +108,15 @@ const ShoppingCart = (props) => {
       }
     }
   };
+  console.log(treatmentsArr, "treatment arr")
+  const {
+    data: getEmployeesData,
+    refetch: getServiceRefetch,
+    loading: getServiceLoading,
+  } = useQuery(getServiceQuery, {
+    fetchPolicy: "no-cache",
+  });
+  console.log(getEmployeesData, "treatment barr")
 
   const backToHome = () => {
     dispatch(ACTION_CART_IS_NOT_ACTIVE());
@@ -322,38 +335,66 @@ const ShoppingCart = (props) => {
       dispatch(ACTION_SELECTED_ESTHETICIAN("Salt Cave"));
     }
   }, [dispatch, saltCaveInCart]);
-
+  // if (getEmployeesData.services) {
+  //   const filteredEmployeesArr = getEmployeesData.services.filter(
+  //     (x) => {
+  //       console.log(x, "kjdisaiiudxa")
+  //       return x.employees;
+  //     }
+  //   )}
+  // if(getEmployeesData){
+  // const filteredEmployeesArr = treatmentsArr.map(
+  //   (x) => {
+  //     // console.log(x.employees, "sqwi")
+  //     return x.employees
+  //   }
+  // );
+  // console.log(filteredEmployeesArr, "d")
+  // }
+ 
+//   console.log(treatmentsArr[0], "datat")
+//   console.log(treatmentsArr[0].employees, "datt")
+//  const d = treatmentsArr[0].employees.map((x, i) => {
+//   console.log(x, 'hhhh')
+//   })
+//   console.log(d, "suaduaud")
+  
   const renderEstheticianNames = () => {
-    if (props.getEmployeesData) {
-      if (props.getEmployeesData.employees) {
-        const filteredEmployeesArr = props.getEmployeesData.employees.filter(
-          (x) => {
-            return x.employeeRole.includes("Esthetician");
-          }
-        );
+    // if (getEmployeesData) {
+    //   if (getEmployeesData.services) {
+    //     const filteredEmployeesArr = getEmployeesData.services.filter(
+    //       (x) => {
+    //         return x.employees;
+    //       }
+    //     );
 
-        return filteredEmployeesArr.map((x, i) => {
+         treatmentsArr[0].employees.map((x, i) => {
           return (
             <option
               key={i}
               value={
-                x.firstName[0].toUpperCase() +
-                x.firstName.slice(1).toLowerCase() +
-                " " +
-                x.lastName[0].toUpperCase() +
-                x.lastName.slice(1).toLowerCase()
-              }
+            //     x.firstName[0].toUpperCase() +
+            //     x.firstName.slice(1).toLowerCase() +
+            //     " " +
+            //     x.lastName[0].toUpperCase() +
+            //     x.lastName.slice(1).toLowerCase()
+          x    
+          }
+          
             >
-              {x.firstName[0].toUpperCase() +
+              {x}{"kjhhjkj"}
+              {/* {x.firstName[0].toUpperCase() +
                 x.firstName.slice(1).toLowerCase() +
                 " " +
                 x.lastName[0].toUpperCase() +
-                "."}
+                "."} */}
             </option>
           );
         });
-      }
-    }
+      
+      
+      
+    
   };
 
   useEffect(() => {
@@ -468,7 +509,10 @@ const ShoppingCart = (props) => {
                 }}
               >
                 <option>Nessuna preferenza</option>
-                {renderEstheticianNames()}
+                {/* {renderEstheticianNames()} */}
+                { treatmentsArr[0].employees.map((x, i) => (
+                                        <option value={x} key={i}>{x}</option>
+                                      ))}
               </Input>
             </div>
           </FormGroup>

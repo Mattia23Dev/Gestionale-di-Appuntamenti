@@ -14,6 +14,8 @@ const ServiceType = new GraphQLObjectType({
     category: { type: GraphQLString },
     description: { type: GraphQLString },
     img: { type: GraphQLString },
+    employees: { type: new GraphQLList(GraphQLString) },
+
   }),
 });
 

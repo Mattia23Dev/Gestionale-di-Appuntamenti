@@ -14,6 +14,7 @@ const {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLNull,
+  GraphQLList
 } = graphql;
 
 const addServiceMutation = {
@@ -27,6 +28,7 @@ const addServiceMutation = {
 
     duration: { type: new GraphQLNonNull(GraphQLInt) },
     img: { type: GraphQLUpload },
+    employees:{type:GraphQLList(GraphQLString)}
   },
 
   async resolve(parent, args, context) {
@@ -62,6 +64,7 @@ const addServiceMutation = {
         price: args.price,
         duration: args.duration,
         img: filename,
+        employees:args.employees
       });
 
       const service = await newService.save();

@@ -1,6 +1,6 @@
 const BACIAL_IN_CART = "BACIAL_IN_CART";
 
-const ACTION_BACIAL_IN_CART = (id, price, duration , name) => {
+const ACTION_BACIAL_IN_CART = (id, price, duration , name, employees) => {
   console.log(id, "id")
   
   return {
@@ -10,6 +10,7 @@ const ACTION_BACIAL_IN_CART = (id, price, duration , name) => {
       name: name,
       price: price,
       duration: duration,
+      employees:employees
       
     },
   };

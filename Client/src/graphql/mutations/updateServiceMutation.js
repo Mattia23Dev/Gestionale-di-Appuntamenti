@@ -9,6 +9,7 @@ const updateServiceMutation = gql`
     $duration: Int
     $price: Int
     $img:Upload
+    $employees:[String]
 
   ) {
     updateService(
@@ -19,6 +20,7 @@ const updateServiceMutation = gql`
       duration: $duration
       price: $price
      img:$img
+     employees: $employees
 
     ) {
       _id
@@ -28,6 +30,7 @@ const updateServiceMutation = gql`
       duration
       price
      img
+     employees
 
     }
   }
