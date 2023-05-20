@@ -499,14 +499,32 @@ const AdminCreateAppointment = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (adminSelectedTreatments.length > 0) {
-  //     const treatments = adminSelectedTreatments.filter(
-  //       (item) => !item.props.children[0].props.children.includes("Add On")
-  //     );
-  //     const addOns = adminSelectedTreatments.filter((item) =>
-  //       item.props.children[0].props.children.includes("Add On")
-  //     );
+  useEffect(() => {
+    console.log(adminSelectedTreatments.length, adminSelectedTreatments, "sel")
+
+    if (adminSelectedTreatments.length > 0) {
+      const treatments = adminSelectedTreatments.filter(
+        (item) => !item.props.children[0].props.children.includes("Add On")
+      );
+
+      changeSelectedTreatments(
+        treatments.map((item) => {
+          if (item.props.children.length === 4) {
+            return {
+              name: item.props.children[0].props.children,
+              duration: item.props.children[1].props.children,
+              price: item.props.children[2].props.children,
+            };
+          } else {
+            return {
+              name: item.props.children[1].props.children,
+              duration: item.props.children[2].props.children,
+              price: item.props.children[3].props.children,
+            };
+          }
+        })
+      );
+    }
 
   //     changeSelectedTreatments(
   //       treatments.map((item) => {
@@ -526,17 +544,7 @@ const AdminCreateAppointment = (props) => {
   //       })
   //     );
 
-  //     changeSelectedAddOns(
-  //       addOns.map((item) => {
-  //         return {
-  //           name: item.props.children[1].props.children,
-  //           duration: item.props.children[2].props.children,
-  //           price: item.props.children[3].props.children,
-  //         };
-  //       })
-  //     );
-  //   }
-  // }, [adminSelectedTreatments]);
+  }, [adminSelectedTreatments]);
 
   const variablesModel = {
     firstName: adminClientFirstName,
@@ -544,7 +552,6 @@ const AdminCreateAppointment = (props) => {
     email: adminClientEmail,
     phoneNumber: adminClientPhoneNumber,
     bookedWithCardSquareID: "",
-    notes: adminAppointmentNotes,
     squareCustomerId: "",
   };
 
@@ -566,6 +573,7 @@ const AdminCreateAppointment = (props) => {
   }, [dispatch, changeCreateAppointmentClicked]);
 
   const handleSubmitBooking = (e) => {
+    console.log('questo è selectedTreatment',selectedTreatments)
     e.preventDefault();
 
     const appDate = moment(adminAppointmentDate, "MM/DD/YYYY").format(
@@ -720,7 +728,7 @@ const AdminCreateAppointment = (props) => {
       appDate + " " + adminAppointmentTime,
       "MMMM D, YYYY h:mm A"
     )
-      .add(regularDuration, "minuti")
+      .add(regularDuration, "minutes")
       .format("h:mm A");
 
     if (afterSalt.length > 0) {
@@ -728,7 +736,7 @@ const AdminCreateAppointment = (props) => {
         appDate + " " + regularEndTime,
         "MMMM D, YYYY h:mm A"
       )
-        .add(afterSalt[0].duration, "minuti")
+        .add(afterSalt[0].duration, "minutes")
         .format("h:mm");
 
       setTimeout(() => {
@@ -758,16 +766,18 @@ const AdminCreateAppointment = (props) => {
             startTime: adminAppointmentTime.split(" ")[0],
             morningOrEvening: adminAppointmentTime.split(" ")[1],
             endTime: regularEndTime.split(" ")[0],
-            price: regularTreatments
-              .concat(selectedAddOns)
-              .map((x) => x.price)
-              .reduce((a, b) => a + b, 0),
+            price: selectedTreatments[0].price,
             duration: regularDuration,
-            esthetician: adminAppointmentStaffMember,
-            treatments: regularTreatments,
+            esthetician: adminAppointmentStaffMember.value,
+            treatments: selectedTreatments,
             addOns: selectedAddOns,
+            notes: adminAppointmentNotes,
           },
         });
+        console.log('variabili', variablesModel)
+        console.log('altre variabili', appDate, adminAppointmentTime, 
+        regularEndTime, selectedTreatments[0].price, regularDuration, adminAppointmentStaffMember.value,
+        selectedTreatments, adminAppointmentNotes)
       }, twilioDelayArr[1]);
     }
 

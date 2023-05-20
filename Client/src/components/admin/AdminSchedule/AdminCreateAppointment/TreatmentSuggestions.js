@@ -6,7 +6,7 @@ const treatmentSuggestions = (getServiceData) => {
       suggestions: [
         {
           name: service.name,
-          componentName: "Bacial",
+          componentName: service.name,
           picture: (
             <svg width="100%" height="100%" viewBox="0 0 56.356 56.356">
               <circle cx="28" cy="28" r="22.25" fill="rgb(241, 241, 241)" />
@@ -22,7 +22,7 @@ const treatmentSuggestions = (getServiceData) => {
               </g>
             </svg>
           ),
-          duration: service.name,
+          duration: service.duration,
           price: service.price,
           id: service._id,
         },

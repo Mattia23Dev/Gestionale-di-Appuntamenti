@@ -351,7 +351,7 @@ const AdminSchedule = (props) => {
             >
               <option value="" disabled>Scegli calendario</option>
               {renderScheduleSelectionDropdownOptions().map((option) => (
-                <option key={option.id} value={option} style={{color:'black'}}>
+                <option key={option} value={option} style={{color:'black'}}>
                   {option}
                 </option>
               ))}

@@ -234,6 +234,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
                 .map((d) => {
                   return (
                     <Bacial
+                      key={d._id}
                       initialScreenSize={initialScreenSize}
                       currentScreenSize={currentScreenSize}
                       resetAllCartStates={resetAllCartStates}

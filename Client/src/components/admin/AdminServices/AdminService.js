@@ -714,8 +714,7 @@ const add =()=>{
                           />
                        
                         </p>
-                        <p>
-                        <div className="service-icon" onClick={() => handleUpdateService(item._id) }>
+                        <p className="service-icon" onClick={() => handleUpdateService(item._id) }>
                           <FontAwesomeIcon
                             className="large_screen_side_menu_item_icon service-icon"
                             icon={faEdit}
@@ -723,7 +722,6 @@ const add =()=>{
                               color: "rgba(0, 129, 177, 0.9)",
                             }}
                           />
-                        </div>
                         </p>
                       </div>
                       </div>

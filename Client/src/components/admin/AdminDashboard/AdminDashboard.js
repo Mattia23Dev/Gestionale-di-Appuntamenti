@@ -756,7 +756,7 @@ const [chartNum, setChartNum] = useState(null);
                 <option value="">Tutti i dipendenti (scegli il dipendente)</option>
                     {getEmployeesDataStaff && getEmployeesDataStaff.employees.length > 0 ? (
                         getEmployeesDataStaff.employees.map((employee) => (
-                          <option key={employee.id} value={`${employee.firstName} ${employee.lastName}`}>
+                          <option key={employee._id} value={`${employee.firstName} ${employee.lastName}`}>
                             {employee.firstName} {employee.lastName}
                           </option>
                         ))
@@ -797,7 +797,7 @@ const [chartNum, setChartNum] = useState(null);
               <option value="">Tutti i dipendenti (scegli il dipendente)</option>
                   {getEmployeesDataStaff && getEmployeesDataStaff.employees.length > 0 ? (
                       getEmployeesDataStaff.employees.map((employee) => (
-                        <option key={employee.id} value={`${employee.firstName} ${employee.lastName}`}>
+                        <option key={employee._id} value={`${employee.firstName} ${employee.lastName}`}>
                           {employee.firstName} {employee.lastName}
                         </option>
                       ))

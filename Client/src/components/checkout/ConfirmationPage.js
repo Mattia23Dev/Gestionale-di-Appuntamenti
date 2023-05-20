@@ -688,14 +688,14 @@ console.log(variablesModel, " variablr ", treatmentsArray(), " treatment ", addO
           Il mio
           {saltCaveInCart
             ? " Trattamento"
-            : " trattamento (con " + selectedEsthetician + ")"}
+            : " trattamento con " + selectedEsthetician}
         </h2>
         {renderSummaryCardTreatments()}
       </div>
       {renderSummaryCardAddOnSection()}
       <div className="summary_card_subtotal_container">
         <p>TOTALE</p>
-        <p>€{totalPrice}</p>
+        <p>{totalPrice},00 €</p>
       </div>
       <Link
         to={
