@@ -223,11 +223,18 @@ console.log(e, "e")
       dispatch(ACTION_FINAL_BOOK_BUTTON_ACTIVE());
     }
 
+    const newTreatmentsArr = treatmentsArr.map(treatment => ({
+      name: treatment.name,
+      duration: treatment.duration,
+      price: treatment.price
+    }));
+
     const treatmentsArray = () => {
       return {
-        treatments: treatmentsArr,
+        treatments: newTreatmentsArr,
       };
     };
+
 
     const addOnsArray = () => {
       return {
@@ -237,6 +244,7 @@ console.log(e, "e")
 console.log(variablesModel, " variablr ", treatmentsArray(), " treatment ", addOnsArray(), "just to test")
     addAppointment({
       variables: { ...variablesModel, ...treatmentsArray(), ...addOnsArray() },
+      //variables: { ...variablesModel, newTreatmentsArr, ...addOnsArray() },
     });
 
     dispatch(ACTION_FINAL_BOOKING_MODAL_ACTIVE());

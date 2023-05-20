@@ -11,7 +11,7 @@ const initialState = {
 const bacialInCartReducer = (state = initialState, action) => {
   switch (action.type) {
     case BACIAL_IN_CART:
-      const { id, price, duration, name } = action.payload;
+      const { id, price, duration, name, employees } = action.payload;
       console.log({ ...state, in_cart: true }, "bacial in cart reducer");
       return {
         ...state,
@@ -19,6 +19,7 @@ const bacialInCartReducer = (state = initialState, action) => {
         price,
         duration,
         name,
+        employees,
         in_cart: true,
       };
     case TREATMENTS_CART_RESET:

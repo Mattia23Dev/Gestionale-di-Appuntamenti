@@ -399,7 +399,8 @@ const Bacial = (props) => {
             props.data._id,
             props.data.price,
             props.data.duration,
-            props.data.name
+            props.data.name,
+            props.data.employees,
           )
         );
         dispatch(ACTION_INCREMENT_COUNTER());

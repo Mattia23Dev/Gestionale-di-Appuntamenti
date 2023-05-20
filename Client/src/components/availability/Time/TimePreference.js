@@ -88,6 +88,7 @@ const TimePreference = (props) => {
   const saltCaveInCart = useSelector((state) => state.saltCaveInCart.in_cart);
 
   const [bookedTimes, changeBookedTimes] = useState(null);
+  const [blockTimes, setBlockedTime] =useState(null)
 
   // Checkout Form States
   const firstName = useSelector((state) => state.firstName.first_name);
@@ -376,6 +377,42 @@ const TimePreference = (props) => {
   console.log(bookedTimes);
   console.log(alreadyBookedAppointments);
   console.log(totalDuration);
+
+  const disabledTimes = [];
+  if(bookedTimes){
+    bookedTimes.map((d)=>{
+      const [hh, mm] = d.split(':').map(str => parseInt(str, 10));
+      const currentTime = new Date();
+      currentTime.setHours(hh);
+      currentTime.setMinutes(mm);
+  
+      for (let i = 1; i <= 3; i++) {
+        const disabledTime = new Date(currentTime.getTime());
+        disabledTime.setMinutes(disabledTime.getMinutes() - (15 * i));
+        disabledTimes.push(disabledTime);
+      }
+  
+    })
+  }  
+  useEffect(()=>{
+  
+  if(disabledTimes)
+  {
+    const d = disabledTimes.map((d)=>{
+      const hour = d.getHours();
+      const minute = d.getMinutes();
+  return (hour + ':' + minute)  })
+  const combinedObject = Object.assign({}, d, bookedTimes);
+  console.log(combinedObject, "com")
+  setBlockedTime(combinedObject);
+  console.log(typeof(d), " d " , typeof(bookedTimes), "blocked")
+  console.log(blockTimes, "time")
+  }
+  
+  }, [bookedTimes])
+  
+  console.log(bookedTimes, "blocked time")
+  
 
   useEffect(() => {
     if (!appointmentsLoading && !personalEventsLoading) {

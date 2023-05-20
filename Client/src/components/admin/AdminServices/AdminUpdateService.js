@@ -3,11 +3,19 @@ import { Transition } from "react-spring/renderprops";
 import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Modal from "react-modal";
 import { css } from "@emotion/css";
 import {useHistory} from "react-router-dom"
+import {Select} from 'antd'
+import getEmployeesQuery from "../../../graphql/queries/getEmployeesQuery";
 
+import {
+  faShoppingCart,
+  faChevronLeft,
+  faChevronRight,
+  faChevronCircleDown,
+} from "@fortawesome/free-solid-svg-icons";
 import BounceLoader from "react-spinners/BounceLoader";
 import { ApolloError } from 'apollo-client';
 
@@ -43,6 +51,15 @@ const navigate = useHistory()
     getEmployeesRefetch,
     ServiceID
   } = props;
+
+  const {
+    data: getEmployeesData,
+    loading: getEmployeesLoading,
+    error: getEmployeesError,
+    refetch: getEmployeesRefetch1,
+  } = useQuery(getEmployeesQuery, {
+    fetchPolicy: "no-cache",
+  });
   
 //   const adminStaffMemberFirstName = useSelector(
 //     (state) => state.adminStaffMemberFirstName.admin_staff_member_first_name
@@ -77,19 +94,49 @@ const navigate = useHistory()
   const [phoneNumberError, changePhoneNumberError] = useState(false);
   const [roleError, changeRoleError] = useState(false);
 
-
-
-
-
-
-
-
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [img, setImg] = useState('');
+
+  const [employee, setEmployee] = useState([]);
+const handleEmployee =(e)=>{
+  setEmployee(e)
+  console.log(e, "sdji")
+
+}
+  const renderEstheticianNames = () => {
+    if (getEmployeesData) {
+      if (getEmployeesData.employees) {
+        const filteredEmployeesArr = getEmployeesData.employees.filter((x) => {
+          return x.employeeRole.includes("Esthetician");
+        });
+
+        return filteredEmployeesArr.map((x, i) => {
+          return (
+            <option
+              key={i}
+              value={
+                x.firstName[0].toUpperCase() +
+                x.firstName.slice(1).toLowerCase() +
+                " " +
+                x.lastName[0].toUpperCase() +
+                x.lastName.slice(1).toLowerCase()
+              }
+            >
+              {x.firstName[0].toUpperCase() +
+                x.firstName.slice(1).toLowerCase() +
+                " " +
+                x.lastName[0].toUpperCase() +
+                "."}
+            </option>
+          );
+        });
+      }
+    }
+  };
 
 
   const [
@@ -101,11 +148,12 @@ const navigate = useHistory()
         variables: { _id:ServiceID,name: name ||undefined, 
             category: category||undefined,   
             description:description||undefined,     
-            duration:parseInt(duration) ||undefined
-            , price:parseInt(price) ||undefined,
+            duration:parseInt(duration) ||undefined,
+            price:parseInt(price) ||undefined,
             // category: category, description:description, 
          
-           img:img ||undefined
+           img:img ||undefined,
+           employees:employee,
           },
         onCompleted: (data) => {
           console.log(data, "data");
@@ -507,7 +555,44 @@ const navigate = useHistory()
                   />
                 </div>
               </div>
-              
+              <div className="esthetician_preference_dropdown_input_field">
+                <FontAwesomeIcon
+                  className="esthetician_preference_dropdown_icon"
+                  icon={faChevronCircleDown}
+                />
+                  <div
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-owns="react-autowhatever-1"
+                  aria-controls="react-autowhatever-1"
+                  aria-expanded="false"
+                  className="react-autosuggest__container"
+
+                >
+                <Select
+                  className="esthetician_preference_input"
+                  mode="multiple"
+                  name="select"
+                  // multiple
+                  // defaultValue={selectedEsthetician}
+                  placeholder="No preference"
+                  id="esthetician_preference"
+                  // onChange={(e) => {
+                  //   props.resetAllCartStatesExceptTreatments();
+                  //   if (e.target.value === "No preference") {
+                  //     dispatch(ACTION_SELECTED_ESTHETICIAN_RESET());
+                  //   } else {
+                  //     dispatch(ACTION_SELECTED_ESTHETICIAN(e.target.value));
+                  //   }
+                  // }}
+                  onChange={handleEmployee}
+                >
+                  {/* <option>Nessuna preferenza</option> */}
+
+                  {renderEstheticianNames()}
+                </Select>
+               </div>
+              </div>
             
 
               <div className="admin_square_payment_form_container">

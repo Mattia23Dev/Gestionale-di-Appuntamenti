@@ -10,6 +10,7 @@ const getServiceQuery = gql`
       description
       _id
       img
+      employees
     }
   }
 `;

@@ -436,12 +436,11 @@ const AdminSelectedAppointment = React.forwardRef((props, ref) => {
                 <div className="selected_appointment_total_header admin_side_total_header">
                   <p>Totale</p>
                   <p>
-                    €
                     {
                       allAdminAppointments.filter(
                         (x) => x.id === currentToggledAppointment
                       )[0].price
-                    }
+                    },00 €
                   </p>
                 </div>
                 <div className="selected_appointment_date_and_time_header">

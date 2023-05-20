@@ -49,7 +49,8 @@ const treatmentsArrReducer = (state = { treatments_arr: [] }, action) => {
           name: action.payload.name,
           price: action.payload.price,
           duration: action.payload.duration,
-          id:action.payload.id
+          id:action.payload.id,
+          employees: action.payload.employees,
         }),
       };
     case BACIAL_NOT_IN_CART:

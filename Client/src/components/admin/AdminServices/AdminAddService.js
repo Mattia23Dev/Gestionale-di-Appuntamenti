@@ -3,11 +3,20 @@ import { Transition } from "react-spring/renderprops";
 import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Modal from "react-modal";
 import { css } from "@emotion/css";
-import {useHistory} from "react-router-dom"
+import { FormGroup, Input } from "reactstrap";
+import {
+  faShoppingCart,
+  faChevronLeft,
+  faChevronRight,
+  faChevronCircleDown,
+} from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router-dom";
 import BounceLoader from "react-spinners/BounceLoader";
+import getEmployeesQuery from "../../../graphql/queries/getEmployeesQuery";
+import {Select} from 'antd'
 import { ApolloError } from "apollo-client";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
@@ -16,6 +25,7 @@ import { onError } from "apollo-link-error";
 import addServiceMutation from "../../../graphql/mutations/addServiceMutaion";
 import addEmployeeMutation from "../../../graphql/mutations/addEmployeeMutation";
 import Dropdown from "react-dropdown";
+import getServiceQuery from "../../../graphql/queries/getServiceQuery"
 import ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER from "../../../actions/Admin/AdminAddStaffMember/AdminStaffMemberPhoneNumber/ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER";
 import ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET from "../../../actions/Admin/AdminAddStaffMember/AdminStaffMemberPhoneNumber/ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET";
 import ACTION_LOADING_SPINNER_ACTIVE from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_ACTIVE";
@@ -34,14 +44,31 @@ import "./AdminService.css";
 
 const AdminAddService = (props) => {
   const dispatch = useDispatch();
-const navigate = useHistory()
+  const navigate = useHistory();
   const otherRoleRef = useRef(null);
+
+  const {
+    data: getEmployeesData,
+    loading: getEmployeesLoading,
+    error: getEmployeesError,
+    refetch: getEmployeesRefetch1,
+  } = useQuery(getEmployeesQuery, {
+    fetchPolicy: "no-cache",
+  });
 
   const {
     addStaffMemberClicked,
     changeAddStaffMemberClicked,
     getEmployeesRefetch,
   } = props;
+
+  const {
+    data: getEmployee,
+    refetch: getServiceRefetch,
+    loading: getServiceLoading,
+  } = useQuery(getServiceQuery, {
+    fetchPolicy: "no-cache",
+  });
 
   const logoutClicked = useSelector(
     (state) => state.logoutClicked.log_out_clicked
@@ -60,6 +87,7 @@ const navigate = useHistory()
   const [descriptionError, changeDescriptionError] = useState(false);
   const [categoryError, changeCategoryError] = useState(false);
   const [imgError, changeImgError] = useState(false);
+  const [emplError, changeEmpError] = useState(false);
 
 
   const [name, setName] = useState("");
@@ -69,13 +97,49 @@ const navigate = useHistory()
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
 
+  const [employee, setEmployee] = useState([]);
+const handleEmployee =(e)=>{
+  setEmployee(e)
+  console.log(employee, "sdji")
+}
+  const renderEstheticianNames = () => {
+    if (getEmployeesData) {
+      if (getEmployeesData.employees) {
+        const filteredEmployeesArr = getEmployeesData.employees.filter((x) => {
+          return x.employeeRole.includes("Esthetician");
+        });
+
+        return filteredEmployeesArr.map((x, i) => {
+          return (
+            <option
+              key={i}
+              value={
+                x.firstName[0].toUpperCase() +
+                x.firstName.slice(1).toLowerCase() +
+                " " +
+                x.lastName[0].toUpperCase() +
+                x.lastName.slice(1).toLowerCase()
+              }
+            >
+              {x.firstName[0].toUpperCase() +
+                x.firstName.slice(1).toLowerCase() +
+                " " +
+                x.lastName[0].toUpperCase() +
+                "."}
+            </option>
+          );
+        });
+      }
+    }
+  };
+
   const formData = new FormData();
 // formData.append('name', name);
 // formData.append('category', category);
 // formData.append('description', description);
 // formData.append('price', price);
 // formData.append('duration', duration);
-formData.append('img', img);
+formData.append("img", img);
   const [
     addEmployee,
     { loading: addEmployeeLoading, data: addEmployeeData },
@@ -88,6 +152,7 @@ formData.append('img', img);
       price: parseInt(price),
       duration: parseInt(duration),
       img: img||undefined,
+      employees:employee,
     },
     // variables:formData,
     onCompleted: (data) => {
@@ -147,7 +212,7 @@ formData.append('img', img);
   }, [firstFocus]);
 
   const handleBackToAllStaff = () => {
-    navigate.go(0)
+    navigate.go(0);
 
     changeAddStaffMemberClicked(false);
     changeOtherRoles([]);
@@ -179,33 +244,26 @@ formData.append('img', img);
     if (categoryError) {
       changeCategoryError(false);
     }
+
+    if (emplError) {
+      changeEmpError(false);
+    }
   };
   
 
   const handleSubmit = async () => {
 
     console.log(img, "img");
-if (
-      name &&
-      price &&
-      duration &&
-      description &&
-      category &&
-      img
-    ){
-    try {
-     const f =  await addService();
-     console.log(f, "response")
-     changeAddStaffMemberClicked(false);
-     navigate.go(0)
-
-    } catch (error) {
-      console.log(error, "error");
-    }
-  }
-   
-
-   else {
+    if (name && price && duration && description && category && img && employee) {
+      try {
+        const f = await addService();
+        console.log(f, "response");
+        changeAddStaffMemberClicked(false);
+        navigate.go(0);
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }  else {
       if (!name) {
         changeNameError(true);
       }
@@ -217,21 +275,19 @@ if (
       if (!duration) {
         changeDurationError(true);
       } 
-         
-
+        
       if (!description) {
         changeDescriptionError(true);
-      
       }
-
-     
+   
       if (!category) {
         changeCategoryError(true);
-      
       }
       if (!img) {
         changeImgError(true);
-      
+      }
+      if (!employee) {
+        changeEmpError(true);
       }
     }
   };
@@ -327,7 +383,10 @@ if (
                     //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
                     //   );
                     // }}
-                    onChange={(e) => { resetAllErrorStates(); setName(e.target.value)}}
+                    onChange={(e) => {
+                      resetAllErrorStates();
+                      setName(e.target.value);
+                    }}
                     placeholder="Nome"
                   />
                 </div>
@@ -361,7 +420,10 @@ if (
                     //   resetAllErrorStates();
                     //   dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL(e.target.value));
                     // }}
-                    onChange={(e) =>{resetAllErrorStates(); setPrice(e.target.value)}}
+                    onChange={(e) => {
+                      resetAllErrorStates();
+                      setPrice(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
@@ -502,6 +564,47 @@ if (
                     placeholder="Image"
                   />
                 </div>
+              </div>
+              <div className="esthetician_preference_dropdown_input_field">
+                <FontAwesomeIcon
+                  className="esthetician_preference_dropdown_icon"
+                  icon={faChevronCircleDown}
+                />
+                  <div
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-owns="react-autowhatever-1"
+                  aria-controls="react-autowhatever-1"
+                  aria-expanded="false"
+                  className="react-autosuggest__container"
+                  style={{
+                    outline: emplError ? "3px solid red" : "none",
+                    zIndex: emplError ? 99999 : "auto",
+                  }}
+                >
+                <Select
+                  className="esthetician_preference_input"
+                  mode="multiple"
+                  name="select"
+                  // multiple
+                  // defaultValue={selectedEsthetician}
+                  placeholder="No preference"
+                  id="esthetician_preference"
+                  // onChange={(e) => {
+                  //   props.resetAllCartStatesExceptTreatments();
+                  //   if (e.target.value === "No preference") {
+                  //     dispatch(ACTION_SELECTED_ESTHETICIAN_RESET());
+                  //   } else {
+                  //     dispatch(ACTION_SELECTED_ESTHETICIAN(e.target.value));
+                  //   }
+                  // }}
+                  onChange={handleEmployee}
+                >
+                  {/* <option>Nessuna preferenza</option> */}
+
+                  {renderEstheticianNames()}
+                </Select>
+               </div>
               </div>
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
