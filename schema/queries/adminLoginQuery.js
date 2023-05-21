@@ -189,6 +189,9 @@ const adminLoginQuery = {
               : "localhost",
         });
 
+        console.log(args);
+        console.log(accessToken, refreshToken);
+
         return {
           _id: employee._id,
           accessToken: accessToken,
