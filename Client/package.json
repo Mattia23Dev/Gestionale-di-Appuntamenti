@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "18.x"
+    "node": "19.8.1"
   },
   "name": "new",
   "version": "1.0.0",
