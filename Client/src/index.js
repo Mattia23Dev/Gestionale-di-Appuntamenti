@@ -7,6 +7,7 @@ import React, {
   useCallback,
   Suspense,
 } from "react";
+    //"node": "^19.8.1",
 import ReactDOM from "react-dom";
 import { ApolloProvider, useMutation, useQuery } from "@apollo/react-hooks";
 import { Spring, Transition } from "react-spring/renderprops";
