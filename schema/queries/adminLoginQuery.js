@@ -139,8 +139,7 @@ const adminLoginQuery = {
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
-              //? process.env.PRODUCTION_CLIENT_ROOT
-              ? null
+              ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
           sameSite: "none",     
         });
@@ -153,8 +152,7 @@ const adminLoginQuery = {
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
-              //? process.env.PRODUCTION_CLIENT_ROOT
-              ? null
+              ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
           sameSite: "none",
         });
@@ -165,8 +163,7 @@ const adminLoginQuery = {
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
-              //? process.env.PRODUCTION_CLIENT_ROOT
-              ? null
+              ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
           sameSite: "none",
         });
