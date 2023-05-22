@@ -38,7 +38,7 @@
     "lodash.isequal": "^4.5.0",
     "lz-string": "^1.4.4",
     "moment": "^2.29.1",
-    "node": "^16.15.1",
+    "node": "^18.x",
     "phone": "^2.4.17",
     "randomcolor": "^0.6.2",
     "react": "^16.14.0",
