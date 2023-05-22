@@ -98,7 +98,7 @@ const adminLoginQuery = {
 
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
             maxAge: 1000 * 60 * 15,
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === "production" ? true : false,
             domain:
               process.env.NODE_ENV === "production"
@@ -135,7 +135,7 @@ const adminLoginQuery = {
         const dummyToken = generateAdminDummyToken(employee);
         context.res.cookie("admin-dummy-token", dummyToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
-          httpOnly: true,
+          httpOnly: false,
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
@@ -147,7 +147,7 @@ const adminLoginQuery = {
 
         context.res.cookie("admin-access-token", accessToken, {
           maxAge: 1000 * 60 * 15,
-          httpOnly: true,
+          httpOnly: false,
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
@@ -157,7 +157,7 @@ const adminLoginQuery = {
 
         context.res.cookie("admin-refresh-token", refreshToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
-          httpOnly: true,
+          httpOnly: false,
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
