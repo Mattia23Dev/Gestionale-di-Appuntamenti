@@ -64,6 +64,7 @@ const AdminLoginPage = (props) => {
 
   const handleAdminLogin = () => {
     changeSignInLoading(false);
+    console.log(adminAuthenticated);
 
     if (registeredEmployeeFound) {
       if (adminLoginEmailInvalid) {
