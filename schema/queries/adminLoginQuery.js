@@ -31,25 +31,25 @@ const adminLoginQuery = {
           context.res.clearCookie("dummy-token", {
             domain:
               process.env.NODE_ENV === "production"
-                ? process.env.PRODUCTION_CLIENT_ROOT
+                ? process.env.PRODUCTION_CLIENT_URL
                 : "localhost",
           });
           context.res.clearCookie("access-token", {
             domain:
               process.env.NODE_ENV === "production"
-                ? process.env.PRODUCTION_CLIENT_ROOT
+                ? process.env.PRODUCTION_CLIENT_URL
                 : "localhost",
           });
           context.res.clearCookie("refresh-token", {
             domain:
               process.env.NODE_ENV === "production"
-                ? process.env.PRODUCTION_CLIENT_ROOT
+                ? process.env.PRODUCTION_CLIENT_URL
                 : "localhost",
           });
           context.res.clearCookie("temporary-facebook-dummy-token", {
             domain:
               process.env.NODE_ENV === "production"
-                ? process.env.PRODUCTION_CLIENT_ROOT
+                ? process.env.PRODUCTION_CLIENT_URL
                 : "localhost",
           });
 
@@ -92,7 +92,7 @@ const adminLoginQuery = {
             secure: process.env.NODE_ENV === "production" ? true : false,
             domain:
               process.env.NODE_ENV === "production"
-                ? process.env.PRODUCTION_CLIENT_ROOT
+                ? process.env.PRODUCTION_CLIENT_URL
                 : "localhost",
           });
 
@@ -102,7 +102,7 @@ const adminLoginQuery = {
             secure: process.env.NODE_ENV === "production" ? true : false,
             domain:
               process.env.NODE_ENV === "production"
-                ? process.env.PRODUCTION_CLIENT_ROOT
+                ? process.env.PRODUCTION_CLIENT_URL
                 : "localhost",
           });
         } else {
@@ -138,7 +138,7 @@ const adminLoginQuery = {
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
 
@@ -150,7 +150,7 @@ const adminLoginQuery = {
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
 
@@ -160,32 +160,32 @@ const adminLoginQuery = {
           secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
 
         context.res.clearCookie("dummy-token", {
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
         context.res.clearCookie("access-token", {
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
         context.res.clearCookie("refresh-token", {
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
         context.res.clearCookie("temporary-facebook-dummy-token", {
           domain:
             process.env.NODE_ENV === "production"
-              ? process.env.PRODUCTION_CLIENT_ROOT
+              ? process.env.PRODUCTION_CLIENT_URL
               : "localhost",
         });
 
