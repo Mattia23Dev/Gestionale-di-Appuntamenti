@@ -94,6 +94,7 @@ const adminLoginQuery = {
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
+            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
           });
 
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
@@ -104,6 +105,7 @@ const adminLoginQuery = {
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
+            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
           });
         } else {
           throw new UserInputError("Incorrect password.");
@@ -141,7 +143,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: "none",     
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',    
         });
 
         const { accessToken, refreshToken } = createAdminTokens(employee);
@@ -154,7 +156,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: "none",
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
         });
 
         context.res.cookie("admin-refresh-token", refreshToken, {
@@ -165,7 +167,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: "none",
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
         });
 
         context.res.clearCookie("dummy-token", {
