@@ -142,6 +142,7 @@ const adminLoginQuery = {
               //? process.env.PRODUCTION_CLIENT_ROOT
               ? null
               : "localhost",
+          sameSite: "none",     
         });
 
         const { accessToken, refreshToken } = createAdminTokens(employee);
@@ -155,6 +156,7 @@ const adminLoginQuery = {
               //? process.env.PRODUCTION_CLIENT_ROOT
               ? null
               : "localhost",
+          sameSite: "none",
         });
 
         context.res.cookie("admin-refresh-token", refreshToken, {
@@ -166,7 +168,7 @@ const adminLoginQuery = {
               //? process.env.PRODUCTION_CLIENT_ROOT
               ? null
               : "localhost",
-          
+          sameSite: "none",
         });
 
         context.res.clearCookie("dummy-token", {
