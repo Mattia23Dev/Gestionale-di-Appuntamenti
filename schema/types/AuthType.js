@@ -10,7 +10,6 @@ const AuthType = new GraphQLObjectType({
     password: { type: GraphQLString },
     accessToken: { type: GraphQLString },
     refreshToken: { type: GraphQLString },
-    dummyToken: { type: GraphQLString},
   }),
 });
 

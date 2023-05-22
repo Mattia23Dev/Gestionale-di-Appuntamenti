@@ -89,7 +89,7 @@ const adminLoginQuery = {
           context.res.cookie("temporary-admin-access-token", accessToken, {
             maxAge: 1000 * 60 * 15,
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production" ? false : false,
+            secure: process.env.NODE_ENV === "production" ? true : false,
             domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
@@ -98,8 +98,8 @@ const adminLoginQuery = {
 
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
             maxAge: 1000 * 60 * 15,
-            httpOnly: false,
-            secure: process.env.NODE_ENV === "production" ? false : false,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production" ? true : false,
             domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
@@ -135,7 +135,8 @@ const adminLoginQuery = {
         const dummyToken = generateAdminDummyToken(employee);
         context.res.cookie("admin-dummy-token", dummyToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
-          secure: process.env.NODE_ENV === "production" ? false : false,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
@@ -147,7 +148,7 @@ const adminLoginQuery = {
         context.res.cookie("admin-access-token", accessToken, {
           maxAge: 1000 * 60 * 15,
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" ? false : false,
+          secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
@@ -157,7 +158,7 @@ const adminLoginQuery = {
         context.res.cookie("admin-refresh-token", refreshToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" ? false : false,
+          secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
@@ -196,7 +197,6 @@ const adminLoginQuery = {
           _id: employee._id,
           accessToken: accessToken,
           refreshToken: refreshToken,
-          dummyToken: dummyToken,
         };
       }
     }

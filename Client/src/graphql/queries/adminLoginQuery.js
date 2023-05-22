@@ -6,7 +6,6 @@ const adminLoginQuery = gql`
       _id
       accessToken
       refreshToken
-      dummyToken
     }
   }
 `;
