@@ -312,7 +312,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
             />
           )}
         />
-        <Route
+        {/* <Route
           exact
           path={path + "/dashboard"}
           onLeave={() => resetNotifications()}
@@ -336,7 +336,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
             getEmployeesDataStaff={getEmployeesData}
             />
           )}
-        />
+        /> */}
         {/* If no path matches, redirect to home */}
         <Route render={() => <Redirect to="/" />} />
       </Switch>

@@ -62,7 +62,7 @@ app.use(
         ? process.env.PRODUCTION_CLIENT_URL
         : "http://localhost:3000",
     credentials: true,
-    Upload: GraphQLUpload,
+    // Upload: GraphQLUpload,
 
   })
 );

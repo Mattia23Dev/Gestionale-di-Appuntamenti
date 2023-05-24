@@ -1,5 +1,7 @@
 const ADMIN_CLIENT_PAST_APPOINTMENTS_SELECTED =
   "ADMIN_CLIENT_PAST_APPOINTMENTS_SELECTED";
+  const ADMIN_CLIENT_DESCRIPTIONS =
+  "ADMIN_CLIENT_DESCRIPTIONS";
 const ADMIN_CLIENT_UPCOMING_APPOINTMENTS_SELECTED =
   "ADMIN_CLIENT_UPCOMING_APPOINTMENTS_SELECTED";
 const ADMIN_CLIENT_PROFILE_SELECTED = "ADMIN_CLIENT_PROFILE_SELECTED";
@@ -22,6 +24,11 @@ const adminClientSectionSelectedReducer = (
       return {
         ...state,
         admin_client_section_selected: "UpcomingAppointments",
+      };
+      case ADMIN_CLIENT_DESCRIPTIONS:
+      return {
+        ...state,
+        admin_client_section_selected: "ClientDescriptions",
       };
     case ADMIN_CLIENT_PAST_APPOINTMENTS_SELECTED:
       return {

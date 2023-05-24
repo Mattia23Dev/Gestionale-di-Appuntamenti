@@ -13,6 +13,7 @@ const clientQuery = {
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
     email: { type: GraphQLString },
+    description:{type:GraphQLString},
     phoneNumber: { type: GraphQLString },
     createdAt: { type: GraphQLString },
   },

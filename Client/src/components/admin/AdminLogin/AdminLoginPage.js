@@ -165,6 +165,7 @@ const AdminLoginPage = (props) => {
   }, [dispatch]);
 
   const handleAdminLoginClick = () => {
+    console.log(adminLoginEmail, "email, ", " pas", adminLoginPassword)
     loginAdmin({
       variables: { email: adminLoginEmail, password: adminLoginPassword },
     });

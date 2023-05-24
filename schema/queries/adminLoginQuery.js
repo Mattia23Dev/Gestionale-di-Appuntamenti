@@ -18,6 +18,7 @@ const adminLoginQuery = {
     password: { type: GraphQLString },
   },
   async resolve(parent, args, context) {
+    console.log(args, "args")
     const employee = await Employee.findOne({ email: args.email });
 
     if (!employee) {

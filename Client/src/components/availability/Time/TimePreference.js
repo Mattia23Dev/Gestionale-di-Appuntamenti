@@ -88,7 +88,6 @@ const TimePreference = (props) => {
   const saltCaveInCart = useSelector((state) => state.saltCaveInCart.in_cart);
 
   const [bookedTimes, changeBookedTimes] = useState(null);
-  const [blockTimes, setBlockedTime] =useState(null)
 
   // Checkout Form States
   const firstName = useSelector((state) => state.firstName.first_name);
@@ -164,21 +163,26 @@ const TimePreference = (props) => {
           const startMinutes = Number(
             alreadyBookedAppointments[i].startTime.slice(-2)
           );
+          console.log(startMinutes, "startMinutes");
           const minutes =
             startMinutes +
             Math.ceil(alreadyBookedAppointments[i].duration / 15) * 15;
-
+          console.log(minutes, "minutes");
+          console.log(totalDuration, "totalDuration");
           const currentDurationMinutes =
             totalDuration - Math.floor(totalDuration / 60) * 60 > 30
               ? Math.ceil(totalDuration / 15) * 15
               : Math.floor(totalDuration / 15) * 15;
+          console.log(currentDurationMinutes, "currentDurationMinutes");
 
           const currentDurationEndHour = Math.ceil(currentDurationMinutes / 60);
+          console.log(currentDurationEndHour, "currentDurationEndHour");
 
           const endHour = (
             Number(alreadyBookedAppointments[i].startTime.split(":")[0]) +
             Number((minutes / 60).toString().slice(0, 1))
           ).toString();
+          console.log(endHour, "endHour");
 
           const endMinutes =
             (minutes / 60).toString().length > 1
@@ -187,6 +191,7 @@ const TimePreference = (props) => {
                   60
                 ).toString()
               : "00";
+          console.log(endMinutes, "endMinutes");
 
           const calendarEndTime =
             (Number(endHour) > 12
@@ -194,6 +199,8 @@ const TimePreference = (props) => {
               : endHour) +
             ":" +
             endMinutes;
+          console.log(calendarEndTime, "calendarEndTime");
+          console.log(minutesArr, "minutesArr");
 
           const intervalArr = new Array(
             Math.ceil(
@@ -206,6 +213,7 @@ const TimePreference = (props) => {
               (accumulator, currentValue) => accumulator.concat(currentValue),
               []
             );
+          console.log(intervalArr, "intervalArr");
 
           const hourArr = [];
 
@@ -222,6 +230,7 @@ const TimePreference = (props) => {
               hourArr.push(j);
             }
           }
+          console.log(hourArr, "hourArr");
 
           const quadrupleHourArr = hourArr
             .map((e) => {
@@ -236,7 +245,20 @@ const TimePreference = (props) => {
               (accumulator, currentValue) => accumulator.concat(currentValue),
               []
             );
+          console.log(totalDuration, "totalDuration");
 
+          console.log(quadrupleHourArr, "quadrupleHourArr");
+          console.log(
+            Number.isInteger(totalDuration / 15),
+            "Number.isInteger(totalDuration / 15)"
+          );
+          console.log(
+            (Number(alreadyBookedAppointments[i].startTime.split(":")[0]) * 60 +
+              Number(alreadyBookedAppointments[i].startTime.split(":")[1]) -
+              totalDuration) /
+              60,
+            "yrs"
+          );
           const startSliceBasedOnDuration = Number.isInteger(totalDuration / 15)
             ? // Rounds available apppointment time up if total duration is divisibile by 15
               (Number(alreadyBookedAppointments[i].startTime.split(":")[0]) *
@@ -255,6 +277,11 @@ const TimePreference = (props) => {
                   60 /
                   0.25
               ) * 0.25;
+          console.log(startSliceBasedOnDuration, "startSliceBasedOnDuration");
+          console.log(
+            startSliceBasedOnDuration.toString().split(".")[1],
+            "(startSliceBasedOnDuration.toString().split[1])"
+          );
 
           const endSliceBasedOnDuration = () => {
             let emptyArr = [];
@@ -264,19 +291,92 @@ const TimePreference = (props) => {
             emptyArr = (Number(emptyArr.join("")) * 60).toString();
             return emptyArr;
           };
+          console.log(endSliceBasedOnDuration(), "endSliceBasedOnDuration");
+          console.log(typeof endSliceBasedOnDuration(), "type");
+
+          console.log(
+            quadrupleHourArr.slice(
+              quadrupleHourArr.indexOf(
+                Number.isInteger(startSliceBasedOnDuration)
+              )
+            ),
+            "index of"
+          );
+          console.log(
+            quadrupleHourArr.indexOf(
+              Number.isInteger(startSliceBasedOnDuration)
+            ),
+            "index of test"
+          );
+          console.log(
+            Number.isInteger(startSliceBasedOnDuration),
+            "index of teset"
+          );
+
+          console.log(
+            startSliceBasedOnDuration.toString().split(".")[0] +
+              ":" +
+              endSliceBasedOnDuration(),
+            "2 index"
+          );
+          let startTime = startSliceBasedOnDuration.toString().split(".")[0];
+          console.log(startTime, typeof startTime, "startTime");
+          startTime = Number(startTime);
+          console.log(startTime, typeof startTime, "startTime2");
+          console.log(
+            alreadyBookedAppointments[i].endTime.split(":")[1],
+            "already 1"
+          );
+          console.log(
+            minutesArr.indexOf(
+              Math.floor(
+                (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) +
+                  25) /
+                  15
+              ) * 15
+            ),
+            "yes"
+          );
+          console.log(
+            (
+              Math.floor(
+                (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) +
+                  25) /
+                  15
+              ) *
+                15 -
+              60
+            ).toString(),
+            "second"
+          );
 
           alreadyBookedTimesArr.push(
             alreadyBookedAppointments[i].startTime,
             quadrupleHourArr
               .slice(
                 quadrupleHourArr.indexOf(
-                  Number.isInteger(startSliceBasedOnDuration)
-                    ? startSliceBasedOnDuration.toString() + ":00"
-                    : startSliceBasedOnDuration.toString().split(".")[0] +
-                        ":" +
-                        endSliceBasedOnDuration()
+                  //   Number.isInteger(startSliceBasedOnDuration)
+                  //     ? startSliceBasedOnDuration.toString() + ":15"
+                  //     : endSliceBasedOnDuration() === "45"
+                  //     ? (startTime + 1).toString() + ":" + "00"
+                  //     : endSliceBasedOnDuration() === "30"
+                  //     ? startSliceBasedOnDuration.toString().split(".")[0] +
+                  //       ":" +
+                  //       "45"
+                  //     : endSliceBasedOnDuration() === "15"
+                  //     ? startSliceBasedOnDuration.toString().split(".")[0] +
+                  //       ":" +
+                  //       "30"
+                  //     : startSliceBasedOnDuration.toString().split(".")[0] +
+                  //       ":" +
+                  //       endSliceBasedOnDuration()
+                  alreadyBookedAppointments[i].startTime
+
+                  // startSliceBasedOnDuration.toString().split(".")[0] +
+                  // ":" + '00'
+                  // (endSliceBasedOnDuration() ==='45' ?'00' : endSliceBasedOnDuration())
                 ),
-                quadrupleHourArr.length -
+                quadrupleHourArr.length +1 -
                   (Number(
                     alreadyBookedAppointments[i].endTime.split(":")[1]
                   ) === 30 ||
@@ -322,15 +422,63 @@ const TimePreference = (props) => {
                                   15
                               ) * 15
                             ).toString()
-                      ))
+                      )) 
+                  
               )
               .sort(),
             calendarEndTime
           );
+          console.log(
+            quadrupleHourArr.length -
+              (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
+                30 ||
+              Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
+                35 ||
+              Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
+                40 ||
+              Number(alreadyBookedAppointments[i].endTime.split(":")[1]) === 45
+                ? 0
+                : 4 -
+                  minutesArr.indexOf(
+                    Math.floor(
+                      (Number(
+                        alreadyBookedAppointments[i].endTime.split(":")[1]
+                      ) +
+                        25) /
+                        15
+                    ) *
+                      15 >
+                      60
+                      ? (
+                          Math.floor(
+                            (Number(
+                              alreadyBookedAppointments[i].endTime.split(":")[1]
+                            ) +
+                              25) /
+                              15
+                          ) *
+                            15 -
+                          60
+                        ).toString()
+                      : (
+                          Math.floor(
+                            (Number(
+                              alreadyBookedAppointments[i].endTime.split(":")[1]
+                            ) +
+                              25) /
+                              15
+                          ) * 15
+                        ).toString()
+                  )),
+            "yee"
+          );
+          console.log(minutesArr.indexOf(7), "yy");
+          console.log(alreadyBookedAppointments, "alreadyBookedAppointments");
         } else {
           return null;
         }
       }
+      console.log(alreadyBookedTimesArr, "alreadyBookedTimesArr");
       changeBookedTimes(
         alreadyBookedTimesArr.reduce(
           (accumulator, currentValue) => accumulator.concat(currentValue),
@@ -374,45 +522,8 @@ const TimePreference = (props) => {
     }
   }, [blockedTimeForPersonalEvent, bookedTimes]);
 
-  console.log(bookedTimes);
-  console.log(alreadyBookedAppointments);
-  console.log(totalDuration);
-
-  const disabledTimes = [];
-  if(bookedTimes){
-    bookedTimes.map((d)=>{
-      const [hh, mm] = d.split(':').map(str => parseInt(str, 10));
-      const currentTime = new Date();
-      currentTime.setHours(hh);
-      currentTime.setMinutes(mm);
-  
-      for (let i = 1; i <= 3; i++) {
-        const disabledTime = new Date(currentTime.getTime());
-        disabledTime.setMinutes(disabledTime.getMinutes() - (15 * i));
-        disabledTimes.push(disabledTime);
-      }
-  
-    })
-  }  
-  useEffect(()=>{
-  
-  if(disabledTimes)
-  {
-    const d = disabledTimes.map((d)=>{
-      const hour = d.getHours();
-      const minute = d.getMinutes();
-  return (hour + ':' + minute)  })
-  const combinedObject = Object.assign({}, d, bookedTimes);
-  console.log(combinedObject, "com")
-  setBlockedTime(combinedObject);
-  console.log(typeof(d), " d " , typeof(bookedTimes), "blocked")
-  console.log(blockTimes, "time")
-  }
-  
-  }, [bookedTimes])
-  
-  console.log(bookedTimes, "blocked time")
-  
+  // console.log(bookedTimes);
+  // console.log(alreadyBookedAppointments);
 
   useEffect(() => {
     if (!appointmentsLoading && !personalEventsLoading) {
