@@ -48,10 +48,12 @@ const addAppointmentMutation = {
   },
   async resolve(parent, args, context) {
     const foundClient = await Client.findOne({
-      email: args.client[0].email,
-      phoneNumber: args.client[0].phoneNumber,
-    });
+      // email: args.client[0].email,
+      // phoneNumber: args.client[0].phoneNumber,
+      $or: [{ email: args.client[0].email }, { phoneNumber: args.client[0].phoneNumber }]
 
+    });
+console.log(foundClient, "Client")
     let appt_res;
 
     const createEventObject = (appointment) => {

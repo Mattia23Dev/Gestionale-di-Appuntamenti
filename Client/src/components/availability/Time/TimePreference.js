@@ -230,7 +230,11 @@ const TimePreference = (props) => {
               hourArr.push(j);
             }
           }
+          const leng = hourArr[hourArr.length - 1];
           console.log(hourArr, "hourArr");
+          hourArr.push(leng + 1);
+          console.log(leng, "lneg");
+          console.log(hourArr, "hourArr2");
 
           const quadrupleHourArr = hourArr
             .map((e) => {
@@ -252,13 +256,7 @@ const TimePreference = (props) => {
             Number.isInteger(totalDuration / 15),
             "Number.isInteger(totalDuration / 15)"
           );
-          console.log(
-            (Number(alreadyBookedAppointments[i].startTime.split(":")[0]) * 60 +
-              Number(alreadyBookedAppointments[i].startTime.split(":")[1]) -
-              totalDuration) /
-              60,
-            "yrs"
-          );
+
           const startSliceBasedOnDuration = Number.isInteger(totalDuration / 15)
             ? // Rounds available apppointment time up if total duration is divisibile by 15
               (Number(alreadyBookedAppointments[i].startTime.split(":")[0]) *
@@ -328,28 +326,13 @@ const TimePreference = (props) => {
             "already 1"
           );
           console.log(
-            minutesArr.indexOf(
-              Math.floor(
-                (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) +
-                  25) /
-                  15
-              ) * 15
-            ),
-            "yes"
+            quadrupleHourArr.indexOf(alreadyBookedAppointments[i].endTime),
+            "time"
           );
-          console.log(
-            (
-              Math.floor(
-                (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) +
-                  25) /
-                  15
-              ) *
-                15 -
-              60
-            ).toString(),
-            "second"
+          const end = quadrupleHourArr.indexOf(
+            alreadyBookedAppointments[i].endTime
           );
-
+          console.log(end, " ", end + 1);
           alreadyBookedTimesArr.push(
             alreadyBookedAppointments[i].startTime,
             quadrupleHourArr
@@ -376,54 +359,7 @@ const TimePreference = (props) => {
                   // ":" + '00'
                   // (endSliceBasedOnDuration() ==='45' ?'00' : endSliceBasedOnDuration())
                 ),
-                quadrupleHourArr.length +1 -
-                  (Number(
-                    alreadyBookedAppointments[i].endTime.split(":")[1]
-                  ) === 30 ||
-                  Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
-                    35 ||
-                  Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
-                    40 ||
-                  Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
-                    45
-                    ? 0
-                    : 4 -
-                      minutesArr.indexOf(
-                        Math.floor(
-                          (Number(
-                            alreadyBookedAppointments[i].endTime.split(":")[1]
-                          ) +
-                            25) /
-                            15
-                        ) *
-                          15 >
-                          60
-                          ? (
-                              Math.floor(
-                                (Number(
-                                  alreadyBookedAppointments[i].endTime.split(
-                                    ":"
-                                  )[1]
-                                ) +
-                                  25) /
-                                  15
-                              ) *
-                                15 -
-                              60
-                            ).toString()
-                          : (
-                              Math.floor(
-                                (Number(
-                                  alreadyBookedAppointments[i].endTime.split(
-                                    ":"
-                                  )[1]
-                                ) +
-                                  25) /
-                                  15
-                              ) * 15
-                            ).toString()
-                      )) 
-                  
+                (quadrupleHourArr.indexOf(alreadyBookedAppointments[i].endTime) +2)
               )
               .sort(),
             calendarEndTime
