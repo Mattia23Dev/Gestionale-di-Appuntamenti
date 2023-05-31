@@ -45,7 +45,7 @@ process.setMaxListeners(Infinity);
 require("dotenv").config();
 
 const app = express();
-
+app.set('trust proxy', process.env.NODE_ENV !== 'production')
 app.use(cookieParser());
 
 // Compress all responses

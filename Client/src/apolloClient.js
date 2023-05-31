@@ -41,6 +41,7 @@ const link = split(
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   link,
+  credentials: 'include',
   onError: ({ graphQLErrors }) => {
     if (graphQLErrors) {
       graphQLErrors.map(({ message }) => console.log(message));
