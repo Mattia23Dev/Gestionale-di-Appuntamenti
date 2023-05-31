@@ -96,6 +96,9 @@ const AdminLoginPage = (props) => {
     fetchPolicy: "no-cache",
     onCompleted: handleAdminLogin,
     onError: handleAdminLoginError,
+    context: {
+      credentials: "include", // Aggiungi questa riga
+    },
   });
   const { data: getEmployeesData } = useQuery(getEmployeesQuery, {
     fetchPolicy: "no-cache",

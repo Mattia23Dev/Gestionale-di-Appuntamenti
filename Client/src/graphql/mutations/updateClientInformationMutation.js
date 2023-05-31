@@ -7,6 +7,7 @@ const updateClientInformationMutation = gql`
     $email: String
     $phoneNumber: String
     $password: String
+    $description:String
   ) {
     updateClientInformation(
       firstName: $firstName
@@ -14,12 +15,14 @@ const updateClientInformationMutation = gql`
       email: $email
       phoneNumber: $phoneNumber
       password: $password
+      description:$description
     ) {
       firstName
       lastName
       email
       phoneNumber
       password
+      description
     }
   }
 `;

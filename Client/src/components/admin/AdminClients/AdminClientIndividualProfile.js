@@ -18,11 +18,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useMutation } from "@apollo/react-hooks";
 import deleteClientMutation from "../../../graphql/mutations/deleteClientMutation";
+import ACTION_ADMIN_CLIENT_DESCRIPTIONS from "../../../actions/Admin/AdminLogin/AdminClientSectionSelected/ACTION_ADMIN_CLIENT_DESCRIPTIONS";
 import ACTION_ADMIN_CLIENT_UPCOMING_APPOINTMENTS_SELECTED from "../../../actions/Admin/AdminLogin/AdminClientSectionSelected/ACTION_ADMIN_CLIENT_UPCOMING_APPOINTMENTS_SELECTED";
 import ACTION_ADMIN_CLIENT_PAST_APPOINTMENTS_SELECTED from "../../../actions/Admin/AdminLogin/AdminClientSectionSelected/ACTION_ADMIN_CLIENT_PAST_APPOINTMENTS_SELECTED";
 import ACTION_ADD_PROFILE_PHOTO_CLICKED from "../../../actions/Admin/AddProfilePhotoClicked/ACTION_ADD_PROFILE_PHOTO_CLICKED";
 import ACTION_LOADING_SPINNER_ACTIVE from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_ACTIVE";
 import ACTION_LOADING_SPINNER_RESET from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_RESET";
+import AdminClientDescription from "./AdminClientDescription";
 import "./AdminClients.css";
 
 const AdminClientIndividualProfile = (props) => {
@@ -253,7 +255,11 @@ const AdminClientIndividualProfile = (props) => {
             icon={faChevronRight}
           />
         </div>*/}
-        <div className="profile_button_container">
+        <div className="profile_button_container"
+                    onClick={() =>
+                      dispatch(ACTION_ADMIN_CLIENT_DESCRIPTIONS())
+                      }
+        >
           <FontAwesomeIcon className="profile_button_icon" icon={faCommentDots} />
           <h2>
           Descrizione cliente{" "}

@@ -7,6 +7,7 @@ const getClientQuery = gql`
     $firstName: String
     $lastName: String
     $email: String
+    $description:String
     $phoneNumber: String
     $createdAt: String
   ) {
@@ -16,6 +17,7 @@ const getClientQuery = gql`
       firstName: $firstName
       lastName: $lastName
       email: $email
+      description: $description
       phoneNumber: $phoneNumber
       createdAt: $createdAt
     ) {
@@ -25,6 +27,7 @@ const getClientQuery = gql`
       firstName
       lastName
       email
+      description
       phoneNumber
       createdAt
       profilePicture

@@ -4,16 +4,12 @@ const Client = require("../../models/client");
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
 
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLID } = graphql;
 
-const updateClientInformationMutation = {
+const clientDescriptionMutation = {
   type: ClientType,
   args: {
-    firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString },
-    email: { type: GraphQLString },
-    phoneNumber: { type: GraphQLString },
-    password: { type: GraphQLString },
+    _id: { type: GraphQLID },
     description:{ type: GraphQLString },
   },
   async resolve(parent, args, context) {
@@ -25,33 +21,23 @@ const updateClientInformationMutation = {
     let client;
     let filter;
 
-    if (!context.isAuth) {
-      throw new UserInputError("User is not authenticated.");
-    } else {
-      if (temporaryFacebookAccessToken) {
-        client = await Client.findOne({
-          _id: jwt.decode(temporaryFacebookAccessToken).id.toString(),
-        });
-        filter = {
-          _id: jwt.decode(temporaryFacebookAccessToken).id.toString(),
-        };
-      } else {
-        if (accessToken) {
+    // if (!context.isAuth) {
+    //   throw new UserInputError("User is not authenticated.");
+    // } else {
+        console.log(args, "args")
+
+        // if (accessToken) {
           client = await Client.findOne({
-            _id: jwt.decode(accessToken).id.toString(),
+            _id: args._id,
           });
           filter = {
-            _id: jwt.decode(accessToken).id.toString(),
+            _id: args._id,
           };
-        }
-      }
 
+      // }
+console.log(client, "client")
       const update = {
-        firstName: args.firstName ? args.firstName : client.firstName,
-        lastName: args.lastName ? args.lastName : client.lastName,
-        email: args.email ? args.email : client.email,
-        password: args.password ? args.password : client.password,
-        phoneNumber: args.phoneNumber ? args.phoneNumber : client.phoneNumber,
+
         description: args.description? args.description : client.description
       };
 
@@ -72,7 +58,7 @@ const updateClientInformationMutation = {
         description: matchedClient.description,
       };
     }
-  },
+//   },
 };
 
-module.exports = updateClientInformationMutation;
+module.exports = clientDescriptionMutation;

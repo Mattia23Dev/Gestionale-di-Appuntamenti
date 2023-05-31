@@ -37,6 +37,7 @@ import {
 import AdminClientIndividualProfile from "./AdminClientIndividualProfile";
 import AdminRenderUpcomingAppointments from "./AdminRenderUpcomingAppointments";
 import AdminRenderPastAppointments from "./AdminRenderPastAppointments";
+import AdminClientDescription from "./AdminClientDescription";
 import ACTION_ADD_PROFILE_PHOTO_CLICKED_RESET from "../../../actions/Admin/AddProfilePhotoClicked/ACTION_ADD_PROFILE_CLICKED_RESET";
 import ACTION_LOADING_SPINNER_RESET from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_RESET";
 import ACTION_LOADING_SPINNER_ACTIVE from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_ACTIVE";
@@ -47,6 +48,7 @@ import ACTION_SPLASH_SCREEN_HALFWAY from "../../../actions/SplashScreenHalfway/A
 import ACTION_LOGIN_IS_NOT_ACTIVE from "../../../actions/Login/ACTION_LOGIN_IS_NOT_ACTIVE";
 import ACTION_ADMIN_CLIENT_PROFILE_SELECTED from "../../../actions/Admin/AdminLogin/AdminClientSectionSelected/ACTION_ADMIN_CLIENT_PROFILE_SELECTED.js";
 import ACTION_ON_ACTIVITY_PAGE_RESET from "../../../actions/Admin/OnActivityPage/ACTION_ON_ACTIVITY_PAGE_RESET";
+import ACTION_ADMIN_CLIENT_DESCRIPTIONS from "../../../actions/Admin/AdminLogin/AdminClientSectionSelected/ACTION_ADMIN_CLIENT_DESCRIPTIONS"
 import "react-html5-camera-photo/build/css/index.css";
 import "./AdminClients.css";
 
@@ -1141,7 +1143,19 @@ const AdminClients = (props) => {
                                       initialScreenSize={initialScreenSize}
                                     />
                                   </div>
-                                ) : null}
+                                ) : 
+                                adminClientSectionSelected ===
+                                "ClientDescriptions" ? (
+                                <div className="admin_side_my_appointments_content_container">
+                                  <AdminClientDescription
+                                    // data={getOwnPastAppointmentsData}
+                                    item={item}
+                                    currentScreenSize={currentScreenSize}
+                                    initialScreenSize={initialScreenSize}
+                                    clientToggled= {clientToggled}
+                                  />
+                                </div> ):
+                                null}
                               </div>
                             </div>
                           ))

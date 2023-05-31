@@ -1,6 +1,7 @@
 const graphql = require("graphql");
 const addAppointmentMutation = require("./mutations/addAppointmentMutation");
 const confirmAppointmentMutation = require("./mutations/confirmAppointmentMutation");
+const clientDescriptionMutation = require("./mutations/clientDescriptionMutation");
 const addPersonalEventMutation = require("./mutations/addPersonalEventMutation");
 const addClientMutation = require("./mutations/addClientMutation");
 const deleteClientMutation = require("./mutations/deleteClientMutation");
@@ -60,8 +61,8 @@ const Mutation = new GraphQLObjectType({
     addService: addServiceMutation,
     updateService:updateServiceMutation,
     deleteService: deleteServiceMutation,
-    addTreatment:addTreatmentMutation
-
+    addTreatment:addTreatmentMutation,
+    addDescription:clientDescriptionMutation,
   },
 });
 
