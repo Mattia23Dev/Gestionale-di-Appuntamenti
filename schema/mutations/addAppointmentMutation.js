@@ -48,8 +48,9 @@ const addAppointmentMutation = {
   },
   async resolve(parent, args, context) {
     const foundClient = await Client.findOne({
-      email: args.client[0].email,
-      phoneNumber: args.client[0].phoneNumber,
+      //email: args.client[0].email,
+      //phoneNumber: args.client[0].phoneNumber,
+      $or: [{ email: args.client[0].email }, { phoneNumber: args.client[0].phoneNumber }],
     });
 
     let appt_res;
@@ -264,6 +265,7 @@ const addAppointmentMutation = {
         phoneNumber: args.client[0].phoneNumber,
         squareCustomerId: args.client[0].squareCustomerId,
         unsavedSquareCardIDs: [args.client[0].unsavedSquareCardIDs],
+        
       });
 
       const emailTaken = await Client.findOne({
