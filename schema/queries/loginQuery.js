@@ -56,6 +56,7 @@ const loginQuery = {
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
+      sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
     });
 
     const { accessToken, refreshToken } = createTokens(client);
@@ -68,6 +69,7 @@ const loginQuery = {
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
+      sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
     });
 
     context.res.cookie("refresh-token", refreshToken, {
@@ -78,6 +80,7 @@ const loginQuery = {
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
+      sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
     });
 
     return {

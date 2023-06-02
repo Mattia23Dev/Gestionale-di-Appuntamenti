@@ -40,7 +40,7 @@ const link = split(
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link,
+  link: link,
   credentials: 'include',
   onError: ({ graphQLErrors }) => {
     if (graphQLErrors) {

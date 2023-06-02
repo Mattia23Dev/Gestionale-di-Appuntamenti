@@ -94,7 +94,7 @@ const adminLoginQuery = {
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
-            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+            sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
           });
 
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
@@ -105,7 +105,7 @@ const adminLoginQuery = {
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
-            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+            sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
           });
         } else {
           throw new UserInputError("Incorrect password.");
@@ -143,7 +143,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',    
+          sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',    
         });
 
         const { accessToken, refreshToken } = createAdminTokens(employee);
@@ -156,7 +156,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+          sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
         });
 
         context.res.cookie("admin-refresh-token", refreshToken, {
@@ -167,7 +167,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+          sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
         });
 
         context.res.clearCookie("dummy-token", {
