@@ -100,12 +100,13 @@ const adminLoginQuery = {
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
             maxAge: 1000 * 60 * 15,
             httpOnly: false,
-            secure: process.env.NODE_ENV === "production" ? true : false,
+            //secure: process.env.NODE_ENV === "production" ? true : false,
             domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
-            sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
+            sameSite: 'none',
+            secure: true,
           });
         } else {
           throw new UserInputError("Incorrect password.");
@@ -138,12 +139,13 @@ const adminLoginQuery = {
         context.res.cookie("admin-dummy-token", dummyToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: false,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          //secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',    
+          sameSite: 'none',
+          secure: true,   
         });
 
         const { accessToken, refreshToken } = createAdminTokens(employee);
@@ -151,23 +153,25 @@ const adminLoginQuery = {
         context.res.cookie("admin-access-token", accessToken, {
           maxAge: 1000 * 60 * 15,
           httpOnly: false,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          //secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
+          sameSite: 'none',
+          secure: true,
         });
 
         context.res.cookie("admin-refresh-token", refreshToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: false,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          //secure: process.env.NODE_ENV === "production" ? true : false,
           domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
+          sameSite: 'none',
+          secure: true,
         });
 
         context.res.clearCookie("dummy-token", {
