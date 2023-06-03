@@ -67,7 +67,7 @@ app.use(
   })
 );
 
-const port = process.env.PORT || 4000;
+const port = /*process.env.PORT ||*/ 4000;
 
 // Allow 200 responses, but not 304 not modified
 app.disable("etag");
