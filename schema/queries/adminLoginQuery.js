@@ -89,23 +89,26 @@ const adminLoginQuery = {
           context.res.cookie("temporary-admin-access-token", accessToken, {
             maxAge: 1000 * 60 * 15,
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production" ? true : false,
-            domain:
+            //secure: process.env.NODE_ENV === "production" ? true : false,
+            /*domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
-                : "localhost",
-            sameSite: process.env.NODE_ENV === "production" ? 'None' : 'Lax',
+                : "localhost",*/
+            sameSite: 'none',
+            domain: 'booknowpro.it', 
+            secure: true,
           });
 
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
             maxAge: 1000 * 60 * 15,
             httpOnly: false,
             //secure: process.env.NODE_ENV === "production" ? true : false,
-            domain:
+            /*domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
-                : "localhost",
+                : "localhost",*/
             sameSite: 'none',
+            domain: 'booknowpro.it', 
             secure: true,
           });
         } else {
@@ -140,11 +143,12 @@ const adminLoginQuery = {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: false,
           //secure: process.env.NODE_ENV === "production" ? true : false,
-          domain:
+          /*domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
-              : "localhost",
+              : "localhost",*/
           sameSite: 'none',
+          domain: 'booknowpro.it', 
           secure: true,   
         });
 
@@ -154,10 +158,11 @@ const adminLoginQuery = {
           maxAge: 1000 * 60 * 15,
           httpOnly: false,
           //secure: process.env.NODE_ENV === "production" ? true : false,
-          domain:
+          /*domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
-              : "localhost",
+              : "localhost",*/
+          domain: 'booknowpro.it',     
           sameSite: 'none',
           secure: true,
         });
@@ -166,10 +171,11 @@ const adminLoginQuery = {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: false,
           //secure: process.env.NODE_ENV === "production" ? true : false,
-          domain:
+          /*domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
-              : "localhost",
+              : "localhost",*/
+          domain: 'booknowpro.it',    
           sameSite: 'none',
           secure: true,
         });
