@@ -584,7 +584,7 @@ const googlePubSubOptions = {
 
 const pubsub =
   process.env.NODE_ENV === "production"
-    ? new GooglePubSub(googlePubSubOptions)
+    ? new PubSub()
     : new PubSub();
 
 const server = new ApolloServer({
