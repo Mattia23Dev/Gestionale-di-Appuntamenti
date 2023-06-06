@@ -917,3 +917,19 @@
     top: 8vh;
   }
 }
+@media only screen and (max-width: 700px){
+  .imagehomepage{
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .landing_page_description{
+    font-size: 0.8rem;
+    line-height: 2rem;
+  }
+}
+@media only screen and (max-width: 500px){
+  .imagehomepage{
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

@@ -45,7 +45,7 @@ const RemoveClientNotification = (props) => {
           {notification.createdAt
             ? format(
                 new Date(parseInt(notification._id.substring(0, 8), 16) * 1000)
-              )
+              ).toLocaleString('it-IT')
             : null}
         </div>
       </div>

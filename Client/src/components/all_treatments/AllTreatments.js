@@ -113,7 +113,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
                 >
                   <p>
                     Da circa 10 anni ci occupiamo <br />
-                    del relax dei <br />
+                    del relax dei
                     nostri clienti <br />
                   </p>
                 </h3>

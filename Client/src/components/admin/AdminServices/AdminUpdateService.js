@@ -9,7 +9,7 @@ import { css } from "@emotion/css";
 import {useHistory} from "react-router-dom"
 import {Select} from 'antd'
 import getEmployeesQuery from "../../../graphql/queries/getEmployeesQuery";
-
+import getServiceQuery from "../../../graphql/queries/getServiceQuery"
 import {
   faShoppingCart,
   faChevronLeft,
@@ -100,7 +100,7 @@ const navigate = useHistory()
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [img, setImg] = useState('');
-
+  const [service, setService] = useState(null);
   const [employee, setEmployee] = useState([]);
 const handleEmployee =(e)=>{
   setEmployee(e)
@@ -138,6 +138,25 @@ const handleEmployee =(e)=>{
     }
   };
 
+  const {
+    data: getServicesData,
+    refetch: getServiceRefetch,
+    loading: getServiceLoading,
+  } = useQuery(getServiceQuery, {
+    fetchPolicy: "no-cache",
+  });
+
+  useEffect(() => {
+    if (getServicesData) {
+  
+      const filteredService = getServicesData && getServicesData.services.filter(service => {
+        return service._id && service._id === ServiceID;
+      });
+  
+      setService(filteredService[0]);
+    }
+  }, [getServicesData]);
+  console.log(service)
 
   const [
     addEmployee,
@@ -365,11 +384,21 @@ const handleEmployee =(e)=>{
                 <p onClick={handleBackToAllStaff}>Torna indietro</p>
               </div>
               <div className="admin_create_appointment_section_header">
-                <h2>Edit Service Information</h2>
+                <h2>Modifica le informazioni di servizio</h2>
+              </div>
+              <div>
+                <ul>
+                  <li>Nome: {service && service.name}</li>
+                  <li>Prezzo: {service && service.price},00 €</li>
+                  <li>Durata: {service && service.duration} minuti</li>
+                  <li>Categoria: {service && service.category}</li>
+                  <li>Descrizione: {service && service.description}</li>
+                  <li>Personale: {service && service.employees}</li>
+                </ul>
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Name
+                  Nome
                 </div>
                 <div
                   role="combobox"
@@ -405,7 +434,7 @@ const handleEmployee =(e)=>{
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Price
+                  Prezzo
                 </div>
                 <div
                   role="combobox"
@@ -456,7 +485,7 @@ const handleEmployee =(e)=>{
 
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Category
+                  Categoria
                 </div>
                     <div
                       role="combobox"
@@ -488,7 +517,7 @@ const handleEmployee =(e)=>{
               
               </div>   <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Description
+                  Descrizione
                 </div>
                 <div
                   role="combobox"
@@ -522,7 +551,7 @@ const handleEmployee =(e)=>{
                 </div>
              
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Image
+                  Immagine
                 </div>
                 <div
                   role="combobox"
@@ -598,7 +627,7 @@ const handleEmployee =(e)=>{
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
                   <div className="sq-creditcard" onClick={handleSubmit}>
-                   Update Service
+                   Aggiorna servizio
                   </div>
                 </div>
               </div>

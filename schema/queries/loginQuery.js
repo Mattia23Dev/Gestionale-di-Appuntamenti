@@ -50,7 +50,7 @@ const loginQuery = {
 
     const dummyToken = generateDummyToken(client);
     context.res.cookie("dummy-token", dummyToken, {
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
       //secure: process.env.NODE_ENV === "production" ? true : false,
       domain:
         process.env.NODE_ENV === "production"
@@ -75,7 +75,7 @@ const loginQuery = {
     });
 
     context.res.cookie("refresh-token", refreshToken, {
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
       httpOnly: true,
       //secure: process.env.NODE_ENV === "production" ? true : false,
       domain:

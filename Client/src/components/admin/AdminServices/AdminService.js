@@ -689,7 +689,7 @@ const add =()=>{
                           {item.category[0].toUpperCase()}
                         </p>
                       </div>
-                      <div className="admin_individual_client_full_name">
+                      <div className="admin_individual_client_full_name admin-service-name">
                         <p>
                           {item.name[0].toUpperCase() +
                             item.name.slice(1).toLowerCase()

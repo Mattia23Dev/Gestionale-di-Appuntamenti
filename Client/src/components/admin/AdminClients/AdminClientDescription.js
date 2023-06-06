@@ -109,13 +109,10 @@ const AdminClientDescription = (props) => {
               </div> */}
         <div className="admin_create_appointment_section_header">
           <h2>Customer Description</h2>
+          
         </div>
-
+        <h4>{description}</h4>
         <div className="esthetician_preference_dropdown_input_field">
-          <FontAwesomeIcon
-            className="esthetician_preference_dropdown_icon"
-            icon={faChevronCircleDown}
-          />
           <div
             role="combobox"
             aria-haspopup="listbox"
@@ -164,7 +161,7 @@ const AdminClientDescription = (props) => {
                 setDescription(e.target.value);
               }}
               rows={4}
-              placeholder="Add Customer Description"
+              placeholder="Aggiungi la descrizione del cliente"
             />
           </div>
         </div>
@@ -174,7 +171,7 @@ const AdminClientDescription = (props) => {
               className="sq-creditcard"
                 onClick={handleCompleteRegistration}
             >
-              {data && data.client.description ? "Edit" : "Add"}
+              {data && data.client.description ? "Modifica" : "Aggiungi"}
             </div>
           </div>
         </div>

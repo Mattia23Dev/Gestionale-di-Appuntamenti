@@ -140,7 +140,7 @@ const adminLoginQuery = {
 
         const dummyToken = generateAdminDummyToken(employee);
         context.res.cookie("admin-dummy-token", dummyToken, {
-          maxAge: 1000 * 60 * 60 * 24 * 7,
+          maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
           httpOnly: false,
           //secure: process.env.NODE_ENV === "production" ? true : false,
           /*domain:
@@ -168,7 +168,7 @@ const adminLoginQuery = {
         });
 
         context.res.cookie("admin-refresh-token", refreshToken, {
-          maxAge: 1000 * 60 * 60 * 24 * 7,
+          maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
           httpOnly: false,
           //secure: process.env.NODE_ENV === "production" ? true : false,
           /*domain:

@@ -396,6 +396,7 @@ const LandingPage = React.forwardRef((props, ref) => {
                   opacity: splashScreenComplete ? 1 : `${propstyles.opacity}`,
                 }}
                 viewBox="0 0 56.356 56.356"
+                className="imagehomepage"
               />
             )}
           </Spring>

@@ -8,7 +8,7 @@
   padding: 12px 20px;
   font-size: 18px;
   border: none;
-  border-bottom: 1px solid rgb(0, 115, 255);
+  border-bottom: 1px solid rgb(0, 129, 177);
   cursor: pointer;
 }
 .admin_schedule_header {
@@ -407,5 +407,21 @@
   }
   .react-autosuggest__container{
     margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .admin_calendar_top_buttons_container{
+    width: 100%;
+  }
+  .admin_calendar_create_personal_event_button,
+  .admin_calendar_create_appointment_button{
+    padding: 0.4rem;
+    width: 30vw;
+    margin: 10px 0;
+    font-size: 0.5rem;
+  }
+  .admin_calendar_top_buttons_container{
+    gap: 0.2rem;
   }
 }

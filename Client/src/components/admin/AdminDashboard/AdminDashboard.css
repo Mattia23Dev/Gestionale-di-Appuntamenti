@@ -184,3 +184,67 @@
         text-align: center;
     }
   }
+
+  @media only screen and (max-width: 500px){
+    .card-panoramica-analisi{
+        flex-direction: row;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .card-panoramica-analisi > div {
+        width: 150px;
+        height: 200px;
+        padding: 8px;
+    }
+    .card-panoramica-analisi > div > h6{
+        font-size: 16px;
+    }
+    .card-panoramica-analisi > div > p{
+        font-size: 14px;
+    }
+    .card-dashboard-chart{
+        padding: 10px;
+        width: 95%;
+    }
+    .card-dashboard-chart > button {
+        padding: 6px;
+        font-size: 14px;
+        margin: 10px 2px 10px 1px;
+    }
+    .card-dashboard{
+        padding: 3px 10px;
+        width: 95%;
+        height: 400px;
+        gap: 0.5rem;
+    }
+    .filter-date{
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .filter-date > button {
+        padding: 6px 20px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid rgb(53, 134, 0);
+        cursor: pointer;
+        background-color: rgb(53, 134, 0);
+        color: white;
+    }
+    .custom-datepicker {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 3px 6px;
+        border-radius: 0px;
+        cursor: pointer;
+        font-size: 13px;
+        border: none;
+        border-bottom: 1px solid black;
+      }
+      .card-dashboard > h4 {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    .card-dashboard > h4 > span {
+        padding: 3px;
+    }
+  }
