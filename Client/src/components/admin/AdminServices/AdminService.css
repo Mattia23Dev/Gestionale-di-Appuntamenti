@@ -60,7 +60,29 @@
   border: 0;
   cursor: pointer;
 }
+.service-description-container{
+  margin: 40px 0;
+  width: 60%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+thead th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 8px;
+}
 
+tbody td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+tbody td:first-of-type{
+  font-weight: 500;
+}
 .errorsContainer > .errorMessage {
   position: absolute;
   top: 0;
@@ -146,5 +168,51 @@
   .service-information{
     max-width: 100%;
     overflow-x: hidden;
+  }
+  .service-description-container{
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 90%;
+  }
+  .thead > tr > th {
+    font-size: 0.8rem;
+  }
+  .button-filter-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button-filter-container > button{
+    font-size: 0.7rem;
+    padding: 10px 5px;
+    width: 40%;
+  }
+  .not-sel-butt{
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    background-color: transparent;
+    border: 1px solid pink;
+  }
+  
+  .button-filter-container > button:hover{
+    color: white;
+    background-color: pink;
+    border: 1px solid pink;
+    transition: 0.2s;
+    margin: 20px 10px;
+    border-radius: 5px;
+    padding: 10px 5px;
+  }
+  .selected-button{
+    font-size: 0.7rem;
+    color: white;
+    background-color: pink;
+    border: 1px solid pink;
+    transition: 0.2s;
+  }
+  .admin_clients_searchbar_input_field {
+    font-size: 0.8rem;
   }
 }

@@ -237,6 +237,19 @@ const TimePreference = (props) => {
               []
             );
 
+          console.log(quadrupleHourArr, "quadrupleHourArr");
+          console.log(
+            Number.isInteger(totalDuration / 15),
+            "Number.isInteger(totalDuration / 15)"
+          );
+          console.log(
+            (Number(alreadyBookedAppointments[i].startTime.split(":")[0]) * 60 +
+              Number(alreadyBookedAppointments[i].startTime.split(":")[1]) -
+              totalDuration) /
+              60,
+            "yrs"
+          );
+
           const startSliceBasedOnDuration = Number.isInteger(totalDuration / 15)
             ? // Rounds available apppointment time up if total duration is divisibile by 15
               (Number(alreadyBookedAppointments[i].startTime.split(":")[0]) *
@@ -265,7 +278,38 @@ const TimePreference = (props) => {
             return emptyArr;
           };
 
-          alreadyBookedTimesArr.push(
+          let startTime = startSliceBasedOnDuration.toString().split(".")[0];
+          console.log(startTime, typeof startTime, "startTime");
+          startTime = Number(startTime);
+          console.log(startTime, typeof startTime, "startTime2");
+          console.log(
+            alreadyBookedAppointments[i].endTime.split(":")[1],
+            "already 1"
+          );
+          console.log(
+            minutesArr.indexOf(
+              Math.floor(
+                (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) +
+                  25) /
+                  15
+              ) * 15
+            ),
+            "yes"
+          );
+          console.log(
+            (
+              Math.floor(
+                (Number(alreadyBookedAppointments[i].endTime.split(":")[1]) +
+                  25) /
+                  15
+              ) *
+                15 -
+              60
+            ).toString(),
+            "second"
+          );
+
+          /*alreadyBookedTimesArr.push(
             alreadyBookedAppointments[i].startTime,
             quadrupleHourArr
               .slice(
@@ -277,6 +321,64 @@ const TimePreference = (props) => {
                         endSliceBasedOnDuration()
                 ),
                 quadrupleHourArr.length -
+                  (Number(
+                    alreadyBookedAppointments[i].endTime.split(":")[1]
+                  ) === 30 ||
+                  Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
+                    35 ||
+                  Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
+                    40 ||
+                  Number(alreadyBookedAppointments[i].endTime.split(":")[1]) ===
+                    45
+                    ? 0
+                    : 4 -
+                      minutesArr.indexOf(
+                        Math.floor(
+                          (Number(
+                            alreadyBookedAppointments[i].endTime.split(":")[1]
+                          ) +
+                            25) /
+                            15
+                        ) *
+                          15 >
+                          60
+                          ? (
+                              Math.floor(
+                                (Number(
+                                  alreadyBookedAppointments[i].endTime.split(
+                                    ":"
+                                  )[1]
+                                ) +
+                                  25) /
+                                  15
+                              ) *
+                                15 -
+                              60
+                            ).toString()
+                          : (
+                              Math.floor(
+                                (Number(
+                                  alreadyBookedAppointments[i].endTime.split(
+                                    ":"
+                                  )[1]
+                                ) +
+                                  25) /
+                                  15
+                              ) * 15
+                            ).toString()
+                      ))
+              )
+              .sort(),
+            calendarEndTime
+          );*/
+          alreadyBookedTimesArr.push(
+            alreadyBookedAppointments[i].startTime,
+            quadrupleHourArr
+              .slice(
+                quadrupleHourArr.indexOf(
+                  alreadyBookedAppointments[i].startTime
+                ),
+                quadrupleHourArr.length +1 -
                   (Number(
                     alreadyBookedAppointments[i].endTime.split(":")[1]
                   ) === 30 ||
@@ -373,7 +475,7 @@ const TimePreference = (props) => {
       }
     }
   }, [blockedTimeForPersonalEvent, bookedTimes]);
-
+/*
   console.log(bookedTimes);
   console.log(alreadyBookedAppointments);
   console.log(totalDuration);
@@ -412,7 +514,7 @@ const TimePreference = (props) => {
   }, [bookedTimes])
   
   console.log(bookedTimes, "blocked time")
-  
+  */
 
   useEffect(() => {
     if (!appointmentsLoading && !personalEventsLoading) {

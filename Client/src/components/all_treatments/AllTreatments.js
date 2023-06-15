@@ -8,6 +8,9 @@ import leftImage from '../../images/1478254271f24428b884916396971609accb25f958.j
 import { ToastContainer } from "react-toastify";
 import ToastifyCSSImport from "./ToastifyCSSImport";
 import "./AllTreatments.css";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import treatmentSuggestions from "../admin/AdminSchedule/AdminCreateAppointment/TreatmentSuggestions";
 import getAllAppointmentsQuery from "../../graphql/queries/getAllAppointmentsQuery";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -55,6 +58,26 @@ const AllTreatments = React.forwardRef((props, ref) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
+  const settings = {
+    dots: true,
+    arrows: true,
+    draggable: true,
+    swipe: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   /*const filteredServices = selectedCategory
     ? data.services.filter((service) => service.category === selectedCategory)
     : data.services;*/
@@ -109,14 +132,11 @@ const AllTreatments = React.forwardRef((props, ref) => {
                   className="treatments_title_underline"
                 />
                 <br />
-                <h3
-                >
-                  <p>
-                    Da circa 10 anni ci occupiamo <br />
+                  <p className="landing_page_description">
+                    Da circa 10 anni ci occupiamo
                     del relax dei
-                    nostri clienti <br />
+                    nostri clienti
                   </p>
-                </h3>
               </>
             )}
           </Spring>
@@ -205,10 +225,10 @@ const AllTreatments = React.forwardRef((props, ref) => {
                     opacity: `${styles.opacity}`,
                   }}
                 >
-                  <p>
-                    Ogni trattamento è <br />
-                    personalizzato <br />
-                    per i tuoi <br />
+                  <p className="landing_page_description">
+                    Ogni trattamento è
+                    personalizzato
+                    per i tuoi
                     specifici bisogni.
                   </p>
                 </h3>
@@ -216,35 +236,37 @@ const AllTreatments = React.forwardRef((props, ref) => {
             )}
           </Spring>
         ) : null}
-          <div>
             <div className="button-filter-container">
-              <button onClick={() => setSelectedCategory(null)}>Guarda tutte</button>
-              <button onClick={() => handleCategoryClick('opzione1')}>Categoria 1</button>
-              <button onClick={() => handleCategoryClick('opzione2')}>Categoria 2</button>
-              <button onClick={() => handleCategoryClick('opzione3')}>Categoria 3</button>
+              <button onClick={() => setSelectedCategory(null)} className={selectedCategory === null ? 'selected-button' : 'not-sel-butt'}>Guarda tutte</button>
+              <button onClick={() => handleCategoryClick('opzione1')} className={selectedCategory === 'opzione1' ? 'selected-button' : 'not-sel-butt'}>Trattamenti Viso</button>
+              <button onClick={() => handleCategoryClick('opzione2')} className={selectedCategory === 'opzione2' ? 'selected-button' : 'not-sel-butt'}>Mani e Piedi</button>
+              <button onClick={() => handleCategoryClick('opzione3')} className={selectedCategory === 'opzione3' ? 'selected-button' : 'not-sel-butt'}>Depilazione donna</button>
+              <button onClick={() => handleCategoryClick('opzione4')} className={selectedCategory === 'opzione4' ? 'selected-button' : 'not-sel-butt'}>Depilazione uomo</button>
+              <button onClick={() => handleCategoryClick('opzione5')} className={selectedCategory === 'opzione5' ? 'selected-button' : 'not-sel-butt'}>Trattamenti corpo</button>
+              <button onClick={() => handleCategoryClick('opzione6')} className={selectedCategory === 'opzione6' ? 'selected-button' : 'not-sel-butt'}>Epilazione Laser</button>
+              <button onClick={() => handleCategoryClick('opzione7')} className={selectedCategory === 'opzione7' ? 'selected-button' : 'not-sel-butt'}>Pressoterapia</button>
             </div>
-        </div>
       </header>
 
-      <>
-        <Suspense fallback={<></>}>
-          {data
-            ? data.services
-                .filter(service => selectedCategory ? service.category === selectedCategory : true)
-                .map((d) => {
-                  return (
-                    <Bacial
-                      key={d._id}
-                      initialScreenSize={initialScreenSize}
-                      currentScreenSize={currentScreenSize}
-                      resetAllCartStates={resetAllCartStates}
-                      data={d}
-                    />
-                  );
-                })
-            : ""}
-        </Suspense>
-      </>
+      <div className="services-container">
+      <Suspense fallback={<></>}>
+      <Slider {...settings}>
+      {data
+        ? data.services
+            .filter(service => selectedCategory ? service.category === selectedCategory : true)
+            .map((d) => (
+                <Bacial
+                  key={d._id}
+                  initialScreenSize={initialScreenSize}
+                  currentScreenSize={currentScreenSize}
+                  resetAllCartStates={resetAllCartStates}
+                  data={d}
+                />
+            ))
+        : null}
+    </Slider>
+    </Suspense>
+      </div>
 
     </div>
   );

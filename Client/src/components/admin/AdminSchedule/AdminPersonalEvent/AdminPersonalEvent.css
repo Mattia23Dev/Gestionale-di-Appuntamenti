@@ -6,7 +6,6 @@
 .admin_create_appointment_section_header > * {
   display: inline-block;
 }
-
 .admin_create_appointment_section_header
   > .admin_personal_event_checkbox_container {
   position: absolute;
@@ -19,7 +18,6 @@
   justify-content: flex-end;
   margin: 0;
 }
-
 .admin_personal_event_checkbox_container p {
   font-size: 1.5rem;
   font-weight: 400;

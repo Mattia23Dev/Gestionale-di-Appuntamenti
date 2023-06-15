@@ -1175,14 +1175,11 @@ const AdminCreateAppointment = (props) => {
                   borderRight: "1px solid rgb(211, 211, 211)",
                 }}
               >
-                {!totalPrice ? "€0.00" : "€" + totalPrice + ".00"}
+                {!totalPrice ? "0.00€" : totalPrice + ".00€"}
               </div>
             </div>
-            <div className="admin_create_appointment_section_header">
-              <h2>Dettagli pagamento</h2>
-            </div>
             <div className="admin_payment_info_buttons_container">
-              <div
+              {/*<div
                 className="admin_add_credit_card_button"
                 onClick={() => {
                   changeAddCardCollapseOpen(!addCardCollapseOpen);
@@ -1190,8 +1187,7 @@ const AdminCreateAppointment = (props) => {
                 }}
               >
                 Prenota con la Carta
-              </div>
-              O
+              </div>*/}
               <div
                 className="admin_book_without_card_button"
                 onClick={() => {
@@ -1201,7 +1197,7 @@ const AdminCreateAppointment = (props) => {
                   changeAddCardCollapseOpen(false);
                 }}
               >
-                Prenota senza Carta
+                Prenota ora
               </div>
             </div>
             <Collapse isOpen={addCardCollapseOpen}>

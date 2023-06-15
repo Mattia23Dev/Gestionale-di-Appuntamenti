@@ -925,11 +925,48 @@
   .landing_page_description{
     font-size: 0.8rem;
     line-height: 2rem;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
   }
 }
 @media only screen and (max-width: 500px){
   .imagehomepage{
     width: 100% !important;
     height: 100% !important;
+  }
+  .button-filter-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button-filter-container > button{
+    font-size: 0.6rem;
+    padding: 10px 5px;
+    width: 43%;
+  }
+  .not-sel-butt{
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    background-color: transparent;
+    border: 1px solid pink;
+  }
+  
+  .button-filter-container > button:hover{
+    color: white;
+    background-color: pink;
+    border: 1px solid pink;
+    transition: 0.2s;
+    margin: 20px 10px;
+    border-radius: 5px;
+    padding: 10px 5px;
+  }
+  .selected-button{
+    font-size: 0.7rem;
+    color: white;
+    background-color: pink;
+    border: 1px solid pink;
+    transition: 0.2s;
   }
 }

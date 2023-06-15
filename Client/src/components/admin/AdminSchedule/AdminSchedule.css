@@ -409,7 +409,6 @@
     margin-left: 1rem;
   }
 }
-
 @media only screen and (max-width: 500px) {
   .admin_calendar_top_buttons_container{
     width: 100%;

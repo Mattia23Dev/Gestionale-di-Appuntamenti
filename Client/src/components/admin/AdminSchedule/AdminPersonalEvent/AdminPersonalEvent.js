@@ -654,7 +654,7 @@ const AdminPersonalEvent = (props) => {
             <div className="admin_square_payment_form_container">
               <div className="sq-payment-form">
                 <div
-                  className="sq-creditcard"
+                  className="personal-event-button"
                   onClick={handleSavePersonalEvent}
                 >
                   Salva evento personale

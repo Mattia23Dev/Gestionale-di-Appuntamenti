@@ -58,10 +58,10 @@
 
 .admin_individual_client_initials_square {
   padding: 0.5rem;
-  padding-bottom: 1.5rem;
-  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
   min-width: 5.5rem;
-  max-width: 22%;
+  max-width: 24%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -811,14 +811,15 @@
   }
 
   .admin_individual_selected_client_container {
-    left: 30%;
+    left: 22%;
+    width: 77%;
+    overflow-y: auto;
   }
 
   .admin_individual_selected_client_contact_info_container p {
     font-size: 1rem;
     padding: 0.5rem;
   }
-
   .admin_individual_selected_client_full_name_container {
     padding-top: 1.5rem;
     top: 12vh;

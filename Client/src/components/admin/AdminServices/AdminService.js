@@ -121,7 +121,7 @@ const AdminService = (props) => {
   const [addStaffMemberClicked, changeAddStaffMemberClicked] = useState(false);
   const [updateServiceClicked, changeupdateServiceClicked] = useState(false);
 
-  const imageUrl = `http://localhost:4000/uploads/`;
+  const imageUrl = process.env.SERVER_URL || "http://localhost:4000/uploads/";
 
 
   const [takeAPhotoSelected, changeTakeAPhotoSelected] = useState(false);
@@ -354,6 +354,11 @@ const add =()=>{
     }
   };
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
   useMemo(() => {
     if (getEmployeesData) {
       if (getEmployeesData.services.length > 0) {
@@ -643,6 +648,17 @@ const add =()=>{
         <br />
         <br />
       </FormGroup>
+      <div className="button-filter-container">
+              <button onClick={() => setSelectedCategory(null)} className={selectedCategory === null ? 'selected-button' : 'not-sel-butt'}>Guarda tutte</button>
+              <button onClick={() => handleCategoryClick('opzione1')} className={selectedCategory === 'opzione1' ? 'selected-button' : 'not-sel-butt'}>Trattamenti Viso</button>
+              <button onClick={() => handleCategoryClick('opzione2')} className={selectedCategory === 'opzione2' ? 'selected-button' : 'not-sel-butt'}>Mani e Piedi</button>
+              <button onClick={() => handleCategoryClick('opzione3')} className={selectedCategory === 'opzione3' ? 'selected-button' : 'not-sel-butt'}>Depilazione donna</button>
+              <button onClick={() => handleCategoryClick('opzione4')} className={selectedCategory === 'opzione4' ? 'selected-button' : 'not-sel-butt'}>Depilazione uomo</button>
+              <button onClick={() => handleCategoryClick('opzione5')} className={selectedCategory === 'opzione5' ? 'selected-button' : 'not-sel-butt'}>Trattamenti corpo</button>
+              <button onClick={() => handleCategoryClick('opzione6')} className={selectedCategory === 'opzione6' ? 'selected-button' : 'not-sel-butt'}>Epilazione Laser</button>
+              <button onClick={() => handleCategoryClick('opzione7')} className={selectedCategory === 'opzione7' ? 'selected-button' : 'not-sel-butt'}>Pressoterapia</button>
+      </div>
+
       <div
         className="admin_clients_content_container"
         style={{ overflow: "scroll", marginTop: "2vh" }}
@@ -650,7 +666,7 @@ const add =()=>{
         {getEmployeesData
           ? getEmployeesData.services.length > 0
             ? filteredAllEmployees
-                .sort((a, b) => a.name.localeCompare(b.name))
+                .sort((a, b) => a.name.localeCompare(b.name)).filter(service => selectedCategory ? service.category === selectedCategory : true)
                 .map((item, i) => {
                   return (
                     
@@ -668,27 +684,7 @@ const add =()=>{
                       ref={individualEmployeeRef}
                     >
                     <div className="service-information">
-                      <div
-                        className="admin_individual_client_initials_square"
-                        style={{
-                          background: randomColorArray
-                            ? randomColorArray[
-                                getEmployeesData.services
-                                  .sort((a, b) => a.name.localeCompare(b.name))
-                                  .map((x) => x.name)
-                                  .indexOf(item.name)
-                              ]
-                            : "rgb(0, 0, 0)",
-                        }}
-                      >
-                        <p>
-                        {/* <img src = {imageUrl+ 'Screenshot S2023-04-21 012341.png'}></img> */}
-                        
-                        </p>
-                        <p>
-                          {item.category[0].toUpperCase()}
-                        </p>
-                      </div>
+                      <img  src= {`${imageUrl}${item.img}`} alt="service" className="admin_individual_client_initials_square" /> 
                       <div className="admin_individual_client_full_name admin-service-name">
                         <p>
                           {item.name[0].toUpperCase() +

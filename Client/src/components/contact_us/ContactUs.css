@@ -26,6 +26,7 @@
   padding-top: 0.5rem;
   display: inline-block;
   white-space: nowrap;
+  text-align: center !important;
 }
 
 .contact_us_marker_icon,
@@ -326,3 +327,10 @@
     padding-bottom: calc(1rem + 4.5vh);
   }
 }
+
+@media only screen and (min-width: 2000px) {
+  .contact_us_header h1 {
+    text-align: center;
+  }
+}
+

@@ -1,5 +1,5 @@
 /** =================== MONTSERRAT =================== **/
-
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght500;600&display=swap');*/
 /** Montserrat Light **/
 @font-face {
   font-family: "Montserrat";
@@ -80,7 +80,7 @@
 
 html,
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: none;
 }
@@ -154,7 +154,7 @@ body {
 .unsure_toast_container,
 .toast_container {
   background-color: rgb(214, 236, 252);
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin-bottom: 2rem;
   position: absolute;
   bottom: 0;
@@ -162,7 +162,7 @@ body {
 
 .toast_removed_container {
   background-color: rgb(199, 221, 237);
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin-bottom: 2rem;
   position: absolute;
   bottom: 0;
@@ -170,7 +170,7 @@ body {
 
 .toast_error_container {
   background-color: rgb(225, 225, 225);
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin-bottom: 2rem;
   position: absolute;
   bottom: 0;
@@ -290,7 +290,7 @@ body {
   width: 100% !important;
   height: 100px !important;
   z-index: 500 !important;
-  font-family: "Montserrat" !important;
+  font-family: 'Montserrat', sans-serif;
   background: 20px 50% / 30px 30px no-repeat rgb(50, 50, 50) !important;
   background-image: url(./images/cookie.png) !important;
   -webkit-filter: invert(1);

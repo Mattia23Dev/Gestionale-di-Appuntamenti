@@ -389,8 +389,8 @@ const AdminSelectedAppointment = React.forwardRef((props, ref) => {
                               (x) => x.id === currentToggledAppointment
                             )[0].duration / 60
                           ) === 1
-                          ? "hour"
-                          : "hours"
+                          ? "ora"
+                          : "ore"
                         : null}
                       {Number.isInteger(
                         allAdminAppointments.filter(

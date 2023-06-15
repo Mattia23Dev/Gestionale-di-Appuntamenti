@@ -102,6 +102,17 @@ const navigate = useHistory()
   const [img, setImg] = useState('');
   const [service, setService] = useState(null);
   const [employee, setEmployee] = useState([]);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+  
+    setImg(prevImg => {
+      if (file) {
+        return file;
+      } else {
+        return prevImg;
+      }
+    });
+  };
 const handleEmployee =(e)=>{
   setEmployee(e)
   console.log(e, "sdji")
@@ -154,6 +165,7 @@ const handleEmployee =(e)=>{
       });
   
       setService(filteredService[0]);
+      setEmployee(getServicesData.services.employees);
     }
   }, [getServicesData]);
   console.log(service)
@@ -386,16 +398,42 @@ const handleEmployee =(e)=>{
               <div className="admin_create_appointment_section_header">
                 <h2>Modifica le informazioni di servizio</h2>
               </div>
-              <div>
-                <ul>
-                  <li>Nome: {service && service.name}</li>
-                  <li>Prezzo: {service && service.price},00 €</li>
-                  <li>Durata: {service && service.duration} minuti</li>
-                  <li>Categoria: {service && service.category}</li>
-                  <li>Descrizione: {service && service.description}</li>
-                  <li>Personale: {service && service.employees}</li>
-                </ul>
-              </div>
+              <div className="service-description-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Titolo</th>
+                    <th>Descrizione</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nome</td>
+                    <td>{service && service.name}</td>
+                  </tr>
+                  <tr>
+                    <td>Prezzo</td>
+                    <td>{service && service.price},00 €</td>
+                  </tr>
+                  <tr>
+                    <td>Durata</td>
+                    <td>{service && service.duration} minuti</td>
+                  </tr>
+                  <tr>
+                    <td>Categoria</td>
+                    <td>{service && service.category}</td>
+                  </tr>
+                  <tr>
+                    <td>Descrizione</td>
+                    <td>{service && service.description}</td>
+                  </tr>
+                  <tr>
+                    <td>Personale</td>
+                    <td>{service && service.employees.join(', ')}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
                   Nome
@@ -454,7 +492,7 @@ const handleEmployee =(e)=>{
                     aria-autocomplete="list"
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
-                    placeholder="Price"
+                    placeholder="Prezzo"
                     // value={adminStaffMemberEmail}
                     maxLength={100}
                     // onChange={(e) => {
@@ -465,6 +503,8 @@ const handleEmployee =(e)=>{
 
                   />
                 </div>
+                </div>
+                <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
               Durata
                 </div>
@@ -508,9 +548,13 @@ const handleEmployee =(e)=>{
                         onChange={(e) => { setCategory(e.target.value); }}
                       >
                           <option disabled value="">Seleziona una categoria</option>
-                          <option value="opzione1">Opzione 1</option>
-                          <option value="opzione2">Opzione 2</option>
-                          <option value="opzione3">Opzione 3</option>
+                          <option value="opzione1">Trattamenti Viso</option>
+                          <option value="opzione2">Mani e Piedi</option>
+                          <option value="opzione3">Depilazione donna</option>
+                          <option value="opzione4">Depilazione uomo</option>
+                          <option value="opzione5">Trattamenti corpo</option>
+                          <option value="opzione6">Epilazione Laser</option>
+                          <option value="opzione7">Pressoterapia</option>
                       </select>
                     </div>
              
@@ -544,12 +588,13 @@ const handleEmployee =(e)=>{
                     //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
                     //   );
                     // }}
-                    placeholder="Description"
+                    placeholder="Descrizione"
                     onChange={(e)=>setDescription(e.target.value)}
 
                   />
                 </div>
-             
+                </div>
+                <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
                   Immagine
                 </div>
@@ -578,17 +623,15 @@ const handleEmployee =(e)=>{
                     //     ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
                     //   );
                     // }}
-                    onChange={(e)=>setImg(e.target.files[0])}
-
+                    onChange={handleImageChange}
                     placeholder="Image"
                   />
                 </div>
               </div>
-              <div className="esthetician_preference_dropdown_input_field">
-                <FontAwesomeIcon
-                  className="esthetician_preference_dropdown_icon"
-                  icon={faChevronCircleDown}
-                />
+              <div className="admin_create_appointment_input_information_container">
+              <div className="admin_create_appointment_label admin_create_appointment_double_label">
+                  Personale
+                </div>
                   <div
                   role="combobox"
                   aria-haspopup="listbox"
@@ -603,8 +646,8 @@ const handleEmployee =(e)=>{
                   mode="multiple"
                   name="select"
                   // multiple
-                  // defaultValue={selectedEsthetician}
-                  placeholder="No preference"
+                  defaultValue={employee ? [employee] : []}
+                  placeholder='Seleziona un dipendente'
                   id="esthetician_preference"
                   // onChange={(e) => {
                   //   props.resetAllCartStatesExceptTreatments();
@@ -626,7 +669,7 @@ const handleEmployee =(e)=>{
 
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
-                  <div className="sq-creditcard" onClick={handleSubmit}>
+                  <div className="personal-event-button" onClick={handleSubmit}>
                    Aggiorna servizio
                   </div>
                 </div>

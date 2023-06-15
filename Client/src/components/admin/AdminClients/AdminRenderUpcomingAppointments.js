@@ -406,12 +406,13 @@ const AdminRenderUpcomingAppointments = (props) => {
                   </div>
                   <div className="my_appointment_information_container">
                     <p className="my_appointment_date_time">
-                      {moment(item.date, "LL")
+                      {moment(item.date)
+                        .locale('it')
                         .format("LLLL")
                         .split(" ")
                         .slice(
                           0,
-                          moment(item.date, "LL")
+                          moment(item.date, 'LL')
                             .format("LLLL")
                             .split(" ").length - 2
                         )
@@ -432,23 +433,7 @@ const AdminRenderUpcomingAppointments = (props) => {
                     </p>
                     <p className="my_appointment_details">
                       {item.treatments[0].name
-                        ? item.treatments[0].name === "ChemicalPeel"
-                          ? "Chemical Peel Facial"
-                          : item.treatments[0].name === "Salt Cave"
-                          ? "Salt Cave"
-                          : item.treatments[0].name + " Facial"
-                        : null}
-                      {item.addOns[0]
-                        ? ", " +
-                          (item.addOns[0].name
-                            ? item.addOns[0].name === "ExtraExtractions"
-                              ? "Extra Extractions"
-                              : item.addOns[0].name
-                            : null) +
-                          " Add On"
-                        : null}{" "}
-                      {item.addOns.length > 1
-                        ? "+ " + (item.addOns.length - 1).toString() + " more"
+                        ? item.treatments[0].name
                         : null}
                     </p>
                     <p className="my_appointment_details">
@@ -531,7 +516,8 @@ const AdminRenderUpcomingAppointments = (props) => {
                             <div className="selected_appointment_date_and_time_content_container">
                               <div className="selected_appointment_date_and_time_content">
                                 <p>
-                                  {moment(item.date, "LL")
+                                  {moment(item.date)
+                                    .locale('it')
                                     .format("LLLL")
                                     .split(" ")
                                     .slice(

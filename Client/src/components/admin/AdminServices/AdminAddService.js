@@ -352,11 +352,11 @@ formData.append("img", img);
                 <p onClick={handleBackToAllStaff}>Torna indietro</p>
               </div>
               <div className="admin_create_appointment_section_header">
-                <h2>Add Service Information</h2>
+                <h2>Aggiungi informazioni di servizio</h2>
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Name
+                  Nome
                 </div>
                 <div
                   role="combobox"
@@ -393,7 +393,7 @@ formData.append("img", img);
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Price
+                  Prezzo
                 </div>
                 <div
                   role="combobox"
@@ -426,6 +426,8 @@ formData.append("img", img);
                     }}
                   />
                 </div>
+                </div>
+                <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
                   Durata
                 </div>
@@ -459,10 +461,10 @@ formData.append("img", img);
                       <option value="90">90 minuti</option>
                     </select>
                 </div>
-              </div>
+               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Category
+                  Categoria
                 </div>
                 <div
                   role="combobox"
@@ -491,16 +493,20 @@ formData.append("img", img);
                     onChange={(e) => {resetAllErrorStates(); setCategory(e.target.value)}}
                   >
                     <option disabled value="">Seleziona una categoria</option>
-                    <option value="opzione1">Opzione 1</option>
-                    <option value="opzione2">Opzione 2</option>
-                    <option value="opzione3">Opzione 3</option>
+                    <option value="opzione1">Trattamenti Viso</option>
+                    <option value="opzione2">Mani e Piedi</option>
+                    <option value="opzione3">Depilazione donna</option>
+                    <option value="opzione4">Depilazione uomo</option>
+                    <option value="opzione5">Trattamenti corpo</option>
+                    <option value="opzione6">Epilazione Laser</option>
+                    <option value="opzione7">Pressoterapia</option>
                   </select>
 
                 </div>
               </div>{" "}
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Description
+                  Descrizione
                 </div>
                 <div
                   role="combobox"
@@ -531,9 +537,10 @@ formData.append("img", img);
                     onChange={(e) => {resetAllErrorStates();setDescription(e.target.value)}}
                   />
                 </div>
-
+                </div>
+                <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                  Image
+                  Immagine
                 </div>
                 <div
                   role="combobox"
@@ -565,11 +572,10 @@ formData.append("img", img);
                   />
                 </div>
               </div>
-              <div className="esthetician_preference_dropdown_input_field">
-                <FontAwesomeIcon
-                  className="esthetician_preference_dropdown_icon"
-                  icon={faChevronCircleDown}
-                />
+              <div className="admin_create_appointment_input_information_container">
+              <div className="admin_create_appointment_label admin_create_appointment_double_label">
+                  Personale
+                </div>
                   <div
                   role="combobox"
                   aria-haspopup="listbox"
@@ -588,7 +594,7 @@ formData.append("img", img);
                   name="select"
                   // multiple
                   // defaultValue={selectedEsthetician}
-                  placeholder="No preference"
+                  placeholder="Inserisci il personale che svolge"
                   id="esthetician_preference"
                   // onChange={(e) => {
                   //   props.resetAllCartStatesExceptTreatments();
@@ -608,8 +614,8 @@ formData.append("img", img);
               </div>
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
-                  <div className="sq-creditcard" onClick={handleSubmit}>
-                Add Service
+                  <div className="personal-event-button" onClick={handleSubmit}>
+                Aggiungi servizio
                   </div>
                 </div>
               </div>

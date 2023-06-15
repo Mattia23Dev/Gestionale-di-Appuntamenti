@@ -33,98 +33,46 @@ const FollowUs = React.forwardRef((props, ref) => {
       {inView ? (
         <>
           <header className="follow_us_sub_container_header">
-            <Spring
-              from={{
-                opacity: 0,
-              }}
-              to={{
-                opacity: 1,
-              }}
-              config={{ duration: 1000 }}
-            >
-              {(styles) => (
-                <>
                   <h1
-                    style={{
-                      opacity: `${styles.opacity}`,
-                    }}
                     ref={followUsHeaderRef}
                   >
                     SEGUICI
                   </h1>
                   <span
-                    style={{
-                      opacity: `${styles.opacity}`,
-                      width: followUsHeaderRef.current
-                        ? followUsHeaderRef.current.clientWidth + "px"
-                        : "0px",
-                    }}
                     className="follow_us_underline"
                   />
-                </>
-              )}
-            </Spring>
           </header>
-          <Spring
-            from={{
-              opacity: 0,
-            }}
-            to={{
-              opacity: 1,
-            }}
-            config={{ duration: 1000 }}
-          >
-            {(propstyles) => (
-              <>
                 <div
                   className="follow_us_sub_container_left"
-                  style={{
-                    opacity: `${propstyles.opacity}`,
-                  }}
                 >
                   <div className="insta_photo_1">
                     <img
                       alt="Front_Decal"
                       src={FrontDecal}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                   <div className="insta_photo_2">
                     <img
                       alt="Front_Couch"
                       src={FrontCouch}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                   <div className="insta_photo_3">
                     <img
                       alt="Front_Desk"
                       src={FrontDesk}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                   <div className="insta_photo_4">
                     <img
                       alt="Salt_Cave"
                       src={SaltCave}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                 </div>
 
                 <div
                   className="follow_us_sub_container_middle"
-                  style={{
-                    opacity: `${propstyles.opacity}`,
-                  }}
                 >
                   <p style={{fontWeight: '450', color: 'rgba(0, 0, 0, 0.546)'}}>
                     Connettiti con noi <br />
@@ -145,51 +93,34 @@ const FollowUs = React.forwardRef((props, ref) => {
 
                 <div
                   className="follow_us_sub_container_right"
-                  style={{
-                    opacity: `${propstyles.opacity}`,
-                  }}
+
                 >
                   <div className="insta_photo_5">
                     <img
                       alt="LED"
                       src={LED}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                   <div className="insta_photo_6">
                     <img
                       alt="Dim_Room"
                       src={DimRoom}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                   <div className="insta_photo_7">
                     <img
                       alt="Neon_Sign"
                       src={NeonSign}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                   <div className="insta_photo_8">
                     <img
                       alt="Dermaplaning"
                       src={Dermaplaning}
-                      style={{
-                        opacity: `${propstyles.opacity}`,
-                      }}
                     />
                   </div>
                 </div>
               </>
-            )}
-          </Spring>
-        </>
       ) : null}
     </div>
   );

@@ -50,17 +50,17 @@ const BacialCard = (props) => {
         <div className="cart_card_top_container">
           <h3>{bacialInCart ? bacialInCart.name : ""}</h3>
           <p className="shopping_cart_duration">
-            Duration: {bacialInCart ? bacialInCart.duration : ""} minutes
+            Durata: {bacialInCart ? bacialInCart.duration : ""} minuti
           </p>
         </div>
         <div className="cart_card_bottom_container">
           <div className="shopping_cart_price_container">
             <p className="shopping_cart_price">
-              $ {bacialInCart ? bacialInCart.price : ""}
+              {bacialInCart ? bacialInCart.price : ""},00 €
             </p>
           </div>
           <div className="shopping_cart_remove_button" onClick={handleRemove}>
-            <p>Remove</p>
+            <p>Rimuovi</p>
           </div>
         </div>
       </div>

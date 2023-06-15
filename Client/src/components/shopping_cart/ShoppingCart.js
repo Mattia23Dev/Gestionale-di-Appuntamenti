@@ -466,22 +466,15 @@ const ShoppingCart = (props) => {
         className="cart_header"
         style={{ display: counter === 0 ? "none" : "flex" }}
       >
-        <h2>IL MIO {saltCaveInCart ? "TREATMENT" : "FACIAL"}</h2>
+        <h2>ACCEDI SE HAI UN ACCOUNT</h2>
       </div>
       {renderCartFacials()}
-      <div
-        className="cart_header"
-        style={{ display: addOnsArr.length === 0 ? "none" : "flex" }}
-      >
-        <h2>IL MIO ADD-ON{addOnsArr.length > 1 ? "S" : null}</h2>
-      </div>
-      {renderCartAddOns()}
       <div
         className="cart_subtotal"
         style={{ display: counter === 0 ? "none" : "flex" }}
       >
         <p>Totale</p>
-        <p>€{totalPrice}</p>
+        <p>{totalPrice},00 €</p>
       </div>
       {treatmentsArr.length === 0 || saltCaveInCart ? null : (
         <div className="esthetician_preference_dropdown">

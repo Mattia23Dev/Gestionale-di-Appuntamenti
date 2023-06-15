@@ -35,12 +35,6 @@ const TreatmentAutosuggest = (props) => {
   const renderTreatmentSuggestion = (suggestion) => {
     return (
       <div className="admin_individual_client_treatment_suggestion_container">
-        {suggestion.props.children[4].props.children ? (
-          <div className="admin_individual_client_treatment_suggestion_picture">
-            {suggestion.props.children[4].props.children}
-          </div>
-        ) : null}
-
         <p>{suggestion.props.children[0].props.children}</p>
         <p>
           {suggestion.props.children[3].props.children
@@ -87,7 +81,7 @@ const TreatmentAutosuggest = (props) => {
     placeholder: "Aggiungi servizio",
     value: treatmentInput,
     onChange: treatmentInputChange,
-    style: { borderRight: "1px solid transparent" },
+    style: { border: "none" },
   };
 
   const getTreatmentSuggestionValue = (suggestion) => {
@@ -180,7 +174,7 @@ const TreatmentAutosuggest = (props) => {
         aria-owns="react-autowhatever-1"
         aria-controls="react-autowhatever-1"
         aria-expanded="false"
-        className="react-autosuggest__container"
+        className="react-autosuggest__container react-autosuggest__container-select-service"
       >
         <Autosuggest
           suggestions={treatmentInputSuggestions}
@@ -211,7 +205,7 @@ const TreatmentAutosuggest = (props) => {
           autoComplete="off"
           aria-autocomplete="list"
           aria-controls="react-autowhatever-1"
-          className="react-autosuggest__input"
+          className="react-autosuggest__input react-autosuggest__input-select-service"
           style={{
             borderLeft: "1px solid transparent",
             borderRight: "1px solid transparent",
@@ -232,7 +226,7 @@ const TreatmentAutosuggest = (props) => {
           autoComplete="off"
           aria-autocomplete="list"
           aria-controls="react-autowhatever-1"
-          className="react-autosuggest__input"
+          className="react-autosuggest__input react-autosuggest__input-select-service"
           style={{
             borderLeft: "1px solid transparent",
           }}

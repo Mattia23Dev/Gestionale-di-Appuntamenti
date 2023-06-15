@@ -28,12 +28,12 @@ const ContactUs = (props) => {
   const today = new Date().getDay();
 
   const hours_today = () => {
-    if (today === 6) {
-      return <p className="open_status">Closed today</p>;
-    } else if (today === 5) {
-      return <p className="open_status">Open today until 4:00 PM</p>;
+    if (today === 7) {
+      return <p className="open_status">Chiuso oggi</p>;
+    } else if (today === 6) {
+      return <p className="open_status">Aperto fino alle 19:00</p>;
     } else {
-      return <p className="open_status">Open today until 8:00 PM</p>;
+      return <p className="open_status">Aperto fino alle 20:00</p>;
     }
   };
 
@@ -57,18 +57,6 @@ const ContactUs = (props) => {
       id={name}
       ref={composeRefs(ContactRef, inViewRef)}
     >
-      {inView ? (
-        <Spring
-          from={{
-            opacity: 0,
-          }}
-          to={{
-            opacity: 1,
-          }}
-          config={{ duration: 1000 }}
-        >
-          {(propstyles) => (
-            <>
               <div className="contact_us_map_container" ref={ContactRef}>
                 <GoogleMapReact
                   ref={GoogleMapRef}
@@ -86,8 +74,6 @@ const ContactUs = (props) => {
                   }}
                   defaultZoom={14}
                   style={{
-                    position: `${propstyles.position}`,
-                    opacity: `${propstyles.opacity}`,
                     width: "100%",
                     height: "100%",
                   }}
@@ -104,20 +90,12 @@ const ContactUs = (props) => {
               <header className="contact_us_header">
                 <>
                   <h1
-                    style={{
-                      opacity: `${propstyles.opacity}`,
-                    }}
                     ref={contactUsHeaderRef}
+                    style={{textAlign:'center'}}
                   >
                     CONTATTACI
                   </h1>
                   <span
-                    style={{
-                      opacity: `${propstyles.opacity}`,
-                      width: contactUsHeaderRef.current
-                        ? contactUsHeaderRef.current.clientWidth + "px"
-                        : "0px",
-                    }}
                     className="contact_us_underline"
                   />
                 </>
@@ -146,7 +124,7 @@ const ContactUs = (props) => {
                 </p>
               </div>
               <div className="contact_us_times_section">
-                <h2>Business Hours</h2>
+                <h2>Oriari</h2>
                 <div className="contact_us_availability_container">
                   <div className="contact_us_days_container">
                     <p>Lun</p>
@@ -158,13 +136,13 @@ const ContactUs = (props) => {
                     <p>Dom</p>
                   </div>
                   <div className="contact_us_hours_container">
-                    <p>10:00 AM - 8:00 PM</p>
-                    <p>10:00 AM - 8:00 PM</p>
-                    <p>10:00 AM - 8:00 PM</p>
-                    <p>10:00 AM - 8:00 PM</p>
-                    <p>10:00 AM - 8:00 PM</p>
-                    <p>10:00 AM - 4:00 PM</p>
-                    <p>Closed</p>
+                    <p>10:00 - 20:00 </p>
+                    <p>10:00 - 20:00 </p>
+                    <p>10:00 - 20:00 </p>
+                    <p>10:00 - 20:00 </p>
+                    <p>10:00 - 20:00 </p>
+                    <p>10:00 - 19:00 </p>
+                    <p>Chiuso</p>
                   </div>
                 </div>
               </div>
@@ -177,10 +155,6 @@ const ContactUs = (props) => {
                 currentScreenSize={props.currentScreenSize}
                 initialScreenSize={props.initialScreenSize}
               />
-            </>
-          )}
-        </Spring>
-      ) : null}
     </div>
   );
 };
