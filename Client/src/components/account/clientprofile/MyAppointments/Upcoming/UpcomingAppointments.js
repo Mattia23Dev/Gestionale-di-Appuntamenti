@@ -206,46 +206,6 @@ const UpcomingAppointments = (props) => {
       </div>
     ));
   };
-
-  const renderSummaryCardAddOns = (dataIndex) => {
-    let componentsArr = [];
-
-    for (let i = 0; i < addOnsSummaryCardComponentsArr.length; i++) {
-      for (
-        let j = 0;
-        j < upcomingAppointmentsData.own_appointments[dataIndex].addOns.length;
-        j++
-      ) {
-        if (upcomingAppointmentsData) {
-          if (upcomingAppointmentsData.own_appointments) {
-            if (
-              upcomingAppointmentsData.own_appointments[dataIndex].addOns !== []
-            ) {
-              if (
-                upcomingAppointmentsData.own_appointments[dataIndex].addOns[j]
-                  .name
-              ) {
-                if (
-                  upcomingAppointmentsData.own_appointments[dataIndex].addOns[j]
-                    .name === addOnsSummaryCardComponentsArr[i].name
-                ) {
-                  componentsArr.push(
-                    addOnsSummaryCardComponentsArr[i].component
-                  );
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    return componentsArr.map((item, index) => (
-      <div className="my_selected_appointment_treatment_container" key={index}>
-        {item}
-      </div>
-    ));
-  };
-
   // Allows click only if selected appointment modal is not active
 
   const handleAppointmentToggled = (e, item) => {
@@ -317,15 +277,8 @@ const UpcomingAppointments = (props) => {
           </Link>
         )}
         <h1>
-          {adminAuthenticated ? "CLIENT" : "MY"}{" "}
-          {!currentScreenSize
-            ? initialScreenSize >= 1200
-              ? "UPCOMING "
-              : null
-            : currentScreenSize >= 1200
-            ? "UPCOMING "
-            : null}
-          APPOINTMENTS
+          APPUNTAMENTI
+          {adminAuthenticated ? "DEI CLIENTI" : "MIEI"}{" "}
         </h1>
       </div>
       {
@@ -334,14 +287,14 @@ const UpcomingAppointments = (props) => {
           style={{ zIndex: logoutClicked ? -1 : 2 }}
         >
           <div className="upcoming_appointments_upcoming_title_container">
-            <h2>UPCOMING</h2>
+            <h2>IN ARRIVO</h2>
           </div>
           <Link
             to="/account/clientprofile/pastappointments"
             className="sub_header_container_link"
           >
             <div className="upcoming_appointments_past_title_container">
-              <h2>PAST</h2>
+              <h2>PASSATI</h2>
             </div>
           </Link>
         </div>
@@ -356,7 +309,6 @@ const UpcomingAppointments = (props) => {
           individualAppointmentRef={individualAppointmentRef}
           appointmentToggled={appointmentToggled}
           override={override}
-          renderSummaryCardAddOns={renderSummaryCardAddOns}
           renderSummaryCardTreatments={renderSummaryCardTreatments}
           cancelAppointmentClicked={cancelAppointmentClicked}
           changeLoadingSpinnerActive={changeLoadingSpinnerActive}

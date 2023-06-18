@@ -6,6 +6,57 @@
     gap: 4rem;
     width: 100%;
 }
+.appointment-table{
+    height: 400px !important; 
+    overflow-y: scroll; 
+    scrollbar-color: #007bff #f2f2f2;
+    border-radius: 10px;
+    width: 100%;
+    padding: 0 20px;
+}
+.appointments-table::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .appointments-table::-webkit-scrollbar-track {
+    background: #f2f2f2;
+    border-radius: 10px;
+  }
+  
+  .appointments-table::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 10px;
+  }
+.table-dashboard{
+    width: 100%;
+    font-size: 14px;
+}
+.table-dashboard thead {
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2;
+  }
+
+ .table-dashboard th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    padding: 8px;
+    text-align: left;
+  }
+  
+ .table-dashboard td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+ .table-dashboard tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+ .table-dashboard tbody tr:last-child {
+    border-bottom: none;
+  }
 .dashboard-middle-container{
     display: flex;
     flex-direction: row;
@@ -182,6 +233,27 @@
     .card-dashboard{
         width: 95%;
         text-align: center;
+    }
+    .appointment-table{
+        overflow-x: scroll;
+        padding: 0;
+    }
+    .appointments-table::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      .appointments-table::-webkit-scrollbar-track {
+        background: #f2f2f2;
+        border-radius: 10px;
+      }
+      
+      .appointments-table::-webkit-scrollbar-thumb {
+        background-color: #007bff;
+        border-radius: 10px;
+      }
+    .table-dashboard{
+        width: 100%;
+        font-size: 12px;
     }
   }
 

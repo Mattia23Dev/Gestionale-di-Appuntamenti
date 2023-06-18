@@ -176,7 +176,7 @@ const AdminCalendarComponent = (props) => {
             if (
               allAdminAppointments.filter(
                 (x) => x.id === currentToggledAppointment
-              )[0].addOns !== []
+              )[0]
             ) {
               if (
                 allAdminAppointments.filter(
@@ -385,17 +385,7 @@ const AdminCalendarComponent = (props) => {
                   (x.treatments[0].name === "ChemicalPeel"
                     ? "Chemical Peel"
                     : x.treatments[0].name) +
-                  " " +
-                  (x.addOns.length === 0
-                    ? ""
-                    : x.addOns.map(
-                        (x) =>
-                          ` ${
-                            x.name === "ExtraExtractions"
-                              ? "Extra Extractions"
-                              : x.name
-                          } Add-On`
-                      ))}
+                  " "}
               </>
             ),
             backgroundColor: durationColors[x.duration] || "rgb(211, 211, 211)",
@@ -408,10 +398,8 @@ const AdminCalendarComponent = (props) => {
               x.client.lastName.slice(1).toLowerCase() +
               " - " +
               x.treatments[0].name +
-              " " +
-              (x.addOns === []
-                ? null
-                : x.addOns.map((x) => `${x.name}, Add-On`)),
+              " "
+              ,
             start: moment(
               x.date +
                 " " +

@@ -20,6 +20,7 @@ const ClientSchema = new Schema({
   consentForm: ConsentForm.schema.obj,
   myRoutine: MyRoutine.schema.obj,
   createdAt: { type: Date, default: currentDate },
+  permanentPasswordSet: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Client", ClientSchema);

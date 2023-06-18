@@ -212,7 +212,7 @@ formData.append("img", img);
   }, [firstFocus]);
 
   const handleBackToAllStaff = () => {
-    navigate.go(0);
+    navigate.go(1);
 
     changeAddStaffMemberClicked(false);
     changeOtherRoles([]);

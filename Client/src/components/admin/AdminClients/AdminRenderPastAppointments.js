@@ -46,15 +46,6 @@ import "../../../components/treatments/Quench/Quench.css";
 import "../../../components/treatments/Quickie/Quickie.css";
 import "../../../components/treatments/Rejuvenate/Rejuvenate.css";
 import "../../../components/treatments/SaltCave/SaltCave.css";
-import "../../../components/add_ons/Beard/Beard.css";
-import "../../../components/add_ons/Dermarolling/Dermarolling.css";
-import "../../../components/add_ons/ExtraExtractions/ExtraExtractions.css";
-import "../../../components/add_ons/GuaSha/GuaSha.css";
-import "../../../components/add_ons/HydroJellyMask/HydroJellyMask.css";
-import "../../../components/add_ons/LEDTherapy/LEDTherapy.css";
-import "../../../components/add_ons/Microcurrent/Microcurrent.css";
-import "../../../components/add_ons/Microdermabrasion/Microdermabrasion.css";
-import "../../../components/add_ons/NanoNeedling/NanoNeedling.css";
 import "../../../components/treatments_pages/Page_2/NotSurePopUp/NotSurePopUp.css";
 
 const AdminRenderUpcomingAppointments = (props) => {
@@ -90,18 +81,6 @@ const AdminRenderUpcomingAppointments = (props) => {
     { name: "Salt Cave", component: <SaltCaveSummaryCard /> },
   ];
 
-  const addOnsSummaryCardComponentsArr = [
-    { name: "ExtraExtractions", component: <ExtraExtractionsSummaryCard /> },
-    { name: "HydroJelly", component: <HydroJellyMaskSummaryCard /> },
-    { name: "LED", component: <LEDTherapySummaryCard /> },
-    { name: "Microcurrent", component: <MicrocurrentSummaryCard /> },
-    { name: "Microdermabrasion", component: <MicrodermabrasionSummaryCard /> },
-    { name: "Dermarolling", component: <DermarollingSummaryCard /> },
-    { name: "NanoNeedling", component: <NanoNeedlingSummaryCard /> },
-    { name: "GuaSha", component: <GuaShaSummaryCard /> },
-    { name: "Beard", component: <BeardSummaryCard /> },
-  ];
-
   const renderSummaryCardTreatments = (dataIndex) => {
     let componentsArr = [];
 
@@ -119,43 +98,6 @@ const AdminRenderUpcomingAppointments = (props) => {
                 componentsArr.push(
                   treatmentsSummaryCardComponentsArr[i].component
                 );
-              }
-            }
-          }
-        }
-      }
-    }
-    return componentsArr.map((item, index) => (
-      <div
-        className="my_selected_appointment_treatment_container admin_side_client_treatment_container"
-        key={index}
-      >
-        {item}
-      </div>
-    ));
-  };
-
-  const renderSummaryCardAddOns = (dataIndex) => {
-    let componentsArr = [];
-
-    for (let i = 0; i < addOnsSummaryCardComponentsArr.length; i++) {
-      for (
-        let j = 0;
-        j < props.data.own_past_appointments[dataIndex].addOns.length;
-        j++
-      ) {
-        if (props.data) {
-          if (props.data.own_past_appointments) {
-            if (props.data.own_past_appointments[dataIndex].addOns !== []) {
-              if (props.data.own_past_appointments[dataIndex].addOns[j].name) {
-                if (
-                  props.data.own_past_appointments[dataIndex].addOns[j].name ===
-                  addOnsSummaryCardComponentsArr[i].name
-                ) {
-                  componentsArr.push(
-                    addOnsSummaryCardComponentsArr[i].component
-                  );
-                }
               }
             }
           }

@@ -22,7 +22,7 @@ const appointmentQuery = {
     const appointment = await Appointment.findOne(args);
 
     if (!appointment) {
-      throw new UserInputError("No appointment found.");
+      throw new UserInputError("Nessun appuntamento trovato.");
     }
 
     return {

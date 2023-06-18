@@ -60,7 +60,7 @@ const AdminService = (props) => {
     getEmployeeError,
     getEmployeesError,
     getEmployeesRefetch,
-    
+    getEmployeesData,
     getAllAppointmentsData,
     currentScreenSize,
     initialScreenSize,
@@ -186,10 +186,12 @@ const AdminService = (props) => {
     updateServiceMutation
   );
   const handleDeleteService = (service) => {
+    console.log(service);
     deleteService({
       variables: { _id: service },
     });
-    navigate.go(0)
+    navigate.go(1);
+    window.location.reload();
     //     const selectedEmployee = getEmployeesData.services.filter(
 //       (x) => x._id !== service
 //     );
@@ -241,13 +243,13 @@ const add =()=>{
       }
     }
   }, [employeeToggled, employeeNameToggled, getEmployeesData]);
-  const {
+ /*const {
     data: getEmployeesData,
     refetch: getServiceRefetch,
     loading: getServiceLoading,
   } = useQuery(getServiceQuery, {
     fetchPolicy: "no-cache",
-  });
+  });*/
   // useEffect(() => {
   //   if (employeeNameToggled) {
   //     changeSelectedEmployeeAppointments({

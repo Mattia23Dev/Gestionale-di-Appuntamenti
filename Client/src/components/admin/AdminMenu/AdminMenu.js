@@ -150,7 +150,7 @@ const AdminMenu = (props) => {
             onClick={handleAdminResetNotifications}
           >
             <FontAwesomeIcon icon={faChartLine} className="admin_menu_box_icon" />
-            <h2>PANORAMICA</h2>
+            <h2>DASHBOARD</h2>
           </Link>
         </div>
         <div className="admin_menu_box_container">

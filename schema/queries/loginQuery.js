@@ -22,7 +22,7 @@ const loginQuery = {
 
     if (!client) {
       throw new UserInputError(
-        "There is no registered client associated with that email."
+        "Non ci sono clienti con questa email."
       );
     }
 
@@ -33,7 +33,7 @@ const loginQuery = {
       });
 
     if (!passwordsAreIdentical) {
-      throw new UserInputError("Incorrect password.");
+      throw new UserInputError("Password non corretta.");
     }
 
     const generateDummyToken = (client) => {
@@ -51,13 +51,13 @@ const loginQuery = {
     const dummyToken = generateDummyToken(client);
     context.res.cookie("dummy-token", dummyToken, {
       maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
-      //secure: process.env.NODE_ENV === "production" ? true : false,
+      secure: process.env.NODE_ENV === "production" ? true : false,
       domain:
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
       sameSite: 'none',
-      secure: true,
+      //secure: true,
     });
 
     const { accessToken, refreshToken } = createTokens(client);
@@ -65,25 +65,25 @@ const loginQuery = {
     context.res.cookie("access-token", accessToken, {
       maxAge: 1000 * 60 * 15,
       httpOnly: true,
-      //secure: process.env.NODE_ENV === "production" ? true : false,
+      secure: process.env.NODE_ENV === "production" ? true : false,
       domain:
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
       sameSite: 'none',
-      secure: true,
+      //secure: true,
     });
 
     context.res.cookie("refresh-token", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
       httpOnly: true,
-      //secure: process.env.NODE_ENV === "production" ? true : false,
+      secure: process.env.NODE_ENV === "production" ? true : false,
       domain:
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
       sameSite: 'none',
-      secure: true,
+      //secure: true,
     });
 
     return {

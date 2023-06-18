@@ -251,8 +251,8 @@ const handleEmployee =(e)=>{
   }, [firstFocus]);
 
   const handleBackToAllStaff = () => {
-   // navigate.go(0)
-   window.history.back();
+   navigate.go(1)
+   //window.history.back();
 
     changeupdateServiceClicked(false);
     changeOtherRoles([]);
@@ -289,7 +289,7 @@ const handleEmployee =(e)=>{
       // your GraphQL query here
       console.log("sent", ServiceID)
       await updateService()
-      navigate.go(0)
+      navigate.go(1)
 
     changeupdateServiceClicked(false);
     } catch (error) {

@@ -12,7 +12,6 @@
     display: none;
   }
 }
-
 /* CSS for Regular Desktops/Small Laptops and Tablets */
 @media only screen and (min-width: 1200px) {
   .large_sceen_logged_in_side_menu {
@@ -22,13 +21,13 @@
     align-items: flex-start;
     justify-content: center;
     height: 100vh;
-    width: 30vw;
+    width: 20vw;
     padding-left: 3.1rem;
     padding-right: 3.1rem;
     background: rgb(244, 244, 244);
     z-index: 500;
   }
-
+  
   .large_screen_side_menu_profile_container {
     position: absolute;
     height: 24vh;
@@ -123,17 +122,45 @@
     width: 80%;
   }
 
+  .large_screen_side_menu_pdf_container h2,
+  .large_screen_side_menu_item h2 {
+    padding-left: 1.5rem;
+    color: rgb(44, 44, 52);
+  }
   .large_screen_side_menu_item_container {
     cursor: pointer;
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;
+    padding-left: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     position: relative;
   }
-
+  .large_screen_side_menu_item_container:hover{
+    background-color: rgb(41, 137, 201);
+    color: white !important;
+    border-radius: 10px;
+    transition: 0.2s all;
+  }
+  .selected-sidebar{
+    background-color: rgb(41, 137, 201);
+    border-radius: 10px;
+    color: white !important;
+    transition: 0.2s all;
+  }
+  .large_screen_side_menu_item_container:hover h2,
+  .large_screen_side_menu_item_container:hover .large_screen_side_menu_item_icon {
+    color: white;
+  }
+  .selected-sidebar h2 {
+    color: white;
+    font-weight: 400;
+  }
+  .selected-sidebar .large_screen_side_menu_item_icon{
+    color: white;
+  }
   .large_screen_side_menu_item_container h2 {
     font-size: 0.8rem;
     padding-left: 1.5rem;
@@ -157,11 +184,11 @@
     margin: 0 auto !important;
     font-weight: 600;
   }
-
   .large_screen_side_menu_item_selected_border {
     position: absolute;
     left: -1.5rem;
     border-left: 5px solid rgb(41, 137, 201);
+    color: white;
     width: 100%;
     height: 1.5vh;
     transition: opacity 0.5s ease;
@@ -193,15 +220,8 @@
     font-weight: 600;
   }
 
-  .large_screen_side_menu_pdf_container h2,
-  .large_screen_side_menu_item h2 {
-    padding-left: 1.5rem;
-    color: rgb(44, 44, 52);
-  }
-
-  .large_screen_side_menu_item h2:hover {
-    color: rgb(155, 155, 155);
-    transition: color 0.5s ease;
+  .large_screen_side_menu_item_container h2 {
+    margin-left: 10px;
   }
 
   .large_screen_side_menu_pdf_container h2:hover {
@@ -273,13 +293,13 @@
 
 @media only screen and (min-width: 1400px) {
   .large_sceen_logged_in_side_menu {
-    width: 34vw;
+    width: 25vw;
   }
 }
 
 @media only screen and (min-width: 1600px) {
   .large_sceen_logged_in_side_menu {
-    width: 30vw;
+    width: 25vw;
   }
 }
 
@@ -288,9 +308,9 @@
   .large_sceen_logged_in_side_menu {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    width: 20%;
+    width: 18%;
   }
-
+  large_screen_side_menu_item_container
   .large_screen_side_menu_profile_client_avatar {
     font-size: 5rem;
   }
@@ -390,7 +410,7 @@
   .large_sceen_logged_in_side_menu {
     padding-left: 3.1rem;
     padding-right: 3.1rem;
-    width: 23vw;
+    width: 20vw;
   }
 
   .large_screen_account_nav_logo {

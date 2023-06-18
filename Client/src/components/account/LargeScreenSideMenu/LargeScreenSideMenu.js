@@ -545,17 +545,11 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           </div>
           {getEmployeeData ? (
             <>
-            <div className="large_screen_side_menu_item_container">
+            <div className={location.pathname.includes("activity") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
               <Link
                 className="large_screen_side_menu_item"
                 to="/admin/activity"
               >
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("activity") ? 1 : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faBell}
                   className="large_screen_side_menu_item_icon"
@@ -587,42 +581,25 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               </Link>
             </div>
             <div
-              className="large_screen_side_menu_item_container"
+              className={location.pathname.includes("/admin/dashboard") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
               // onClick={(e)=>{alert("yes")}}
             >
               <Link className="large_screen_side_menu_item" to="/admin/dashboard">
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("/admin/dashboard")
-                      ? 1
-                      : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faChartLine}
                   className="large_screen_side_menu_item_icon"
                 />
-                <h2>Panoramica</h2>
+                <h2>Dashboard</h2>
               </Link>
             </div>
             </>
           ) : null}
           {getEmployeeData ? (
-            <>
             <div
-              className="large_screen_side_menu_item_container"
+              className={location.pathname.includes("/admin/clients") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
               onClick={handleAdminResetNotifications}
             >
               <Link className="large_screen_side_menu_item" to="/admin/clients">
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("/admin/clients")
-                      ? 1
-                      : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faUsers}
                   className="large_screen_side_menu_item_icon"
@@ -630,22 +607,12 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 <h2>Clienti</h2>
               </Link>
             </div>
-          
-            </>
           ) : (
-            <div className="large_screen_side_menu_item_container">
+            <div className={location.pathname.includes("upcomingappointments") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
               <Link
                 className="large_screen_side_menu_item"
                 to="/account/clientprofile/upcomingappointments"
               >
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("upcomingappointments")
-                      ? 1
-                      : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faCalendarAlt}
                   className="large_screen_side_menu_item_icon"
@@ -653,19 +620,13 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 <h2>Appuntamenti in arrivo</h2>
               </Link>
             </div>
-          )}{" "}
+          )}
           {getEmployeeData ? (
             <div
-              className="large_screen_side_menu_item_container"
+            className={location.pathname.includes("staff") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
               onClick={handleAdminResetNotifications}
             >
               <Link className="large_screen_side_menu_item" to="/admin/staff">
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("staff") ? 1 : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faIdBadge}
                   className="large_screen_side_menu_item_icon"
@@ -674,19 +635,11 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               </Link>
             </div>
           ) : (
-            <div className="large_screen_side_menu_item_container">
+            <div className={location.pathname.includes("pastappointments") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
               <Link
                 className="large_screen_side_menu_item"
                 to="/account/clientprofile/pastappointments"
               >
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("pastappointments")
-                      ? 1
-                      : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faHistory}
                   className="large_screen_side_menu_item_icon"
@@ -698,23 +651,13 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           {getEmployeeData ? (
             <>
               <div
-                className="large_screen_side_menu_item_container"
+                className={location.pathname.includes("schedule") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
                 onClick={handleAdminResetNotifications}
               >
                 <Link
                   className="large_screen_side_menu_item"
                   to="/admin/schedule"
                 >
-                  <div
-                    className="large_screen_side_menu_item_selected_border"
-                    style={{
-                      opacity:
-                        location.pathname.includes("schedule") &&
-                        !location.pathname.includes("saltcave")
-                          ? 1
-                          : 0,
-                    }}
-                  />
                   <FontAwesomeIcon
                     icon={faCalendarWeek}
                     className="large_screen_side_menu_item_icon"
@@ -728,18 +671,10 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
 
             
               <div
-              className="large_screen_side_menu_item_container"
+              className={location.pathname.includes("/admin/service") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
               // onClick={(e)=>{alert("yes")}}
             >
               <Link className="large_screen_side_menu_item" to="/admin/service">
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("/admin/service")
-                      ? 1
-                      : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faBriefcase}
                   className="large_screen_side_menu_item_icon"
@@ -754,17 +689,11 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
             </>
           ) : (
             <>
-            <div className="large_screen_side_menu_item_container">
+            <div className={location.pathname.includes("consentform") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
               <Link
                 className="large_screen_side_menu_item"
                 to={`/account/clientprofile/consentform/${consentFormLastPageOpened}`}
               >
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("consentform") ? 1 : 0,
-                  }}
-                />
                 <FontAwesomeIcon
                   icon={faFileSignature}
                   className="large_screen_side_menu_item_icon"
@@ -772,17 +701,11 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 <h2>Modulo consensi</h2>
               </Link>
             </div>
-            <div className="large_screen_side_menu_item_container">
+            <div className={location.pathname.includes("/profile") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
                 <Link
                   className="large_screen_side_menu_item"
                   to="/account/clientprofile/profile"
                 >
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("/profile") ? 1 : 0,
-                  }}
-                />
                   <FontAwesomeIcon
                     icon={faCamera}
                     className="large_screen_side_menu_item_icon"
@@ -809,7 +732,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   <h2>La mia routine</h2>
                 </Link>
               </div>{" "}
-              <div className="large_screen_side_menu_item_container">
+              <div className={location.pathname.includes("activity") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
                 <Link
                   className="large_screen_side_menu_item"
                   to="/"
@@ -822,7 +745,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   <h2>Raccomandazioni</h2>
                 </Link>
               </div>
-              <div className="large_screen_side_menu_item_container">
+              <div className={location.pathname.includes("activity") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
                 <Link
                   className="large_screen_side_menu_item"
                   to="/"
@@ -835,7 +758,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   <h2>Quiz</h2>
                 </Link>
               </div>
-              <div className="large_screen_side_menu_item_container">
+              <div className={location.pathname.includes("activity") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
                 <Link
                   className="large_screen_side_menu_item"
                   to="/"

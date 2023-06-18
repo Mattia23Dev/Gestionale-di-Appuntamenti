@@ -22,7 +22,7 @@ const adminLoginQuery = {
 
     if (!employee) {
       throw new UserInputError(
-        "There is no registered employee associated with that email."
+        "Non esiste un membro dello staff con questa email."
       );
     } else {
       if (!employee.permanentPasswordSet) {
@@ -89,27 +89,27 @@ const adminLoginQuery = {
           context.res.cookie("temporary-admin-access-token", accessToken, {
             maxAge: 1000 * 60 * 15,
             httpOnly: true,
-            //secure: process.env.NODE_ENV === "production" ? true : false,
-            /*domain:
+            secure: process.env.NODE_ENV === "production" ? true : false,
+            domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
-                : "localhost",*/
+                : "localhost",
             sameSite: 'none',
-            domain: 'booknowpro.it', 
-            secure: true,
+            //domain: 'booknowpro.it', 
+            //secure: true,
           });
 
           context.res.cookie("temporary-admin-dummy-token", dummyToken, {
             maxAge: 1000 * 60 * 15,
             httpOnly: false,
-            //secure: process.env.NODE_ENV === "production" ? true : false,
-            /*domain:
+            secure: process.env.NODE_ENV === "production" ? true : false,
+            domain:
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
-                : "localhost",*/
+                : "localhost",
             sameSite: 'none',
-            domain: 'booknowpro.it', 
-            secure: true,
+            //domain: 'booknowpro.it', 
+            //secure: true,
           });
         } else {
           throw new UserInputError("Incorrect password.");
@@ -142,14 +142,14 @@ const adminLoginQuery = {
         context.res.cookie("admin-dummy-token", dummyToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
           httpOnly: false,
-          //secure: process.env.NODE_ENV === "production" ? true : false,
-          /*domain:
+          secure: process.env.NODE_ENV === "production" ? true : false,
+          domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
-              : "localhost",*/
+              : "localhost",
           sameSite: 'none',
-          domain: 'booknowpro.it', 
-          secure: true,   
+          //domain: 'booknowpro.it', 
+          //secure: true,   
         });
 
         const { accessToken, refreshToken } = createAdminTokens(employee);
@@ -157,27 +157,27 @@ const adminLoginQuery = {
         context.res.cookie("admin-access-token", accessToken, {
           maxAge: 1000 * 60 * 15,
           httpOnly: false,
-          //secure: process.env.NODE_ENV === "production" ? true : false,
-          /*domain:
+          secure: process.env.NODE_ENV === "production" ? true : false,
+          domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
-              : "localhost",*/
-          domain: 'booknowpro.it',     
+              : "localhost",
+          //domain: 'booknowpro.it',     
           sameSite: 'none',
-          secure: true,
+          //secure: true,
         });
 
         context.res.cookie("admin-refresh-token", refreshToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7 * 4,
           httpOnly: false,
-          //secure: process.env.NODE_ENV === "production" ? true : false,
-          /*domain:
+          secure: process.env.NODE_ENV === "production" ? true : false,
+          domain:
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
-              : "localhost",*/
-          domain: 'booknowpro.it',    
+              : "localhost",
+          //domain: 'booknowpro.it',    
           sameSite: 'none',
-          secure: true,
+          //secure: true,
         });
 
         context.res.clearCookie("dummy-token", {

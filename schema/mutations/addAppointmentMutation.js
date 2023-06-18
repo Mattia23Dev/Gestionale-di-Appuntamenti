@@ -135,18 +135,18 @@ const addAppointmentMutation = {
       client.messages
         .create({
           body:
-            "Hi, " +
+            "Ciao, " +
             clientObject.firstName[0].toUpperCase() +
             clientObject.firstName.slice(1).toLowerCase() +
-            "! Your Glow Labs appointment has been scheduled for " +
+            "! il tuo appuntamento è stato prenotato per" +
             appointmentObject.startTime +
             " " +
             appointmentObject.morningOrEvening +
-            " on " +
+            " il " +
             moment(appointmentObject.date, "MMMM D, YYYY").format(
               "dddd, MMMM Do, YYYY"
             ) +
-            ` at 1506 Broadway, Hewlett, NY 11557. Reply Y to confirm.\n\nIf you need to cancel or reschedule your appointment, please call us at (516) 442-8122 or visit ${
+            ` a 1506 Broadway, Hewlett, NY 11557. Reply Y to confirm.\n\nIf you need to cancel or reschedule your appointment, please call us at (516) 442-8122 or visit ${
               process.env.NODE_ENV === "production"
                 ? "https://is.gd/glow_labs"
                 : "https://is.gd/glowlabs"
@@ -227,7 +227,6 @@ const addAppointmentMutation = {
             phoneNumber: args.client[0].phoneNumber,
           },
       treatments: args.treatments,
-      addOns: args.addOns === [] ? null : args.addOns,
       notes: args.notes === "" ? null : args.notes,
       confirmed: false,
     });
@@ -361,7 +360,7 @@ const addAppointmentMutation = {
             await transporter.sendMail({
               from: process.env.GLOW_LABS_EMAIL,
               to: client_res.email,
-              subject: "Your Glow Labs Appointment",
+              subject: "Il tuo appuntamento",
               html: finalTemplate,
             });
           });
@@ -474,7 +473,7 @@ const addAppointmentMutation = {
           await transporter.sendMail({
             from: process.env.GLOW_LABS_EMAIL,
             to: args.client[0].email,
-            subject: "Your Glow Labs Appointment",
+            subject: "Il tuo appuntamento",
             html: finalTemplate,
           });
         });
@@ -627,7 +626,7 @@ const addAppointmentMutation = {
           await transporter.sendMail({
             from: process.env.GLOW_LABS_EMAIL,
             to: args.client[0].email,
-            subject: "Your Glow Labs Appointment",
+            subject: "Il tuo appuntamento",
             html: finalTemplate,
           });
         });

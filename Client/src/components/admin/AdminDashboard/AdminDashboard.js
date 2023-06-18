@@ -123,6 +123,7 @@ const AdminService = (props) => {
   const [chartData, setChartData] = useState(null);
   const [numberAppointments, setNumberAppointments] = useState();
   const [numberClients, setNumberClients] = useState();
+  const [appsOver30Days, setAppsOver30Days] = useState([]);
   const [numberServices, setNumberServices] = useState();
   const [totalPrice, setTotalPrice] = useState();
   const [totalPriceRestart, setTotalPriceRestart] = useState();
@@ -368,6 +369,26 @@ const add =()=>{
         setTotalPriceRestart(totalPrices);
       }
     console.log(getAllAppointmentsData);
+
+    if (getAllAppointmentsData && getAllAppointmentsData.all_appointments) {
+      const appointments = getAllAppointmentsData.all_appointments;
+    
+      const filteredAppointments = appointments.filter((appointment) => {
+        const thirtyDaysAgo = moment().subtract(31, 'days');
+        
+        // Verifica se il cliente ha effettuato altri appuntamenti successivi a 30 giorni fa
+        const hasRecentAppointment = appointments.some((recentAppointment) =>
+          recentAppointment.client === appointment.client && moment(recentAppointment.date) > thirtyDaysAgo
+        );
+    
+        // Filtra solo gli appuntamenti con una data precedente a 30 giorni fa e senza appuntamenti più recenti
+        return moment(appointment.date) <= thirtyDaysAgo && !hasRecentAppointment;
+      });
+    
+      filteredAppointments.sort((a, b) => moment(b.date) - moment(a.date));
+      console.log('Appointments made 30 or more days ago without recent appointments:', filteredAppointments);
+      setAppsOver30Days(filteredAppointments);
+    }
   }, [getEmployeesData, getAllAppointmentsData, getClientsData])
 
   const handleStartDateChange = (date) => {
@@ -768,6 +789,31 @@ const [chartNum, setChartNum] = useState(null);
                 <button onClick={handlePreviousWeek}>Settimana precedente</button>
                 <button onClick={handleNextWeek}>Settimana successiva</button>
                 <canvas id="earningsChart" ref={chartRef}></canvas>
+          </div>
+          <div className="card-dashboard-chart">
+          <h2>Clienti che non vengono da più di 1 mese</h2>
+          <div className="appointment-table">
+              <table className="table-dashboard">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Nome Cliente</th>
+                    <th>Cognome Cliente</th>
+                    <th>Servizio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {appsOver30Days.length > 0 && appsOver30Days.map((appointment) => (
+                    <tr key={appointment.id}>
+                      <td>{moment(appointment.date).format('DD/MM/YYYY')}</td>
+                      <td>{appointment.client.firstName}</td>
+                      <td>{appointment.client.lastName}</td>
+                      <td>{appointment.treatments[0].name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              </div>
           </div>
           <div className="dashboard-middle-container">
             <div className="card-dashboard">

@@ -34,9 +34,9 @@ const registerClientMutation = {
       clientEmailMatch &&
       (clientEmailMatch.password || clientEmailMatch.tokenCount > 0)
     ) {
-      throw new UserInputError("This email has already been registered.", {
+      throw new UserInputError("questa email è stata già registrata.", {
         errors: {
-          email: "This email has already been registered.",
+          email: "Questa email è stata già registrata.",
         },
       });
     }
@@ -50,10 +50,10 @@ const registerClientMutation = {
       (clientPhoneMatch.password || clientPhoneMatch.tokenCount > 0)
     ) {
       throw new UserInputError(
-        "This phone number has already been registered.",
+        "Questo numemro è già registrato.",
         {
           errors: {
-            phoneNumber: "This phone number has already been registered.",
+            phoneNumber: "Questo numero è già registrato.",
           },
         }
       );

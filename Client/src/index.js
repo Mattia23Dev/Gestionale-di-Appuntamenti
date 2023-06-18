@@ -21,7 +21,6 @@ import LandingPage from "./components/landing_page/LandingPage";
 import FollowUs from "./components/follow_us/FollowUs";
 import ContactUs from "./components/contact_us/ContactUs";
 import AllTreatments from "./components/all_treatments/AllTreatments";
-import AllAddOns from "./components/all_add_ons/AllAddOns";
 import ShoppingCart from "./components/shopping_cart/ShoppingCart";
 import * as smoothscroll from "smoothscroll-polyfill";
 import Cookies from "js-cookie";
@@ -1735,15 +1734,6 @@ const App = () => {
                 }
                 treatmentsPageInView={treatmentsPageInView}
                 scrollValue={scrollValue}
-              />
-              <AllAddOns
-                name="add_ons"
-                currentScreenSize={currentScreenSize}
-                initialScreenSize={initialScreenSize}
-                AddOnsRef={AddOnsRef}
-                resetAllCartStatesExceptTreatments={
-                  resetAllCartStatesExceptTreatments
-                }
               />
               <FollowUs
                 name="instagram"
