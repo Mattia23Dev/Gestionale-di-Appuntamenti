@@ -1,0 +1,53 @@
+.chi-siamo {
+    font-family: Arial, sans-serif;
+  }
+  
+  .hero {
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 24px;
+  }
+  
+  .description {
+    background-color: #f2f2f2;
+    padding: 50px;
+  }
+  
+  .description h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .description p {
+    font-size: 18px;
+  }
+  
+  .numbers {
+    background-color: #fff;
+    padding: 50px;
+    text-align: center;
+  }
+  
+  .numbers h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .numbers .number {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }

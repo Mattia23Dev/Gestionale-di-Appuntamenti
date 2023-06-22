@@ -106,7 +106,6 @@ const AdminCreateAppointment = (props) => {
   );
 
   const [selectedTreatments, changeSelectedTreatments] = useState([]);
-  const [selectedAddOns, changeSelectedAddOns] = useState([]);
 
   const [
     addAppointment,
@@ -720,7 +719,6 @@ const AdminCreateAppointment = (props) => {
     }
 
     const regularDuration = regularTreatments
-      .concat(selectedAddOns)
       .map((x) => x.duration)
       .reduce((a, b) => a + b, 0);
 
@@ -770,7 +768,7 @@ const AdminCreateAppointment = (props) => {
             duration: regularDuration,
             esthetician: adminAppointmentStaffMember.value,
             treatments: selectedTreatments,
-            addOns: selectedAddOns,
+            addOns: [],
             notes: adminAppointmentNotes,
           },
         });

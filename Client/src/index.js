@@ -22,6 +22,7 @@ import FollowUs from "./components/follow_us/FollowUs";
 import ContactUs from "./components/contact_us/ContactUs";
 import AllTreatments from "./components/all_treatments/AllTreatments";
 import ShoppingCart from "./components/shopping_cart/ShoppingCart";
+import ChiSiamo from "./components/chiSiamo/ChiSiamo";
 import * as smoothscroll from "smoothscroll-polyfill";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -129,6 +130,7 @@ import ACTION_ON_ACTIVITY_PAGE from "./actions/Admin/OnActivityPage/ACTION_ON_AC
 import ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION from "./actions/Admin/AdminNotificationSubscription/ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION";
 import ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION_RESET from "./actions/Admin/AdminNotificationSubscription/ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION_RESET";
 import "./styles.css";
+import { SidebarProvider } from "./components/account/LargeScreenSideMenu/SidebarContext";
 
 // Lazy-loaded Routes
 const Availability = React.lazy(() =>
@@ -1676,11 +1678,10 @@ const App = () => {
         <CookieBanner
           link={
             <p>
-              By using this website, you agree to our{" "}
-              <Link to="/privacy">Privacy Policy</Link>,{" "}
-              <Link to="/termsandconditions">Terms and Conditions</Link>, and
-              Use of cookies. We use cookies to provide you with a personalized
-              experience.
+             Usando questo sito, acconseni alle nostre{" "}
+              <Link to="/privacy">Privacy Policy</Link>,{" e "}
+              <Link to="/termsandconditions">Terms and Conditions</Link>, e
+              l'uso dei cookies. Usiamo i cookies per fornire un'esperienza personalizzata.
             </p>
           }
           cookie="user-has-accepted-cookies"
@@ -1746,6 +1747,38 @@ const App = () => {
                 initialScreenSize={initialScreenSize}
                 currentScreenSize={currentScreenSize}
                 ContactRef={ContactRef}
+              />
+            </div>
+          </KeepAlive>
+        </Route>
+        <Route exact path="/chi-siamo">
+          <KeepAlive saveScrollPosition="screen">
+            <div
+              className="main_container"
+              onScroll={(e) => handleScrollDirection(e)}
+              ref={MainContainerRef}
+              style={{ overflow: splashScreenComplete ? "auto" : "hidden" }}
+              id="main_container_element"
+            >
+              {redirectToCartRoutes()}
+              <ChiSiamo
+                currentScreenSize={currentScreenSize}
+                initialScreenSize={initialScreenSize}
+                currentScreenHeight={currentScreenHeight}
+                initialScreenHeight={initialScreenHeight}
+                handleClickToScrollToHome={handleClickToScrollToHome}
+                handleClickToScrollToTreatments={
+                  handleClickToScrollToTreatments
+                }
+                handleClickToScrollToAddOns={handleClickToScrollToAddOns}
+                handleClickToScrollToInstagram={handleClickToScrollToInstagram}
+                handleClickToScrollToContact={handleClickToScrollToContact}
+                navbarVisible={navbarVisible}
+                treatmentsPageInView={treatmentsPageInView}
+                scrollDirection={scrollDirection}
+                scrollValue={scrollValue}
+                ref={ref}
+                name="chiSiamo"
               />
             </div>
           </KeepAlive>
@@ -1868,9 +1901,11 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <AliveScope>
+        <SidebarProvider>
+         <AliveScope>
           <App />
         </AliveScope>
+        </SidebarProvider>
       </ApolloProvider>
     </Provider>
   </Router>,

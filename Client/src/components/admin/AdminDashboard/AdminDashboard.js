@@ -725,7 +725,7 @@ const [chartNum, setChartNum] = useState(null);
             icon={faChevronLeft}
           />
         </Link>
-        <h1>PANORAMICA</h1>
+        <h1>DASHBOARD</h1>
       </div>
       {adminDash ? 
       <div className="dashboard-container">

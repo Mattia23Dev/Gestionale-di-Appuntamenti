@@ -767,6 +767,7 @@ const AdminClients = (props) => {
             onChange={handleChangeClientFilter}
             maxLength={128}
             onKeyDown={preventKeys}
+            style={{borderRadius: '20px'}}
           />
           <FontAwesomeIcon
             className="admin_clients_searchbar_icon"

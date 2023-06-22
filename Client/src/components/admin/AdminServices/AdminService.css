@@ -178,6 +178,7 @@ tbody td:first-of-type{
   .thead > tr > th {
     font-size: 0.8rem;
   }
+
   .button-filter-container{
     display: flex;
     justify-content: center;

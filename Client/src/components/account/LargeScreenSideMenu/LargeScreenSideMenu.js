@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
+import React, { useRef, useEffect, useCallback, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -22,6 +22,7 @@ import {
   faCircle,
   faIdBadge,
   faChartLine,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CanvasDraw from "@win11react/react-canvas-draw";
@@ -39,6 +40,7 @@ import ACTION_NAVBAR_TOGGLE_RESET from "../../../actions/Nav/ACTION_NAVBAR_TOGGL
 import ACTION_BODY_SCROLL_ALLOW from "../../../actions/Body_Scroll/ACTION_BODY_SCROLL_ALLOW";
 import "./LargeScreenSideMenu.css";
 import "../../../components/treatments/card_styling.css";
+import { SidebarContext } from "./SidebarContext";
 
 const override = css`
   display: block;
@@ -59,6 +61,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
     resetNotifications,
   } = props;
 
+  const { isSidebarOpen, toggleSidebar } = useContext(SidebarContext);
   const dispatch = useDispatch();
   const location = useLocation();
   const signature = useRef(null);
@@ -296,10 +299,11 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
     document.body.classList.remove("no_scroll");
     document.body.style.setProperty("overflow", "scroll");
   };
+  console.log(isSidebarOpen);
 
   return (
     <div
-      className="large_sceen_logged_in_side_menu"
+    className={`${isSidebarOpen ? 'large_sceen_logged_in_side_menu open' : 'closed'}`}
       style={{
         filter: cartIsActive
           ? "blur(8px) brightness(70%)"
@@ -381,6 +385,11 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
         </div>
       </div>
       <div className="large_screen_side_menu_profile_container">
+                  <FontAwesomeIcon
+            icon={faBars}
+            className={`sidebar-toggle-button`}
+            onClick={toggleSidebar}
+          />
         <div className="large_screen_side_menu_profile_client_avatar_container">
           {getClientData ? (
             getClientData.client ? (

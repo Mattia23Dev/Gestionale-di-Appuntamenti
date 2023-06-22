@@ -641,6 +641,7 @@ const add =()=>{
             onChange={handleChangeEmployeeFilter}
             maxLength={128}
             onKeyDown={preventKeys}
+            style={{borderRadius: '20px'}}
           />
           <FontAwesomeIcon
             className="admin_clients_searchbar_icon"
@@ -704,20 +705,22 @@ const add =()=>{
                        
                         <p className="service-icon" onClick={() => handleDeleteService(item._id)}>
                           <FontAwesomeIcon
-                            className="large_screen_side_menu_item_icon service-icon"
+                            className="large_screen_side_menu_item_icon service-icon fa-3x"
                             icon={faTrash}
                             style={{
                               color: "rgba(0, 129, 177, 0.9)",
+                              fontSize: '1em',
                             }}
                           />
                        
                         </p>
                         <p className="service-icon" onClick={() => handleUpdateService(item._id) }>
                           <FontAwesomeIcon
-                            className="large_screen_side_menu_item_icon service-icon"
+                            className="large_screen_side_menu_item_icon service-icon fa-3x"
                             icon={faEdit}
                             style={{
                               color: "rgba(0, 129, 177, 0.9)",
+                              fontSize: '1em',
                             }}
                           />
                         </p>
@@ -730,6 +733,7 @@ const add =()=>{
                             icon={faTrash}
                             style={{
                               color: "rgba(0, 129, 177, 0.9)",
+                              fontSize: '0.5em',
                             }}
                           />
                        
@@ -740,6 +744,7 @@ const add =()=>{
                             icon={faEdit}
                             style={{
                               color: "rgba(0, 129, 177, 0.9)",
+                              fontSize: '0.5em',
                             }}
                           />
                         </p>

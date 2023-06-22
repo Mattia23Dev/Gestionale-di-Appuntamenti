@@ -573,6 +573,7 @@ const AdminStaff = (props) => {
             onChange={handleChangeEmployeeFilter}
             maxLength={128}
             onKeyDown={preventKeys}
+            style={{borderRadius: '20px'}}
           />
           <FontAwesomeIcon
             className="admin_clients_searchbar_icon"
@@ -822,9 +823,7 @@ const AdminStaff = (props) => {
                             item.lastName.slice(1).toLowerCase()}
                         </p>
                         <p>
-                          {item.employeeRole.length > 0
-                            ? item.employeeRole.join(", ")
-                            : null}
+                        {item.employeeRole.length > 0 ? item.employeeRole.includes("Esthetician") ? "Estetista" : item.employeeRole : null}
                         </p>
                         <p>{item.phoneNumber ? item.phoneNumber : null}</p>
                       </div>

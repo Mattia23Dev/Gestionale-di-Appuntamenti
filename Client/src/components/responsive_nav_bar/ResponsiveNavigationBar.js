@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { GrCart } from "react-icons/gr";
 import { FaCircle, FaUser } from "react-icons/fa";
 import { FcHome, FcPlus, FcAbout, FcLike, FcPaid } from "react-icons/fc";
+import { useHistory } from 'react-router-dom';
 import { toast } from "react-toastify";
 import BurgerMenu from "./Burger/BurgerMenuComponent";
 import { Link, useLocation } from "react-router-dom";
@@ -147,6 +148,12 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
         return "rgb(44,44,52)";
       }
     }
+  };
+
+  const history = useHistory();
+
+  const navigateToChiSiamo = () => {
+    history.push('/chi-siamo');
   };
 
   const cartActivated = () => {
@@ -691,19 +698,15 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
             </li>
             <li tabIndex={0} onClick={() => navMenuScrollToTreatments()}>
               <FcPaid />
-              Trattamenti
+              Prenota
             </li>
             <li tabIndex={0} onClick={() => navMenuScrollToAddOns()}>
               <FcPlus />
-              Aggiuntivi
+              Servizi
             </li>
             <li tabIndex={0} onClick={() => navMenuScrollToInstagram()}>
               <FcLike />
-              Seguici
-            </li>
-            <li tabIndex={0} onClick={() => navMenuScrollToContact()}>
-              <FcAbout />
-              Contattaci
+              Chi siamo
             </li>
             <li className="navbar_social_media_icons">
               <FontAwesomeIcon
@@ -851,7 +854,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
                 : "rgb(239, 240, 243)",
           }}
         >
-          TRATTAMENTI
+          PRENOTA
         </h2>
         <h2
           style={{
@@ -882,38 +885,38 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           }}
           onClick={props.handleClickToScrollToAddOns}
         >
-          AGGIUNTIVI
+          SERVIZI
         </h2>
         <h2
-          onClick={props.handleClickToScrollToInstagram}
-          style={{
-            color:
-              props.currentScreenSize === ""
-                ? props.initialScreenSize >= 1200
-                  ? props.scrollValue <= 1
-                    ? cartIsActive ||
-                      location.pathname.includes("account") ||
-                      location.pathname.includes("admin") ||
-                      location.pathname.includes("privacy") ||
-                      location.pathname.includes("termsandconditions")
-                      ? "rgb(239, 240, 243)"
-                      : "rgb(44, 44, 52)"
-                    : "rgb(239, 240, 243)"
-                  : "rgb(239, 240, 243)"
-                : props.currentScreenSize >= 1200
-                ? props.scrollValue <= 1
-                  ? cartIsActive ||
-                    location.pathname.includes("account") ||
-                    location.pathname.includes("admin") ||
-                    location.pathname.includes("privacy") ||
-                    location.pathname.includes("termsandconditions")
-                    ? "rgb(239, 240, 243)"
-                    : "rgb(44, 44, 52)"
-                  : "rgb(239, 240, 243)"
-                : "rgb(239, 240, 243)",
-          }}
+        onClick={navigateToChiSiamo}
+                  style={{
+                    color:
+                      props.currentScreenSize === ""
+                        ? props.initialScreenSize >= 1200
+                          ? props.scrollValue <= 1
+                            ? cartIsActive ||
+                              location.pathname.includes("account") ||
+                              location.pathname.includes("admin") ||
+                              location.pathname.includes("privacy") ||
+                              location.pathname.includes("termsandconditions")
+                              ? "rgb(239, 240, 243)"
+                              : "rgb(44, 44, 52)"
+                            : "rgb(239, 240, 243)"
+                          : "rgb(239, 240, 243)"
+                        : props.currentScreenSize >= 1200
+                        ? props.scrollValue <= 1
+                          ? cartIsActive ||
+                            location.pathname.includes("account") ||
+                            location.pathname.includes("admin") ||
+                            location.pathname.includes("privacy") ||
+                            location.pathname.includes("termsandconditions")
+                            ? "rgb(239, 240, 243)"
+                            : "rgb(44, 44, 52)"
+                          : "rgb(239, 240, 243)"
+                        : "rgb(239, 240, 243)",
+                  }}
         >
-          SEGUICI
+          CHI SIAMO
         </h2>
         <div
           className="nav_login_container"

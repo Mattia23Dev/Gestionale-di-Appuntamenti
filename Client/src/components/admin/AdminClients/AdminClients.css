@@ -39,7 +39,6 @@
   top: 0;
   bottom: 0;
 }
-
 .admin_individual_client_container {
   border-bottom: 2px solid rgb(181, 181, 181);
   margin-left: 1.5rem;
@@ -661,7 +660,7 @@
     top: 5rem;
     font-size: 2rem;
   }
-
+  
   .admin_individual_client_add_photo_modal_content_container {
     height: 50%;
     top: 0;

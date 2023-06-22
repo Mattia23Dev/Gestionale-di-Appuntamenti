@@ -47,7 +47,7 @@ const AdminClientDescription = (props) => {
   });
   if (data) console.log(data.client, "Client data");
   useEffect(() => {
-    if (data) {setDescription(data.client.description)};
+    if (data) {setDescription(data.client.description !== undefined ? data.client.description : '')};
   }, [data]);
   const navigate = useHistory()
   const handleCompleteRegistration = () => {
@@ -149,7 +149,7 @@ const AdminClientDescription = (props) => {
               aria-autocomplete="list"
               aria-controls="react-autowhatever-1"
               className="react-autosuggest__input"
-              value={description}
+              value={description || ''}
               // onChange={(e) => {
               //   resetAllErrorStates();
               //   dispatch(
