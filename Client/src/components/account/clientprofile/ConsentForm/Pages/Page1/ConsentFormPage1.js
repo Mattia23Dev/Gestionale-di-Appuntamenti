@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { SidebarContext } from "../../../../LargeScreenSideMenu/SidebarContext";
 import { Redirect, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -61,8 +62,10 @@ const ConsentFormPage1 = (props) => {
     dispatch(ACTION_CONSENT_FORM_PAGE_1());
   }, [dispatch]);
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
-    <div className="client_consent_form_container">
+    <div className={`client_consent_form_container ${isSidebarOpen ? '' : 'client_consent_form_container_closed'}`}> 
       {redirectToLogInPage()}
       <div className="client_consent_form_header">
         {guestConsentFormAccessToken ? null : (
@@ -73,7 +76,7 @@ const ConsentFormPage1 = (props) => {
             />
           </Link>
         )}
-        <h1>CONSENT FORM</h1>
+        <h1>MODULO CONSENSI</h1>
       </div>
       <SurgeryLast3Months
         currentScreenSize={props.currentScreenSize}

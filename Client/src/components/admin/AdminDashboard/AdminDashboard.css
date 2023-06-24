@@ -6,6 +6,7 @@
     gap: 4rem;
     width: 100%;
 }
+
 .appointment-table{
     height: 400px !important; 
     overflow-y: scroll; 

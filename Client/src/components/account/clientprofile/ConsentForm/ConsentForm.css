@@ -349,12 +349,17 @@
 /* CSS for Regular Desktops/Small Laptops and Tablets */
 @media only screen and (min-width: 1200px) {
   .client_consent_form_container {
-    width: 70%;
+    width: 80%;
     margin-bottom: 10vh;
     position: absolute;
     right: 0;
+    transition: 0.2s all;
   }
 
+  .client_consent_form_container_closed{
+    width: 87%;
+    transition: 0.2s all;
+  }
   .client_consent_form_header h1 {
     font-size: 2rem;
   }

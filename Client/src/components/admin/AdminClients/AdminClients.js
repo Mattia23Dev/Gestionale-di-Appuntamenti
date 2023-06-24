@@ -4,7 +4,9 @@ import React, {
   useMemo,
   useRef,
   useCallback,
+  useContext,
 } from "react";
+import { SidebarContext } from "../../account/LargeScreenSideMenu/SidebarContext";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, Link, useLocation } from "react-router-dom";
 import { FormGroup, Input } from "reactstrap";
@@ -698,8 +700,10 @@ const AdminClients = (props) => {
     }
   }, [getEmployeesError, getEmployeesRefetch]);
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
-    <div className="admin_clients_container">
+    <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`}>
       {redirectToAdminLogInPage()}
       <Modal
         isOpen={imageLoading || loadingSpinnerActive || getClientsLoading}

@@ -98,9 +98,10 @@
 @media only screen and (min-width: 1200px) {
   .admin_notifications_container {
     position: absolute;
-    width: 100% !important;
+    width: 90% !important;
     padding-top: 8vh;
     right: 0;
+    transition: 0.2s all;
   }
 
   .admin_notifications_content_container {

@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
+import { SidebarContext } from "../../account/LargeScreenSideMenu/SidebarContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -504,8 +505,10 @@ const AdminStaff = (props) => {
     }
   }, [getEmployeesError, getEmployeesRefetch]);
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
-    <div className="admin_clients_container">
+    <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`}>
       {redirectToAdminLogInPage()}
       <Modal
         isOpen={imageLoading || loadingSpinnerActive || getClientsLoading}
@@ -1009,8 +1012,9 @@ const AdminStaff = (props) => {
                 }}
               >
                 <div
-                  className="add_staff_member_button"
+                  className="back_to_all_appointments_button"
                   onClick={() => changeAddStaffMemberClicked(true)}
+                  style={{margin: '0 auto', marginTop: '20px'}}
                 >
                   Aggiungi membro del personale
                 </div>

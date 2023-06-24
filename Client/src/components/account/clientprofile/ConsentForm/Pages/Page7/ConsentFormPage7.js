@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -58,6 +58,7 @@ import ACTION_FINAL_BOOK_BUTTON_RESET from "../../../../../../actions/FinalBookB
 import "../../../../../checkout/ConfirmationPage.css";
 import "../../ConsentForm.css";
 import "../../../../../../bootstrap_forms.min.css";
+import { SidebarContext } from "../../../../LargeScreenSideMenu/SidebarContext";
 
 const ConsentFormPage7 = (props) => {
   const dispatch = useDispatch();
@@ -358,8 +359,10 @@ const ConsentFormPage7 = (props) => {
     changeDrawingSaveData("");
   };
 
+  const {isSidebarOpen} = useContext(SidebarContext);
+
   return (
-    <div className="client_consent_form_container" style={{ height: "100%" }}>
+    <div className={`client_consent_form_container ${isSidebarOpen ? '' : 'client_consent_form_container_closed'}`} style={{ height: "100%" }}>
       {redirectToHome()}
       {redirectToLogInPage()}
       <div className="client_consent_form_header">
@@ -371,7 +374,7 @@ const ConsentFormPage7 = (props) => {
             />
           </Link>
         )}
-        <h1>CONSENT FORM</h1>
+        <h1>MODULO CONSENSI</h1>
       </div>
       <h2 className="consent_form_title_designation">Skin Care Consent</h2>
       <p className="consent_form_sign_paragraph">

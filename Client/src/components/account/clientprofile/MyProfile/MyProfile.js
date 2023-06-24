@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useContext } from "react";
 import LZString from "lz-string";
 import moment from "moment";
 import { useLocation, Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SidebarContext } from "../../LargeScreenSideMenu/SidebarContext";
 import {
   faChevronLeft,
   faFileDownload,
@@ -120,7 +121,7 @@ const MyProfile = (props) => {
             color: "rgba(0, 129, 177, 0.9)",
           }}
         >
-          Download Latest Consent Form
+          Scarica il tuo modulo consensi
         </h2>
         <p style={{ display: pdfLoading ? "none" : "block" }}>
           {"(" +
@@ -146,7 +147,7 @@ const MyProfile = (props) => {
             color: "rgba(177, 48, 0, 0.9)",
           }}
         >
-          No Consent Form on File
+          Nessun modulo consensi
         </h2>
       </div>
     );
@@ -243,10 +244,12 @@ const MyProfile = (props) => {
     }
   };
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
     <div
-      className="my_profile_container"
-      style={{ zIndex: logoutClicked ? -1 : "auto" }}
+      className={`my_profile_container ${isSidebarOpen ? '' : 'my_profile_container_closed'}`} 
+      style={{ zIndex: logoutClicked ? -1 : "auto", overflow: "scroll" }}
     >
       {redirectToHome()}
       {redirectToLogInPage()}
@@ -281,13 +284,13 @@ const MyProfile = (props) => {
         className="my_profile_header"
         style={{ zIndex: logoutClicked ? 0 : 3 }}
       >
-        <Link to="/account/clientprofile">
+        <Link to="/account/clientprofile/upcomingappointments">
           <FontAwesomeIcon
             className="my_profile_back_arrow"
             icon={faChevronLeft}
           />
         </Link>
-        <h1>MY PROFILE</h1>
+        <h1>PROFILO</h1>
       </div>
       <div className="profile_top_section">
         <div className="profile_client_avatar_container">
@@ -331,7 +334,7 @@ const MyProfile = (props) => {
         </div>
         <div className="profile_contact_information_container">
           <div className="profile_name_container">
-            <p>Name</p>
+            <p>Nome</p>
             <p>
               {props.getClientData
                 ? props.getClientData.client.firstName
@@ -346,30 +349,26 @@ const MyProfile = (props) => {
             </p>
           </div>
           <div className="profile_phone_number_container">
-            <p>Phone Number</p>
+            <p>Telefono</p>
             <p>
               {props.getClientData
                 ? props.getClientData.client.phoneNumber
                 : null}
             </p>
           </div>
-          <div className="profile_membership_type_container">
-            <p>Membership Type</p>
-            <p>Default</p>
-          </div>
         </div>
       </div>
       <div className="profile_bottom_buttons_container">
         {renderDownloadConsentFormButton()}
-        <Link to="/account/clientprofile/profile/routine">
+        {/*<Link to="/account/clientprofile/profile/routine">
           <div className="profile_button_container">
             <FontAwesomeIcon className="profile_button_icon" icon={faSpa} />
-            <h2>Skin Care Routine</h2>
+            <h2>Preferenze</h2>
             <FontAwesomeIcon
               className="profile_button_expand"
               icon={faChevronRight}
             />
-          </div>
+              </div>
         </Link>
         <div className="profile_button_container">
           <FontAwesomeIcon className="profile_button_icon" icon={faPencilAlt} />
@@ -378,23 +377,23 @@ const MyProfile = (props) => {
             className="profile_button_expand"
             icon={faChevronRight}
           />
-        </div>
+              </div>*/}
         <div className="profile_button_container">
           <FontAwesomeIcon className="profile_button_icon" icon={faQuestion} />
-          <h2>FAQs</h2>
+          <h2>FAQ</h2>
           <FontAwesomeIcon
             className="profile_button_expand"
             icon={faChevronRight}
           />
         </div>
-        <div className="profile_button_container">
+        {/*<div className="profile_button_container">
           <FontAwesomeIcon className="profile_button_icon" icon={faCamera} />
           <h2>Before / After Photos</h2>
           <FontAwesomeIcon
             className="profile_button_expand"
             icon={faChevronRight}
           />
-        </div>
+            </div>*/}
       </div>
     </div>
   );

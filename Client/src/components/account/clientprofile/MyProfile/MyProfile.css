@@ -169,3 +169,24 @@
     text-align: center;
   }
 }
+
+@media only screen and (min-width: 1200px) {
+  .my_profile_container_closed{
+    width: 90% !important;
+    left: 10% !important;
+    transition: 0.2s all;
+  }
+  .my_profile_container{
+    width: 90%;
+    left: 20%;
+    transition: 0.2s all;
+  }
+  .my_profile_container_closed .my_profile_header{
+    width: 100%;
+    left: 0%;
+  }
+  .my_profile_header{
+    width: 100%;
+  }
+}
+

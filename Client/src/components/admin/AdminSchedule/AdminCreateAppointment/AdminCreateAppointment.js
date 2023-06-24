@@ -68,7 +68,7 @@ const AdminCreateAppointment = (props) => {
   const [
     bookWithoutCardCollapseOpen,
     changeBookWithoutCardCollapseOpen,
-  ] = useState(false);
+  ] = useState(true);
 
   const adminClientFirstName = useSelector(
     (state) => state.adminClientFirstName.admin_client_first_name
@@ -1185,7 +1185,7 @@ const AdminCreateAppointment = (props) => {
                 }}
               >
                 Prenota con la Carta
-              </div>*/}
+              </div>
               <div
                 className="admin_book_without_card_button"
                 onClick={() => {
@@ -1193,10 +1193,12 @@ const AdminCreateAppointment = (props) => {
                     !bookWithoutCardCollapseOpen
                   );
                   changeAddCardCollapseOpen(false);
+
                 }}
               >
                 Prenota ora
               </div>
+              */}
             </div>
             <Collapse isOpen={addCardCollapseOpen}>
               <AdminPaymentInfo
@@ -1207,12 +1209,13 @@ const AdminCreateAppointment = (props) => {
               />
             </Collapse>
             <Collapse isOpen={bookWithoutCardCollapseOpen}>
-              <div className="admin_square_payment_form_container">
-                <div className="sq-payment-form">
-                  <div className="sq-creditcard" onClick={handleSubmitBooking}>
+              <div className="selected_appointments_bottom_buttons_container">
+                  <div className="back_to_all_appointments_button" 
+                  onClick={handleSubmitBooking}
+                  style={{marginTop: '30px'}}
+                  >
                     PRENOTA APPUNTAMENTO
                   </div>
-                </div>
               </div>
             </Collapse>
           </div>

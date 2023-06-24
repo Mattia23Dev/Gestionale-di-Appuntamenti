@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SidebarContext } from "../../account/LargeScreenSideMenu/SidebarContext";
 import {
   faChevronLeft,
   faUsers,
@@ -522,7 +523,7 @@ useEffect(() => {
             selectedEmployee ? `di ${selectedEmployee}` : "totale"
           }`,
           data: updatedDaysInCurrentWeek.map((day) => day.price),
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          backgroundColor: 'rgb(41, 137, 201)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
         },
@@ -541,6 +542,7 @@ useEffect(() => {
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          height: '200px',
           scales: {
             y: {
               beginAtZero: true, // Imposta il valore minimo sull'asse Y a 0
@@ -624,7 +626,7 @@ useEffect(() => {
             const count = totalAppointmentsPerDay[day.date] || 0;
             return count;
           }),
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          backgroundColor: 'rgb(41, 137, 201)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
         },
@@ -643,6 +645,7 @@ useEffect(() => {
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          height: '200px',
           scales: {
             y: {
               beginAtZero: true, 
@@ -662,11 +665,11 @@ const chartRef = useRef(null);
 const [chart, setChart] = useState(null);
 const [chartNum, setChartNum] = useState(null);
 
-
+const { isSidebarOpen } = useContext(SidebarContext);
 
   return (
 
-    <div className="admin_clients_container" style={{ overflow: "scroll" }}>
+    <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`} style={{ overflow: "scroll" }}>
 
       {redirectToAdminLogInPage()}
       <Modal

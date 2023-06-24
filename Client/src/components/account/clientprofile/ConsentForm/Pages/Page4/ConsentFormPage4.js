@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import ListKnownAllergies from "../../Questions/ListKnownAllergies";
 import ACTION_CONSENT_FORM_PAGE_4 from "../../../../../../actions/ConsentForm/LastPageOpened/ACTION_CONSENT_FORM_PAGE_4";
 import "../../ConsentForm.css";
 import "../../../../../../bootstrap_forms.min.css";
+import { SidebarContext } from "../../../../LargeScreenSideMenu/SidebarContext";
 
 const ConsentFormPage4 = (props) => {
   const dispatch = useDispatch();
@@ -43,8 +44,10 @@ const ConsentFormPage4 = (props) => {
     dispatch(ACTION_CONSENT_FORM_PAGE_4());
   }, [dispatch]);
 
+  const {isSidebarOpen} = useContext(SidebarContext);
+
   return (
-    <div className="client_consent_form_container">
+    <div className={`client_consent_form_container ${isSidebarOpen ? '' : 'client_consent_form_container_closed'}`}>
       {redirectToHome()}
       {redirectToLogInPage()}
       <div className="client_consent_form_header">
@@ -56,7 +59,7 @@ const ConsentFormPage4 = (props) => {
             />
           </Link>
         )}
-        <h1>CONSENT FORM</h1>
+        <h1>MODULO CONSENSI</h1>
       </div>
       <AnyFillersOrBotox
         currentScreenSize={props.currentScreenSize}

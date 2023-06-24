@@ -162,16 +162,16 @@ const ConsentFormPDF = (props) => {
               marginTop: "2vh",
             }}
           >
-            Consent Form
+            Modulo consensi
           </Text>
         </View>
         <View style={styles.contactSection} fixed={true}>
           <Text style={styles.formValues}>
-            First Name:{" "}
+            Nome:{" "}
             {props.getClientData ? props.getClientData.client.firstName : null}
           </Text>
           <Text style={styles.formValues}>
-            Last Name:{" "}
+            Cognome:{" "}
             {props.getClientData ? props.getClientData.client.lastName : null}
           </Text>
           <Text style={styles.formValues}>
@@ -179,7 +179,7 @@ const ConsentFormPDF = (props) => {
             {props.getClientData ? props.getClientData.client.email : null}
           </Text>
           <Text style={styles.formValues}>
-            Date Submitted:{" "}
+            Data:{" "}
             {props.getClientData ? props.consentFormLastUpdated : null}
           </Text>
         </View>

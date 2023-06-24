@@ -651,15 +651,14 @@ const AdminPersonalEvent = (props) => {
                 }}
               />
             </div>
-            <div className="admin_square_payment_form_container">
-              <div className="sq-payment-form">
+            <div className="selected_appointments_bottom_buttons_container">
                 <div
-                  className="personal-event-button"
+                  className="back_to_all_appointments_button"
                   onClick={handleSavePersonalEvent}
+                  style={{marginTop: '30px'}}
                 >
                   Salva evento personale
                 </div>
-              </div>
             </div>
           </div>
         ))

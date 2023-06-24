@@ -548,15 +548,21 @@
 @media only screen and (min-width: 1200px) {
   .my_appointments_container {
     position: absolute;
-    width: 74%;
+    width: 80%;
     padding-top: 8vh;
     right: 0;
+    transition: 0.2s all;
+  }
+  .my_appointments_container_closed{
+    width: 90%;
+    transition: 0.2s all;
   }
 
   .my_appointments_header {
     height: 8vh;
     font-weight: 600;
-    width: 80%;
+    width: 90%;
+    transition: 0.2s all;
   }
 
   .my_appointments_header h1 {

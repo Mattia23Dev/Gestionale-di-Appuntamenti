@@ -27,6 +27,7 @@
 .admin_clients_header h1 {
   font-size: 1.5rem;
   font-weight: 900;
+  text-align: center;
 }
 
 .admin_clients_back_arrow {
@@ -452,17 +453,22 @@
 @media only screen and (min-width: 1200px) {
   .admin_clients_container {
     position: absolute;
-    width: 70%;
+    width: 85%;
     padding-top: 8vh;
     right: 0;
+    transition: 0.1s all;
+  }
+  .admin_clients_container_closed{
+    width: 92% !important;
+    transition: 0.1s all;
   }
 
   .admin_clients_header {
     height: 8vh;
     font-weight: 600;
-    width: 80%;
+    width: 100%;
   }
-
+  
   .admin_clients_header h1 {
     font-size: 2rem;
   }
@@ -543,16 +549,21 @@
 
   .admin_individual_selected_client_container {
     margin-top: auto;
-    width: 60%;
+    width: 80%;
     top: 16vh;
-    left: 40%;
+    left: 22%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     overflow: visible;
+    transition: 0.2s all;
   }
-
+  .admin_clients_container_closed .admin_individual_selected_client_container{
+    left: 18%;
+    width: 83%;
+    transition: 0.2s all;
+  }
   .admin_individual_selected_client_contents_container {
     overflow-x: hidden;
   }
@@ -800,7 +811,7 @@
   .admin_clients_content_container {
     margin-left: 11vw;
   }
-
+  
   .admin_clients_searchbar_input_field {
     font-size: 1rem;
   }
@@ -820,7 +831,7 @@
 
   .admin_individual_selected_client_container {
     left: 22%;
-    width: 77%;
+    width: 80%;
     overflow-y: auto;
   }
 
@@ -833,7 +844,7 @@
     top: 12vh;
     left: 22%;
   }
-
+  
   .admin_individual_selected_client_contact_info_container {
     padding-top: 0.5rem;
     top: 19vh;

@@ -647,11 +647,12 @@ const AdminAddStaffMember = (props) => {
               ) : null}
 
               <div className="admin_square_payment_form_container">
-                <div className="sq-payment-form">
-                  <div className="sq-creditcard" onClick={handleSubmit}>
+                  <div 
+                  className="back_to_all_appointments_button" 
+                  onClick={handleSubmit}
+                  style={{margin: '0 auto', marginTop: '20px'}}>
                     Aggiungi membro del personale
                   </div>
-                </div>
               </div>
             </div>
           </div>

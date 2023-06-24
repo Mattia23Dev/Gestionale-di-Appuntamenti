@@ -85,7 +85,7 @@ const AdminNotifications = (props) => {
         <h1>ATTIVITÀ</h1>
       </div>
       <div
-        className={`${isSidebarOpen ? 'admin_notifications_content_container' : 'sidebar-closed-noti-content'}`}
+        className={`${isSidebarOpen ? 'admin_notifications_content_container' : 'admin_notifications_content_container'}`}
         style={{ display: getEmployeeLoading ? "flex" : "block" }}
       >
         {!getEmployeeData ? (

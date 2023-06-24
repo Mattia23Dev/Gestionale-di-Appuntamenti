@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
+import { SidebarContext } from "../../account/LargeScreenSideMenu/SidebarContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -359,8 +360,20 @@ const add =()=>{
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategoryClick = (category) => {
+    console.log(category);
     setSelectedCategory(category);
   };
+
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+
+    if (selectedValue === '') {
+      handleCategoryClick(null); 
+    } else {
+      handleCategoryClick(selectedValue);
+    }
+  };
+
   useMemo(() => {
     if (getEmployeesData) {
       if (getEmployeesData.services.length > 0) {
@@ -569,9 +582,23 @@ const add =()=>{
   changeAddStaffMemberClicked(true)
   console.log(addStaffMemberClicked)
   }
+
+  const { isSidebarOpen } = useContext(SidebarContext);
+
+  const options = [
+    { value: '', label: 'Guarda tutte' },
+    { value: 'opzione1', label: 'Trattamenti Viso' },
+    { value: 'opzione2', label: 'Mani e Piedi' },
+    { value: 'opzione3', label: 'Depilazione donna' },
+    { value: 'opzione4', label: 'Depilazione uomo' },
+    { value: 'opzione5', label: 'Trattamenti corpo' },
+    { value: 'opzione6', label: 'Epilazione Laser' },
+    { value: 'opzione7', label: 'Pressoterapia' },
+  ];
+
   return (
 
-    <div className="admin_clients_container" style={{ overflow: "scroll" }}>
+    <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`} style={{ overflow: "scroll" }}>
           {/* <img src={`${imageUrl}${img1}`} alt="Uploaded Image" /> */}
 
       {redirectToAdminLogInPage()}
@@ -652,6 +679,18 @@ const add =()=>{
         <br />
       </FormGroup>
       <div className="button-filter-container">
+        <select 
+        style={{width: '200px'}} 
+        value={selectedCategory} 
+        onChange={handleChange}>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      {/*<div className="button-filter-container">
               <button onClick={() => setSelectedCategory(null)} className={selectedCategory === null ? 'selected-button' : 'not-sel-butt'}>Guarda tutte</button>
               <button onClick={() => handleCategoryClick('opzione1')} className={selectedCategory === 'opzione1' ? 'selected-button' : 'not-sel-butt'}>Trattamenti Viso</button>
               <button onClick={() => handleCategoryClick('opzione2')} className={selectedCategory === 'opzione2' ? 'selected-button' : 'not-sel-butt'}>Mani e Piedi</button>
@@ -660,7 +699,7 @@ const add =()=>{
               <button onClick={() => handleCategoryClick('opzione5')} className={selectedCategory === 'opzione5' ? 'selected-button' : 'not-sel-butt'}>Trattamenti corpo</button>
               <button onClick={() => handleCategoryClick('opzione6')} className={selectedCategory === 'opzione6' ? 'selected-button' : 'not-sel-butt'}>Epilazione Laser</button>
               <button onClick={() => handleCategoryClick('opzione7')} className={selectedCategory === 'opzione7' ? 'selected-button' : 'not-sel-butt'}>Pressoterapia</button>
-      </div>
+          </div>*/}
 
       <div
         className="admin_clients_content_container"
@@ -786,13 +825,17 @@ const add =()=>{
                           ServiceID= {ServiceID}
                         />
                       ) : null}
-                     
-        <button
-          className="add_staff_member_button"
-          onClick={addServiceNEW}
-        >
-          AGGIUNGI UN SERVIZIO CHE IL CLIENTE PRENOTA
-        </button>
+
+              <div className="selected_appointments_bottom_buttons_container">
+                <button
+                  className="back_to_all_appointments_button"
+                  onClick={addServiceNEW}
+                  style={{marginTop: '30px'}}
+                >
+                  Aggiungi un servizio
+                </button>
+              </div>       
+
   
       </div>
     </div>

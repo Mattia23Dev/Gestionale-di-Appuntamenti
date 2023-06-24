@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import { SidebarContext } from "../../account/LargeScreenSideMenu/SidebarContext";
 import { Redirect, Link } from "react-router-dom";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -322,8 +323,10 @@ const AdminSchedule = (props) => {
     }
   }, [getEmployeesError, getEmployeesRefetch]);
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
-    <div className="admin_schedule_container">
+    <div className={`admin_schedule_container ${isSidebarOpen ? '' : 'admin_schedule_container_closed'}`}>
       {redirectToAdminLogInPage()}
       <div
         className="admin_schedule_header"

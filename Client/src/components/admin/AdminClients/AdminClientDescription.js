@@ -108,7 +108,7 @@ const AdminClientDescription = (props) => {
                 />
               </div> */}
         <div className="admin_create_appointment_section_header">
-          <h2>Customer Description</h2>
+          <h2>Descrizione cliente</h2>
           
         </div>
         <h4>{description}</h4>
@@ -165,15 +165,13 @@ const AdminClientDescription = (props) => {
             />
           </div>
         </div>
-        <div className="admin_square_payment_form_container">
-          <div className="sq-payment-form">
+        <div className="selected_appointments_bottom_buttons_container">
             <div
-              className="sq-creditcard"
+              className="back_to_all_appointments_button"
                 onClick={handleCompleteRegistration}
             >
               {data && data.client.description ? "Modifica" : "Aggiungi"}
             </div>
-          </div>
         </div>
       </div>
     </div>

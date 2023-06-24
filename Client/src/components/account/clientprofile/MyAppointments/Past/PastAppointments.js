@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { SidebarContext } from "../../../LargeScreenSideMenu/SidebarContext";
 import "../MyAppointments.css";
 import { Redirect, Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -172,9 +173,11 @@ const PastAppointments = (props) => {
     }
   };
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
     <div
-      className="my_appointments_container"
+    className={`my_appointments_container ${isSidebarOpen ? '' : 'my_appointments_container_closed'}`} 
       style={{
         height: props.data
           ? props.data.own_past_appointments.length > 4

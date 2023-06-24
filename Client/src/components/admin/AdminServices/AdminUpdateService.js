@@ -386,7 +386,7 @@ const handleEmployee =(e)=>{
                 loading={loadingSpinnerActive}
               />
             </Modal>
-            <div className="admin_individual_selected_employee_contents">
+            <div className="admin_individual_selected_employee_contents" style={{ overflow: "scroll" }}>
               <div className="admin_individual_selected_client_back_container">
                 <FontAwesomeIcon
                   icon={faLongArrowAltLeft}
@@ -667,12 +667,12 @@ const handleEmployee =(e)=>{
               </div>
             
 
-              <div className="admin_square_payment_form_container">
-                <div className="sq-payment-form">
-                  <div className="personal-event-button" onClick={handleSubmit}>
+              <div className="selected_appointments_bottom_buttons_container">
+                  <div className="back_to_all_appointments_button" 
+                  onClick={handleSubmit}
+                  style={{margin: '30px 0 80px 0'}}>
                    Aggiorna servizio
                   </div>
-                </div>
               </div>
             </div>
           </div>

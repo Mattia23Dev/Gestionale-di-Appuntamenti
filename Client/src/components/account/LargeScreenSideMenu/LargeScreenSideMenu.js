@@ -613,7 +613,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   icon={faCalendarAlt}
                   className="large_screen_side_menu_item_icon"
                 />
-                <h2>Appuntamenti in arrivo</h2>
+                <h2><span style={{ display: isSidebarOpen ? 'block' : 'none' }}>Appuntamenti in</span> arrivo</h2>
               </Link>
             </div>
           )}
@@ -642,7 +642,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   icon={faHistory}
                   className="large_screen_side_menu_item_icon"
                 />
-                <h2>Appuntamenti passati</h2>
+                <h2><span style={{ display: isSidebarOpen ? 'block' : 'none' }}>Appuntamenti</span> passati</h2>
               </Link>
             </div>
           )}{" "}
@@ -715,7 +715,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               </div>
             </>
           )}
-          {renderDownloadConsentFormButton()}
+          {/*(renderDownloadConsentFormButton()*/}
           {getEmployeeData ? null : (
             <div className="large_screen_side_menu_extras_section">
               <div className="large_screen_side_menu_underline_separator" />
