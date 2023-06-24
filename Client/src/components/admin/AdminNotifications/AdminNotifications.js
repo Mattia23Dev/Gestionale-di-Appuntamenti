@@ -1,6 +1,7 @@
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { SidebarContext } from "../../account/LargeScreenSideMenu/SidebarContext";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { IoMdNotificationsOff } from "react-icons/io";
@@ -64,8 +65,10 @@ const AdminNotifications = (props) => {
     right: 25%;
   `;
 
+  const { isSidebarOpen } = useContext(SidebarContext);
+
   return (
-    <div className="admin_notifications_container">
+    <div className={`admin_notifications_container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
       {redirectToAdminLogInPage()}{" "}
       <div
         className="admin_notifications_header"
@@ -82,7 +85,7 @@ const AdminNotifications = (props) => {
         <h1>ATTIVITÀ</h1>
       </div>
       <div
-        className="admin_notifications_content_container"
+        className={`${isSidebarOpen ? 'admin_notifications_content_container' : 'sidebar-closed-noti-content'}`}
         style={{ display: getEmployeeLoading ? "flex" : "block" }}
       >
         {!getEmployeeData ? (

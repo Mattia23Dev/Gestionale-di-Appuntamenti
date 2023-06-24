@@ -98,7 +98,7 @@
 @media only screen and (min-width: 1200px) {
   .admin_notifications_container {
     position: absolute;
-    width: 70%;
+    width: 100% !important;
     padding-top: 8vh;
     right: 0;
   }
@@ -106,12 +106,13 @@
   .admin_notifications_content_container {
     margin-left: 10vw;
     margin-right: 10vw;
+    transition: 0.3s all;
   }
 
   .admin_notifications_header {
     height: 8vh;
     font-weight: 600;
-    width: 80%;
+    width: 100%;
   }
 
   .admin_notifications_header h1 {
@@ -151,7 +152,7 @@
 
 @media only screen and (min-width: 1800px) {
   .admin_notifications_container {
-    width: 80%;
+    width: 85%;
   }
 
   .admin_individual_notification_message_info {

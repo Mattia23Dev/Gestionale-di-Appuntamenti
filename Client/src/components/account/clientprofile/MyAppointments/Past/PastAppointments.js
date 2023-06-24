@@ -132,42 +132,6 @@ const PastAppointments = (props) => {
     ));
   };
 
-  const renderSummaryCardAddOns = (dataIndex) => {
-    let componentsArr = [];
-
-    for (let i = 0; i < addOnsSummaryCardComponentsArr.length; i++) {
-      for (
-        let j = 0;
-        j < props.data.own_past_appointments[dataIndex].addOns.length;
-        j++
-      ) {
-        if (props.data) {
-          if (props.data.own_past_appointments) {
-            if (props.data.own_past_appointments[dataIndex].addOns !== []) {
-              if (props.data.own_past_appointments[dataIndex].addOns[j].name) {
-                if (
-                  props.data.own_past_appointments[dataIndex].addOns[j].name ===
-                  addOnsSummaryCardComponentsArr[i].name
-                ) {
-                  componentsArr.push(
-                    addOnsSummaryCardComponentsArr[i].component
-                  );
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    return componentsArr.map((item, index) => (
-      <div className="my_selected_appointment_treatment_container" key={index}>
-        {item}
-      </div>
-    ));
-  };
-
-  // Allows click only if selected appointment modal is not active
-
   const handleAppointmentToggled = (e, item) => {
     if (e.currentTarget && individualAppointmentRef) {
       if (individualAppointmentRef.current) {
@@ -232,15 +196,7 @@ const PastAppointments = (props) => {
           />
         </Link>
         <h1>
-          MY{" "}
-          {!props.currentScreenSize
-            ? props.initialScreenSize >= 1200
-              ? "PAST "
-              : null
-            : props.currentScreenSize >= 1200
-            ? "PAST "
-            : null}
-          APPOINTMENTS
+           I MIEI APPUNTAMENTI
         </h1>
       </div>
       <div
@@ -252,11 +208,11 @@ const PastAppointments = (props) => {
           className="sub_header_container_link"
         >
           <div className="past_appointments_upcoming_title_container">
-            <h2>UPCOMING</h2>
+            <h2>IN ARRIVO</h2>
           </div>
         </Link>
         <div className="past_appointments_past_title_container">
-          <h2>PAST</h2>
+          <h2>PASSATI</h2>
         </div>
       </div>
       <div className="my_appointments_content_container">
@@ -267,7 +223,6 @@ const PastAppointments = (props) => {
           handleAppointmentUntoggled={handleAppointmentUntoggled}
           individualAppointmentRef={individualAppointmentRef}
           appointmentToggled={appointmentToggled}
-          renderSummaryCardAddOns={renderSummaryCardAddOns}
           renderSummaryCardTreatments={renderSummaryCardTreatments}
           ref={{
             individualAppointmentRef: individualAppointmentRef,

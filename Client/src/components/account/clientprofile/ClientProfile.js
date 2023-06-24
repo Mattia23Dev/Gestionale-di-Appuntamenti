@@ -144,7 +144,7 @@ const ClientProfile = (props) => {
               icon={faFileSignature}
               className="profile_box_icon"
             />
-            <h2>CONSENT FORM</h2>
+            <h2>MODULO CONSENSI</h2>
           </Link>
         </div>
         <div className="profile_my_appointments_box_container">
@@ -156,7 +156,7 @@ const ClientProfile = (props) => {
               icon={faCalendarCheck}
               className="profile_box_icon"
             />
-            <h2>MY APPOINTMENTS</h2>
+            <h2>I MIEI APPUNTAMENTI</h2>
           </Link>
         </div>
         <div className="profile_my_profile_box_container">
@@ -165,7 +165,7 @@ const ClientProfile = (props) => {
             to={"/account/clientprofile/profile"}
           >
             <FontAwesomeIcon icon={faUser} className="profile_box_icon" />
-            <h2>MY PROFILE</h2>
+            <h2>PROFILO</h2>
           </Link>
         </div>
       </div>

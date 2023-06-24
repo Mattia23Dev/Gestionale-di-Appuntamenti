@@ -165,10 +165,10 @@ const ClientRenderPastAppointments = React.forwardRef((props, ref) => {
                             icon={faLongArrowAltLeft}
                             className="my_individual_selected_appointment_back_arrow_icon"
                           />
-                          <p>Back to Past Appointments</p>
+                          <p>Torna agli appuntamenti</p>
                         </div>
                         <div className="selected_appointment_date_and_time_header">
-                          <p>Appointment Date &amp; Time</p>
+                          <p>Data appuntamento &amp; Orario</p>
                         </div>
                         <div className="selected_appointment_date_and_time_content_container">
                           <div className="selected_appointment_date_and_time_content">
@@ -206,8 +206,8 @@ const ClientRenderPastAppointments = React.forwardRef((props, ref) => {
                                 : item.duration}{" "}
                               {item.duration >= 60
                                 ? Math.floor(item.duration / 60) === 1
-                                  ? "hour"
-                                  : "hours"
+                                  ? "ora"
+                                  : "ore"
                                 : null}
                               {Number.isInteger(item.duration / 60)
                                 ? null
@@ -217,47 +217,25 @@ const ClientRenderPastAppointments = React.forwardRef((props, ref) => {
                                   ? null
                                   : item.duration -
                                     Math.floor(item.duration / 60) * 60 +
-                                    " minutes"
-                                : "minutes"}
+                                    " minuti"
+                                : "minuti"}
                               )
                             </p>
                           </div>
                         </div>
                         <div className="selected_appointment_treatments_header">
                           <p>
-                            Treatment{" "}
                             {item.treatments[0].name === "Salt Cave"
                               ? null
                               : item.esthetician
-                              ? "(with " + item.esthetician + ")"
+                              ? "(con " + item.esthetician + ")"
                               : null}
                           </p>
                         </div>
                         {props.renderSummaryCardTreatments(i)}
-                        {props.data ? (
-                          props.data.own_past_appointments ? (
-                            props.data.own_past_appointments[i].addOns
-                              .length === 0 ? null : (
-                              <>
-                                <div className="selected_appointment_add_ons_header">
-                                  <p>
-                                    Add On
-                                    {props.data
-                                      ? props.data.own_past_appointments[i]
-                                          .addOns.length > 1
-                                        ? "s"
-                                        : null
-                                      : null}
-                                  </p>
-                                </div>
-                                {props.renderSummaryCardAddOns(i)}
-                              </>
-                            )
-                          ) : null
-                        ) : null}
                         <div className="selected_appointment_total_header">
-                          <p>Total</p>
-                          <p>${item.price}</p>
+                          <p>Totale</p>
+                          <p>{item.price},00 €</p>
                         </div>
                         <div className="selected_past_appointments_bottom_buttons_container">
                           <div
@@ -265,7 +243,7 @@ const ClientRenderPastAppointments = React.forwardRef((props, ref) => {
                             ref={backToAppointmentsRef}
                             onClick={(e) => props.handleAppointmentUntoggled(e)}
                           >
-                            <p>Back to Appointments</p>
+                            <p>Torna agli appuntamenti</p>
                           </div>
                         </div>
                       </div>
@@ -281,8 +259,8 @@ const ClientRenderPastAppointments = React.forwardRef((props, ref) => {
               icon={faHistory}
               className="my_upcoming_appointments_empty_calendar_icon"
             />
-            <h2>No past appointments</h2>
-            <p>Any previous appointment information will be available here</p>
+            <h2>Nessun appuntamento passato</h2>
+            <p>Qualsiasi informazione di prenotazione apparirà qui</p>
           </div>
         )
       ) : props.loadingPastAppointments ? (
@@ -300,8 +278,8 @@ const ClientRenderPastAppointments = React.forwardRef((props, ref) => {
             icon={faHistory}
             className="my_upcoming_appointments_empty_calendar_icon"
           />
-          <h2>No past appointments</h2>
-          <p>Any previous appointment information will be available here</p>
+          <h2>Nessun appuntamento passato</h2>
+          <p>Qualsiasi informazione di prenotazione apparirà qui</p>
         </div>
       )}
     </>

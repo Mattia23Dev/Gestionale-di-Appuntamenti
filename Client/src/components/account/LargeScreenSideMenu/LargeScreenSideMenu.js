@@ -365,7 +365,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
         style={{ display: "none" }}
       />
       <div className="large_screen_side_menu_item_container">
-        <div className="large_screen_account_nav_logo_container">
+        <div className={`${isSidebarOpen ? 'large_screen_account_nav_logo_container' : 'large_screen_account_nav_logo_container_closed'}`}>
           <a className="large_screen_account_nav_logo" href="/">
             <svg
               className="large_screen_account_nav_logo_svg"
@@ -395,7 +395,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
             getClientData.client ? (
               getClientData.client.profilePicture ? (
                 <img
-                  className="large_screen_side_menu_profile_client_photo_avatar"
+                  className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_photo_avatar' : 'large_screen_side_menu_profile_client_photo_avatar_closed'}`}
                   src={LZString.decompressFromEncodedURIComponent(
                     getClientData.client.profilePicture
                   )}
@@ -410,22 +410,22 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 />
               ) : (
                 <FontAwesomeIcon
-                  className="large_screen_side_menu_profile_client_avatar"
+                className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_avatar' : 'large_screen_side_menu_profile_client_avatar_closed'}`}
                   icon={faUserCircle}
                 />
               )
             ) : (
               <FontAwesomeIcon
-                className="large_screen_side_menu_profile_client_avatar"
-                icon={faUserCircle}
+              className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_avatar' : 'large_screen_side_menu_profile_client_avatar_closed'}`}
+              icon={faUserCircle}
               />
             )
           ) : getEmployeeData ? (
             getEmployeeData.employee ? (
               getEmployeeData.employee.profilePicture ? (
                 <img
-                  className="large_screen_side_menu_profile_client_photo_avatar"
-                  src={LZString.decompressFromEncodedURIComponent(
+                className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_photo_avatar' : 'large_screen_side_menu_profile_client_photo_avatar_closed'}`}
+                src={LZString.decompressFromEncodedURIComponent(
                     getEmployeeData.employee.profilePicture
                   )}
                   alt={
@@ -439,25 +439,25 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 />
               ) : (
                 <FontAwesomeIcon
-                  className="large_screen_side_menu_profile_client_avatar"
+                className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_avatar' : 'large_screen_side_menu_profile_client_avatar_closed'}`}
                   icon={faUserCircle}
                 />
               )
             ) : (
               <FontAwesomeIcon
-                className="large_screen_side_menu_profile_client_avatar"
-                icon={faUserCircle}
+              className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_avatar' : 'large_screen_side_menu_profile_client_avatar_closed'}`}
+              icon={faUserCircle}
               />
             )
           ) : (
             <FontAwesomeIcon
-              className="large_screen_side_menu_profile_client_avatar"
-              icon={faUserCircle}
+            className={`${isSidebarOpen ? 'large_screen_side_menu_profile_client_avatar' : 'large_screen_side_menu_profile_client_avatar_closed'}`}
+            icon={faUserCircle}
             />
           )}
         </div>
         <div className="large_screen_side_menu_profile_contact_information_container">
-          <div className="large_screen_side_menu_profile_name_container">
+          <div className={`${isSidebarOpen ? 'large_screen_side_menu_profile_name_container' : 'large_screen_side_menu_profile_name_container_closed'}`}>
             <p>
               {getEmployeeData
                 ? getEmployeeData.employee
@@ -489,22 +489,8 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 : null}
             </p>
           </div>
-          <div className="large_screen_side_menu_profile_membership_type_container">
-            <p>Membro : </p>
-            <p>
-              {getClientData
-                ? "Default"
-                : getEmployeeData
-                ? getEmployeeData.employee
-                  ? getEmployeeData.employee.employeeRole.includes("Admin")
-                    ? "Admin"
-                    : "Staff"
-                  : "Staff"
-                : "Staff"}
-            </p>
-          </div>
         </div>
-        <div className="large_screen_side_menu_profile_email_and_phone_container">
+        <div className={`${isSidebarOpen ? 'large_screen_side_menu_profile_email_and_phone_container' : 'large_screen_side_menu_profile_email_and_phone_container_closed'}`}>
           <div className="large_screen_side_menu_profile_email_container">
             <h2>Email</h2>
             <p>
@@ -538,9 +524,9 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
         </div>
       </div>
       {guestConsentFormAccessToken ? null : (
-        <div className="large_screen_side_menu_all_items_container">
-          <div className="large_screen_side_menu_underline_separator" />
-          <div className="large_screen_side_menu_item_container">
+      <div className={`${isSidebarOpen ? 'large_screen_side_menu_all_items_container' : 'large_screen_side_menu_all_items_container_closed'}`}>
+          <div  className="large_screen_side_menu_underline_separator" />
+          <div className={`${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}>
             <div
               className="large_screen_side_menu_item"
               onClick={navMenuScrollToHome}
@@ -554,7 +540,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           </div>
           {getEmployeeData ? (
             <>
-            <div className={location.pathname.includes("activity") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
+            <div className={`${location.pathname.includes("activity") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}>
               <Link
                 className="large_screen_side_menu_item"
                 to="/admin/activity"
@@ -590,7 +576,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               </Link>
             </div>
             <div
-              className={location.pathname.includes("/admin/dashboard") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
+              className={`${location.pathname.includes("/admin/dashboard") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}
               // onClick={(e)=>{alert("yes")}}
             >
               <Link className="large_screen_side_menu_item" to="/admin/dashboard">
@@ -605,7 +591,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           ) : null}
           {getEmployeeData ? (
             <div
-              className={location.pathname.includes("/admin/clients") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
+            className={`${location.pathname.includes("/admin/clients") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}
               onClick={handleAdminResetNotifications}
             >
               <Link className="large_screen_side_menu_item" to="/admin/clients">
@@ -617,7 +603,8 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               </Link>
             </div>
           ) : (
-            <div className={location.pathname.includes("upcomingappointments") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
+            <div 
+            className={`${location.pathname.includes("upcomingappointments") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}>
               <Link
                 className="large_screen_side_menu_item"
                 to="/account/clientprofile/upcomingappointments"
@@ -632,7 +619,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           )}
           {getEmployeeData ? (
             <div
-            className={location.pathname.includes("staff") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
+            className={`${location.pathname.includes("staff") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}
               onClick={handleAdminResetNotifications}
             >
               <Link className="large_screen_side_menu_item" to="/admin/staff">
@@ -644,7 +631,9 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               </Link>
             </div>
           ) : (
-            <div className={location.pathname.includes("pastappointments") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
+            <div 
+            className={`${location.pathname.includes("pastappointments") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}
+            >
               <Link
                 className="large_screen_side_menu_item"
                 to="/account/clientprofile/pastappointments"
@@ -660,7 +649,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           {getEmployeeData ? (
             <>
               <div
-                className={location.pathname.includes("schedule") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
+                className={`${location.pathname.includes("schedule") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}
                 onClick={handleAdminResetNotifications}
               >
                 <Link
@@ -680,7 +669,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
 
             
               <div
-              className={location.pathname.includes("/admin/service") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}
+              className={`${location.pathname.includes("/admin/service") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}
               // onClick={(e)=>{alert("yes")}}
             >
               <Link className="large_screen_side_menu_item" to="/admin/service">
@@ -698,7 +687,8 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
             </>
           ) : (
             <>
-            <div className={location.pathname.includes("consentform") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
+            <div 
+              className={`${location.pathname.includes("consentform") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}>
               <Link
                 className="large_screen_side_menu_item"
                 to={`/account/clientprofile/consentform/${consentFormLastPageOpened}`}
@@ -710,7 +700,8 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 <h2>Modulo consensi</h2>
               </Link>
             </div>
-            <div className={location.pathname.includes("/profile") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
+            <div 
+              className={`${location.pathname.includes("/profile") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}>
                 <Link
                   className="large_screen_side_menu_item"
                   to="/account/clientprofile/profile"
@@ -728,7 +719,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           {getEmployeeData ? null : (
             <div className="large_screen_side_menu_extras_section">
               <div className="large_screen_side_menu_underline_separator" />
-              <div className="large_screen_side_menu_item_container">
+              {/*<div className="large_screen_side_menu_item_container">
                 <Link
                   className="large_screen_side_menu_item"
                   to="/"
@@ -766,8 +757,9 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                   />
                   <h2>Quiz</h2>
                 </Link>
-              </div>
-              <div className={location.pathname.includes("activity") ? 'selected-sidebar large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container'}>
+              </div>*/}
+              <div 
+                className={`${location.pathname.includes("/activity") ? 'selected-sidebar ' : ''}${isSidebarOpen ? 'large_screen_side_menu_item_container' : 'large_screen_side_menu_item_container_closed'}`}>
                 <Link
                   className="large_screen_side_menu_item"
                   to="/"
@@ -786,7 +778,8 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
       )}
        
       {guestConsentFormAccessToken ? null : (
-        <div className="large_screen_side_menu_item_container large_screen_side_menu_log_out">
+        <div 
+        className={`${isSidebarOpen ? 'large_screen_side_menu_item_container large_screen_side_menu_log_out' : 'large_screen_side_menu_item_container_closed large_screen_side_menu_log_out'}`}>
           
           <div
             className="large_screen_side_menu_item"
@@ -805,9 +798,6 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
           </div>
         </div>
       )}
-      <p className="large_screen_side_menu_copyright">
-        &copy; {new Date().getFullYear()} NomeAzienda, RM
-      </p>
     </div>
   );
 });

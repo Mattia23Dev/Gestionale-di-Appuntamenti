@@ -94,7 +94,7 @@ const adminLoginQuery = {
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
-            sameSite: 'none',
+            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
             //domain: 'booknowpro.it', 
             //secure: true,
           });
@@ -107,7 +107,7 @@ const adminLoginQuery = {
               process.env.NODE_ENV === "production"
                 ? process.env.PRODUCTION_CLIENT_ROOT
                 : "localhost",
-            sameSite: 'none',
+            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
             //domain: 'booknowpro.it', 
             //secure: true,
           });
@@ -147,7 +147,7 @@ const adminLoginQuery = {
             process.env.NODE_ENV === "production"
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
-          sameSite: 'none',
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
           //domain: 'booknowpro.it', 
           //secure: true,   
         });
@@ -163,7 +163,7 @@ const adminLoginQuery = {
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
           //domain: 'booknowpro.it',     
-          sameSite: 'none',
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
           //secure: true,
         });
 
@@ -176,7 +176,7 @@ const adminLoginQuery = {
               ? process.env.PRODUCTION_CLIENT_ROOT
               : "localhost",
           //domain: 'booknowpro.it',    
-          sameSite: 'none',
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
           //secure: true,
         });
 

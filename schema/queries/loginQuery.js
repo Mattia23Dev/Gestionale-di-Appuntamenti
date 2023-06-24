@@ -56,7 +56,7 @@ const loginQuery = {
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
-      sameSite: 'none',
+      sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
       //secure: true,
     });
 
@@ -70,8 +70,8 @@ const loginQuery = {
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
-      sameSite: 'none',
-      //secure: true,
+          sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+        //secure: true,
     });
 
     context.res.cookie("refresh-token", refreshToken, {
@@ -82,7 +82,7 @@ const loginQuery = {
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_CLIENT_ROOT
           : null,
-      sameSite: 'none',
+      sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
       //secure: true,
     });
 

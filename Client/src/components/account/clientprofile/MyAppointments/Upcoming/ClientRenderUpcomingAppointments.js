@@ -46,7 +46,6 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
     appointmentToggled,
     handleCancelAppointment,
     handleAppointmentUntoggled,
-    renderSummaryCardAddOns,
     renderSummaryCardTreatments,
     loadingAppointments,
   } = props;
@@ -70,7 +69,7 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
         upcomingAppointmentsData.own_appointments.length > 0 ? (
           upcomingAppointmentsData.own_appointments.map((item, i) => {
             const event = {
-              title: "Glow Labs Appointment",
+              title: "Prneotazioni Glow Labs",
               description:
                 (item.treatments[0].name
                   ? item.treatments[0].name === "ChemicalPeel"
@@ -190,13 +189,13 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                           dispatch(ACTION_CANCEL_APPOINTMENT_CLICKED_RESET())
                         }
                       />
-                      <h2>Are you sure you want to cancel your appointment?</h2>
+                      <h2>Sei sicuro di cancellare l'appuntamento?</h2>
                       <span className="logout_buttons_container">
                         <div
                           className="logout_button yes_cancel_appointment_button"
                           onClick={() => handleCancelAppointment(item)}
                         >
-                          <p>YES, CANCEL</p>
+                          <p>SI, CANCELLA</p>
                         </div>
                         <div
                           className="cancel_logout_button no_dont_cancel_appointment_button"
@@ -204,7 +203,7 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                             dispatch(ACTION_CANCEL_APPOINTMENT_CLICKED_RESET())
                           }
                         >
-                          <p>NO, GO BACK</p>
+                          <p>NO, INDIETRO</p>
                         </div>
                       </span>
                     </div>
@@ -257,18 +256,6 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                         ? "Salt Cave"
                         : item.treatments[0].name + " Facial"
                       : null}
-                    {item.addOns[0]
-                      ? ", " +
-                        (item.addOns[0].name
-                          ? item.addOns[0].name === "ExtraExtractions"
-                            ? "Extra Extractions"
-                            : item.addOns[0].name
-                          : null) +
-                        " Add On"
-                      : null}{" "}
-                    {item.addOns.length > 1
-                      ? "+ " + (item.addOns.length - 1).toString() + " more"
-                      : null}
                   </p>
                   <p className="my_appointment_details">
                     {item.duration >= 60
@@ -276,16 +263,16 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                       : item.duration}{" "}
                     {item.duration >= 60
                       ? Math.floor(item.duration / 60) === 1
-                        ? "hour"
-                        : "hours"
+                        ? "ora"
+                        : "ore"
                       : null}{" "}
                     {item.duration >= 60
                       ? Number.isInteger(item.duration / 60)
                         ? null
                         : item.duration -
                           Math.floor(item.duration / 60) * 60 +
-                          " minutes"
-                      : "minutes"}
+                          " minuti"
+                      : "minuti"}
                   </p>
                 </div>
 
@@ -332,10 +319,10 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                               icon={faLongArrowAltLeft}
                               className="my_individual_selected_appointment_back_arrow_icon"
                             />
-                            <p>Back to Upcoming Appointments</p>
+                            <p>Torna alle prenotazioni in arrivo</p>
                           </div>
                           <div className="selected_appointment_date_and_time_header">
-                            <p>Appointment Date &amp; Time</p>
+                            <p>Data appuntamento &amp; Orario</p>
                           </div>
                           <div className="selected_appointment_date_and_time_content_container">
                             <div className="selected_appointment_date_and_time_content">
@@ -373,8 +360,8 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                                   : item.duration}{" "}
                                 {item.duration >= 60
                                   ? Math.floor(item.duration / 60) === 1
-                                    ? "hour"
-                                    : "hours"
+                                    ? "ora"
+                                    : "ore"
                                   : null}
                                 {Number.isInteger(item.duration / 60)
                                   ? null
@@ -384,8 +371,8 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                                     ? null
                                     : item.duration -
                                       Math.floor(item.duration / 60) * 60 +
-                                      " minutes"
-                                  : "minutes"}
+                                      " minuti"
+                                  : "minuti"}
                                 )
                               </p>
                             </div>
@@ -400,40 +387,17 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                           </div>
                           <div className="selected_appointment_treatments_header">
                             <p>
-                              Treatment{" "}
                               {item.treatments[0].name === "Salt Cave"
                                 ? null
                                 : item.esthetician
-                                ? "(with " + item.esthetician + ")"
+                                ? "(con " + item.esthetician + ")"
                                 : null}
                             </p>
                           </div>
                           {renderSummaryCardTreatments(i)}
-                          {upcomingAppointmentsData ? (
-                            upcomingAppointmentsData.own_appointments ? (
-                              upcomingAppointmentsData.own_appointments[i]
-                                .addOns.length === 0 ? null : (
-                                <>
-                                  <div className="selected_appointment_add_ons_header">
-                                    <p>
-                                      Add On
-                                      {upcomingAppointmentsData
-                                        ? upcomingAppointmentsData
-                                            .own_appointments[i].addOns.length >
-                                          1
-                                          ? "s"
-                                          : null
-                                        : null}
-                                    </p>
-                                  </div>
-                                  {renderSummaryCardAddOns(i)}
-                                </>
-                              )
-                            ) : null
-                          ) : null}
                           <div className="selected_appointment_total_header">
-                            <p>Total</p>
-                            <p>${item.price}</p>
+                            <p>Totale</p>
+                            <p>{item.price},00 €</p>
                           </div>
                           <div className="selected_appointments_bottom_buttons_container">
                             <div
@@ -442,14 +406,14 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
                                 dispatch(ACTION_CANCEL_APPOINTMENT_CLICKED())
                               }
                             >
-                              <p>Cancel Appointment</p>
+                              <p>Cancella appuntamento</p>
                             </div>
                             <div
                               className="back_to_all_appointments_button"
                               ref={backToAppointmentsRef}
                               onClick={(e) => handleAppointmentUntoggled(e)}
                             >
-                              <p>Back to Appointments</p>
+                              <p>Torna alle prenotazioni</p>
                             </div>
                           </div>
                         </div>
@@ -466,10 +430,9 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
               icon={faCalendarAlt}
               className="my_upcoming_appointments_empty_calendar_icon"
             />
-            <h2>No upcoming appointments</h2>
+            <h2>Nessun appuntamento in arrivo</h2>
             <p>
-              Any future appointment bookings will be added here, so check back
-              soon!
+              Qualsiasi appuntamento futuro apparirà qui
             </p>
           </div>
         )
@@ -488,10 +451,9 @@ const ClientRenderUpcomingAppointments = React.forwardRef((props, ref) => {
             icon={faCalendarAlt}
             className="my_upcoming_appointments_empty_calendar_icon"
           />
-          <h2>No upcoming appointments</h2>
+          <h2>Nessun appuntamento in arrivo</h2>
           <p>
-            Any future appointment bookings will be added here, so check back
-            soon!
+          Qualsiasi appuntamento futuro apparirà qui
           </p>
         </div>
       )}

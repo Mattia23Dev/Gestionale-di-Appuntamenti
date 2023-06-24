@@ -804,13 +804,13 @@ const [chartNum, setChartNum] = useState(null);
                 </thead>
                 <tbody>
                   {appsOver30Days.length > 0 && appsOver30Days.map((appointment) => (
-                    <tr key={appointment.id}>
-                      <td>{moment(appointment.date).format('DD/MM/YYYY')}</td>
-                      <td>{appointment.client.firstName}</td>
-                      <td>{appointment.client.lastName}</td>
-                      <td>{appointment.treatments[0].name}</td>
-                    </tr>
-                  ))}
+                      <tr key={appointment.id}>
+                        <td>{moment(appointment.date).format('DD/MM/YYYY')}</td>
+                        <td>{appointment.client && appointment.client.firstName ? appointment.client.firstName : ''}</td>
+                        <td>{appointment.client && appointment.client.lastName ? appointment.client.lastName : ''}</td>
+                        <td>{appointment.treatments.length > 0 && appointment.treatments[0].name ? appointment.treatments[0].name : ''}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
               </div>
