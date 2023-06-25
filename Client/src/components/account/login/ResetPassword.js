@@ -106,7 +106,7 @@ const handleResetPassword = async () => {
     console.log(email, resetCode, password);
     try {
       const response = await axios.post(process.env.REACT_APP_ENV === "production"
-      ? process.env.REACT_APP_PRODUCTION_SERVER_URL_TEST
+      ? `${process.env.REACT_APP_PRODUCTION_SERVER_URL_TEST}`
       : "http://localhost:4000" + "/resetPassword", {
         email,
         resetCode,
