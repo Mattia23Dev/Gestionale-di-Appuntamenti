@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { useMutation, useLazyQuery } from "@apollo/react-hooks";
+import addNotification from 'react-push-notification';
 import { Spring } from "react-spring/renderprops";
 import { css } from "@emotion/css";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -245,7 +246,19 @@ console.log(variablesModel, " variablr ", treatmentsArray(), " treatment ", addO
     addAppointment({
       variables: { ...variablesModel, ...treatmentsArray(), ...addOnsArray() },
       //variables: { ...variablesModel, newTreatmentsArr, ...addOnsArray() },
+    }).then((response) => {
+      console.log(response);
+      const data = response.data ? response.data.addAppointment : null;
+      addNotification({
+        title: `${data.client.first_name} ${data.client.last_name} grazie per la prenotazione`,
+        subtitle: `${data.date}`,
+        message: `Ti sei prenotato/a per un nuovo trattamento alle ${data.startTime}`,
+        theme: 'darkblue',
+        //recipients: ['employee1', 'employee2', 'staff1', 'staff2'],
+        native: true,
     });
+      
+    });;
 
     dispatch(ACTION_FINAL_BOOKING_MODAL_ACTIVE());
   };

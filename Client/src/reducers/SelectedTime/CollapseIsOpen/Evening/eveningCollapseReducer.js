@@ -2,7 +2,7 @@ const EVENING_OPEN = "EVENING_OPEN";
 const EVENING_CLOSED = "EVENING_CLOSED";
 const ALL_COLLAPSE_RESET = "ALL_COLLAPSE_RESET";
 
-const eveningCollapseReducer = (state = { collapseIsOpen: false }, action) => {
+const eveningCollapseReducer = (state = { collapseIsOpen: true }, action) => {
   switch (action.type) {
     case EVENING_OPEN:
       return { ...state, collapseIsOpen: true };

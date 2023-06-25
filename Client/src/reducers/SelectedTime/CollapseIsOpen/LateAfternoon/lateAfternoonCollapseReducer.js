@@ -3,7 +3,7 @@ const LATE_AFTERNOON_CLOSED = "LATE_AFTERNOON_CLOSED";
 const ALL_COLLAPSE_RESET = "ALL_COLLAPSE_RESET";
 
 const lateAfternoonCollapseReducer = (
-  state = { collapseIsOpen: false },
+  state = { collapseIsOpen: true },
   action
 ) => {
   switch (action.type) {

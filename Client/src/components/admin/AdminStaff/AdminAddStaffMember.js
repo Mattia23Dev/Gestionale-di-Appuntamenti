@@ -335,6 +335,7 @@ const AdminAddStaffMember = (props) => {
             style={{
               ...styleprops,
               zIndex: logoutClicked || loadingSpinnerActive ? 0 : 5,
+              overflow: "scroll"
             }}
           >
             <Modal

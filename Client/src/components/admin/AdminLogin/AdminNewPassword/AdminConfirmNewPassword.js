@@ -64,14 +64,14 @@ const AdminConfirmNewPassword = () => {
   return (
     <FormGroup className="sign_up_individual_form_field">
       <Label for="adminLoginPassword">
-        <div className="required_label">Confirm New Password</div>
+        <div className="required_label">Conferma la Password</div>
       </Label>
       <Input
         type="password"
         name="createAccountConfirmPassword"
         defaultValue={adminConfirmNewPassword}
         maxLength={128}
-        placeholder="Re-enter new password here"
+        placeholder="Reinserisci la nuova password qui"
         className="input_field_sign_up"
         onChange={confirmNewPasswordTyping}
         onBlur={handleConfirmNewPassword}
@@ -92,7 +92,7 @@ const AdminConfirmNewPassword = () => {
       />
       {adminConfirmNewPassword === adminNewPassword ? null : (
         <FormFeedback className="invalid_message_container" invalid="true">
-          Passwords must match.
+          Le Password devono essere uguali.
         </FormFeedback>
       )}
     </FormGroup>

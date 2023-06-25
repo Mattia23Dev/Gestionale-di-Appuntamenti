@@ -36,6 +36,7 @@ import ACTION_NAVBAR_IS_VISIBLE from "../../actions/NavbarIsVisible/ACTION_NAVBA
 import "./LargeScreenSideMenu/LargeScreenSideMenu.css";
 import "../../components/checkout/ConfirmationPage.css";
 import "../../components/checkout/GuestCheckout.css";
+import ResetPassword from "./login/ResetPassword";
 
 const AccountRouter = React.forwardRef((props, ref) => {
   const {
@@ -152,6 +153,7 @@ const AccountRouter = React.forwardRef((props, ref) => {
         ref={ref}
       />
       <Switch>
+      <Route exact path={path + "/reset-password"} component={ResetPassword} />
         <Route exact path={path + "/login"} component={Login} />
         <Route exact path={path + "/signup"} component={SignUp} />
         <Route

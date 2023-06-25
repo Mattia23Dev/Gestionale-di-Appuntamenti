@@ -3,6 +3,7 @@ const compression = require("compression");
 const { graphqlHTTP } = require("express-graphql");
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require("bcryptjs");
 const expressPlayground =
   require("graphql-playground-middleware-express").default;
 const { ApolloServer } = require("apollo-server-express");
@@ -33,7 +34,7 @@ const { ApiError, Environment } = require("square");
 const SquareClient = require("square").Client;
 const { graphqlUploadExpress } = require('graphql-upload');
 const { GraphQLUpload } = require('graphql-upload');
-
+const nodemailer = require('nodemailer');
 
 // Used to normalize phone numbers for use by Twilio
 const phone = require("phone");
@@ -219,7 +220,7 @@ app.get("/smsresponse", async (req, res) => {
     });
 
     if (upcomingClientApps.length === 1) {
-      twiml.message("Thank you, your appointment has been confirmed!");
+      twiml.message("Grazie l'appuntamento è stato confermato!");
     } else if (upcomingClientApps.length > 1) {
       twiml.message("Thank you, your appointments have been confirmed!");
     } else {
@@ -232,6 +233,70 @@ app.get("/smsresponse", async (req, res) => {
   res.writeHead(200, { "Content-Type": "text/xml" });
   res.end(twiml.toString());
 });
+
+app.post('/sendReminderEmail', (req, res) => {
+  console.log(req.body);
+  const { oggetto, messaggio, email } = req.body;
+
+  // Configurazione del transporter
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    service: 'gmail',
+    auth: {
+      user: process.env.GLOW_LABS_EMAIL,
+      pass: process.env.GLOW_LABS_EMAIL_APP_PASSWORD,
+    },
+    debug: false,
+    logger: true,
+  });
+
+  let mailOptions = {
+    from: process.env.GLOW_LABS_EMAIL,
+    to: email, 
+    subject: oggetto,
+    text: messaggio,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Errore durante l\'invio dell\'email:', error);
+      res.status(500).send('Errore durante l\'invio dell\'email');
+    } else {
+      console.log('Email inviata con successo:', info.response);
+      res.status(200).send('Email inviata con successo');
+    }
+  });
+});
+
+app.post('/resetPassword', async (req, res) => {
+  const { email, resetCode } = req.body;
+  let {password} = req.body;
+
+  try {
+    const client = await Client.findOne({ email });
+
+    if (client && client.codeResetPassword === resetCode) {
+      let passwordCrypted = await bcrypt
+        .hash(password, 12)
+        .then((hash) => (password = hash))
+        .catch((err) => {
+          throw err;
+        });
+      client.password = passwordCrypted;
+      await client.save();
+
+      res.status(200).json({ message: 'Password resettata con successo.' });
+    } else {
+      res.status(400).json({ message: 'Codice di reset password non valido.' });
+    }
+  } catch (error) {
+    console.error('Errore durante il reset della password:', error);
+    res.status(500).json({ message: 'Si è verificato un errore durante il reset della password.' });
+  }
+});
+
 
 // Schedule Twilio text appointment reminders
 cron.schedule("* * * * *", async () => {

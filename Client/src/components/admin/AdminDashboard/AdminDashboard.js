@@ -9,6 +9,7 @@ import {
   faBriefcase,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import {  gql } from '@apollo/client';
 import { useSelector, useDispatch } from "react-redux";
 import {useHistory} from "react-router-dom"
@@ -280,6 +281,8 @@ const add =()=>{
     }
   }, [employeeFilter, getEmployeesData]);
 
+  const [monthsFilter, setMonthsFilter] = useState(1);
+
   // useEffect(() => {
   //   if (location.pathname || addProfilePhotoClicked || loadingSpinnerActive) {
   //     window.scrollTo(0, 0);
@@ -375,7 +378,7 @@ const add =()=>{
       const appointments = getAllAppointmentsData.all_appointments;
     
       const filteredAppointments = appointments.filter((appointment) => {
-        const thirtyDaysAgo = moment().subtract(31, 'days');
+        const thirtyDaysAgo = moment().subtract(monthsFilter, 'months');
         
         // Verifica se il cliente ha effettuato altri appuntamenti successivi a 30 giorni fa
         const hasRecentAppointment = appointments.some((recentAppointment) =>
@@ -391,6 +394,41 @@ const add =()=>{
       setAppsOver30Days(filteredAppointments);
     }
   }, [getEmployeesData, getAllAppointmentsData, getClientsData])
+
+
+  const handleSelectMonths = (selectedMonths) => {
+    const months = parseInt(selectedMonths);
+    setMonthsFilter(selectedMonths);
+  
+    if (months >= 1 && months <= 6) {
+      handleFilterAppointments(months);
+    } else {
+      console.error('Invalid number of months selected.');
+    }
+  };
+
+  const handleFilterAppointments = (months) => {
+    if (getAllAppointmentsData && getAllAppointmentsData.all_appointments) {
+      const appointments = getAllAppointmentsData.all_appointments;
+  
+      const filteredAppointments = appointments.filter((appointment) => {
+        const monthsAgo = moment().subtract(months, 'months');
+  
+        // Verifica se il cliente ha effettuato altri appuntamenti successivi al numero di mesi scelto
+        const hasRecentAppointment = appointments.some((recentAppointment) =>
+          recentAppointment.client === appointment.client && moment(recentAppointment.date) > monthsAgo
+        );
+  
+        // Filtra solo gli appuntamenti con una data precedente al numero di mesi scelto e senza appuntamenti più recenti
+        return moment(appointment.date) <= monthsAgo && !hasRecentAppointment;
+      });
+  
+      filteredAppointments.sort((a, b) => moment(b.date) - moment(a.date));
+      console.log('Appointments made', months, 'or more months ago without recent appointments:', filteredAppointments);
+      setAppsOver30Days(filteredAppointments);
+    }
+  };
+  
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -667,6 +705,91 @@ const [chartNum, setChartNum] = useState(null);
 
 const { isSidebarOpen } = useContext(SidebarContext);
 
+const [showReminderPopup, setShowReminderPopup] = useState(false);
+const [selectedClientId, setSelectedClientId] = useState(null);
+
+const handleOpenReminderPopup = (clientId) => {
+  setSelectedClientId(clientId);
+  console.log(clientId);
+  setShowReminderPopup(true);
+};
+
+const handleCloseReminderPopup = () => {
+  setSelectedClientId(null);
+  setShowReminderPopup(false);
+};
+
+
+const ReminderPopup = ({ clientId, onClose }) => {
+  const [messaggio, setMessaggio] = useState('');
+  const [oggetto, setOggetto] = useState('');
+  const email = clientId.email ? clientId.email : null;
+
+  const sendReminderEmail = async () => {
+  
+    try {
+      const response = await axios.post(process.env.REACT_APP_ENV === "production"
+      ? process.env.REACT_APP_PRODUCTION_SERVER_URL_TEST
+      : "http://localhost:4000" + "/sendReminderEmail", {
+        email,
+        oggetto,
+        messaggio,
+      });
+
+      let sentClients = localStorage.getItem('sentClients');
+      sentClients = sentClients ? JSON.parse(sentClients) : [];
+  
+      sentClients.push(email);
+  
+      localStorage.setItem('sentClients', JSON.stringify(sentClients));
+      window.location.reload();
+      console.log('Email inviata con successo:', response.data);
+    } catch (error) {
+      console.error('Errore durante l\'invio dell\'email:', error);
+    }
+  };
+
+  const handleSendReminder = () => {
+    sendReminderEmail();
+    onClose();
+  };
+
+  return (
+    <div style={{zIndex: '1000'}} className="reminder-popup">
+      <h2>Invia Reminder</h2>
+      <textarea
+      className="textarea"
+        value={oggetto}
+        onChange={(e) => setOggetto(e.target.value)}
+        placeholder="Inserisci l'oggetto dell'email."
+      />
+      <textarea
+      className="textarea"
+        value={messaggio}
+        onChange={(e) => setMessaggio(e.target.value)}
+        placeholder="Inserisci il messaggio del reminder."
+      />
+      <div>
+        <button className="button-reminder" onClick={handleSendReminder}>Invia Reminder</button>
+        <button className="button-annulla" onClick={onClose}>Annulla</button>
+      </div>
+
+    </div>
+  );
+};
+
+let sentClients = localStorage.getItem('sentClients');
+sentClients = sentClients ? JSON.parse(sentClients) : [];
+
+const clearSentClientsLocalStorage = () => {
+  localStorage.removeItem('sentClients');
+  console.log('LocalStorage svuotato: sentClients');
+};
+
+const oneWeekInterval = 7 * 24 * 60 * 60 * 1000;
+
+setInterval(clearSentClientsLocalStorage, oneWeekInterval);
+
   return (
 
     <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`} style={{ overflow: "scroll" }}>
@@ -730,6 +853,12 @@ const { isSidebarOpen } = useContext(SidebarContext);
         </Link>
         <h1>DASHBOARD</h1>
       </div>
+      {showReminderPopup ? (
+        <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+           {showReminderPopup && <div className="overlay" onClick={handleCloseReminderPopup} />}
+          <ReminderPopup clientId={selectedClientId} onClose={handleCloseReminderPopup} />
+        </div>
+      ) : null}
       {adminDash ? 
       <div className="dashboard-container">
         <div className="card-panoramica">
@@ -794,24 +923,38 @@ const { isSidebarOpen } = useContext(SidebarContext);
                 <canvas id="earningsChart" ref={chartRef}></canvas>
           </div>
           <div className="card-dashboard-chart">
-          <h2>Clienti che non vengono da più di 1 mese</h2>
+          <h2>Clienti che non vengono da più di {monthsFilter} {monthsFilter == 1 ? 'mese' : 'mesi' }</h2>
+          <select className="selectEmployee" style={{margin: '0 0 40px 0'}} onChange={(e) => handleSelectMonths(e.target.value)}>
+            <option value="1">1 mese</option>
+            <option value="2">2 mesi</option>
+            <option value="3">3 mesi</option>
+            <option value="6">6 mesi</option>
+          </select>
           <div className="appointment-table">
               <table className="table-dashboard">
                 <thead>
                   <tr>
                     <th>Data</th>
-                    <th>Nome Cliente</th>
-                    <th>Cognome Cliente</th>
+                    <th>Nome</th>
+                    <th>Email</th>
                     <th>Servizio</th>
+                    <th>Azioni</th>
                   </tr>
                 </thead>
                 <tbody>
                   {appsOver30Days.length > 0 && appsOver30Days.map((appointment) => (
                       <tr key={appointment.id}>
                         <td>{moment(appointment.date).format('DD/MM/YYYY')}</td>
-                        <td>{appointment.client && appointment.client.firstName ? appointment.client.firstName : ''}</td>
-                        <td>{appointment.client && appointment.client.lastName ? appointment.client.lastName : ''}</td>
+                        <td>{appointment.client && appointment.client.firstName ? appointment.client.firstName + ' ' + appointment.client.lastName : ''}</td>
+                        <td>{appointment.client && appointment.client.lastName ? appointment.client.email : ''}</td>
                         <td>{appointment.treatments.length > 0 && appointment.treatments[0].name ? appointment.treatments[0].name : ''}</td>
+                        <td>
+                            {sentClients.includes(appointment.client.email) ? (
+                                <span className="button-reminder-sended">Inviata</span>
+                              ) : (
+                                <button className="button-reminder" onClick={() => handleOpenReminderPopup(appointment.client)}>Invia Reminder</button>
+                              )}
+                        </td>
                       </tr>
                     ))}
                 </tbody>

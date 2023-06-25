@@ -21,6 +21,7 @@ const ClientSchema = new Schema({
   myRoutine: MyRoutine.schema.obj,
   createdAt: { type: Date, default: currentDate },
   permanentPasswordSet: { type: Boolean, default: false },
+  codeResetPassword: String,
 });
 
 module.exports = mongoose.model("Client", ClientSchema);

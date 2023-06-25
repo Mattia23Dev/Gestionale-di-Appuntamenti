@@ -156,6 +156,10 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
     history.push('/chi-siamo');
   };
 
+  const navigateToPrenota = () => {
+    history.push('/prenota');
+  };
+
   const cartActivated = () => {
     dispatch(ACTION_CART_IS_ACTIVE());
     document.body.style.setProperty("background", "rgb(255, 255, 255)");
@@ -696,15 +700,11 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
               <FcHome />
               Home
             </li>
-            <li tabIndex={0} onClick={() => navMenuScrollToTreatments()}>
+            <li tabIndex={0} onClick={navigateToPrenota}>
               <FcPaid />
               Prenota
             </li>
-            <li tabIndex={0} onClick={() => navMenuScrollToAddOns()}>
-              <FcPlus />
-              Servizi
-            </li>
-            <li tabIndex={0} onClick={() => navMenuScrollToInstagram()}>
+            <li tabIndex={0} onClick={navigateToChiSiamo}>
               <FcLike />
               Chi siamo
             </li>
@@ -826,7 +826,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           HOME
         </h2>
         <h2
-          onClick={props.handleClickToScrollToTreatments}
+          onClick={navigateToPrenota}
           style={{
             color:
               props.currentScreenSize === ""
@@ -855,37 +855,6 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           }}
         >
           PRENOTA
-        </h2>
-        <h2
-          style={{
-            color:
-              props.currentScreenSize === ""
-                ? props.initialScreenSize >= 1200
-                  ? props.scrollValue <= 1
-                    ? cartIsActive ||
-                      location.pathname.includes("account") ||
-                      location.pathname.includes("admin") ||
-                      location.pathname.includes("privacy") ||
-                      location.pathname.includes("termsandconditions")
-                      ? "rgb(239, 240, 243)"
-                      : "rgb(44, 44, 52)"
-                    : "rgb(239, 240, 243)"
-                  : "rgb(239, 240, 243)"
-                : props.currentScreenSize >= 1200
-                ? props.scrollValue <= 1
-                  ? cartIsActive ||
-                    location.pathname.includes("account") ||
-                    location.pathname.includes("admin") ||
-                    location.pathname.includes("privacy") ||
-                    location.pathname.includes("termsandconditions")
-                    ? "rgb(239, 240, 243)"
-                    : "rgb(44, 44, 52)"
-                  : "rgb(239, 240, 243)"
-                : "rgb(239, 240, 243)",
-          }}
-          onClick={props.handleClickToScrollToAddOns}
-        >
-          SERVIZI
         </h2>
         <h2
         onClick={navigateToChiSiamo}

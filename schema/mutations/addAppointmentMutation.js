@@ -255,6 +255,21 @@ const addAppointmentMutation = {
     const updateNotifications = (staff) =>
       createNotificationFunction(newNotification, staff);
 
+      const generateResetPasswordCode = () => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const codeLength = 8;
+        let code = '';
+      
+        for (let i = 0; i < codeLength; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          code += characters.charAt(randomIndex);
+        }
+      
+        return code;
+      };
+      
+      const resetPasswordCode = generateResetPasswordCode();
+
     if (!foundClient) {
       client = new Client({
         _id: new mongoose.Types.ObjectId(),
@@ -264,7 +279,7 @@ const addAppointmentMutation = {
         phoneNumber: args.client[0].phoneNumber,
         squareCustomerId: args.client[0].squareCustomerId,
         unsavedSquareCardIDs: [args.client[0].unsavedSquareCardIDs],
-        
+        codeResetPassword: resetPasswordCode,
       });
 
       const emailTaken = await Client.findOne({
@@ -355,6 +370,7 @@ const addAppointmentMutation = {
               process.env.NODE_ENV === "production"
                 ? `${process.env.PRODUCTION_SERVER_URL}/api/${client_res._id}/consentform`
                 : `http://localhost:4000/api/${client_res._id}/consentform`,
+            codeResetPassword: resetPasswordCode,
           })
           .then(async (finalTemplate) => {
             await transporter.sendMail({
@@ -468,6 +484,7 @@ const addAppointmentMutation = {
             process.env.NODE_ENV === "production"
               ? `${process.env.PRODUCTION_SERVER_URL}/api/${client_res._id}/consentform`
               : `http://localhost:4000/${client_res._id}/consentform`,
+          codeResetPassword: resetPasswordCode,
         })
         .then(async (finalTemplate) => {
           await transporter.sendMail({
@@ -621,6 +638,7 @@ const addAppointmentMutation = {
             process.env.NODE_ENV === "production"
               ? `${process.env.PRODUCTION_SERVER_URL}/api/${client._id}/consentform`
               : `http://localhost:4000/${client._id}/consentform`,
+          codeResetPassword: resetPasswordCode,
         })
         .then(async (finalTemplate) => {
           await transporter.sendMail({

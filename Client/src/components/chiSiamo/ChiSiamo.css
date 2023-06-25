@@ -1,24 +1,43 @@
 .chi-siamo {
     font-family: Arial, sans-serif;
   }
-  
-  .hero {
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Imposta il colore e la trasparenza dell'overlay */
+  }
+  .hero1 ,.hero2 {
     background-size: cover;
-    height: 400px;
+    height: 650px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     color: white;
     text-align: center;
     padding: 50px;
+    flex-direction: column;
+    gap: 3rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .hero1{
+    background-image: url('../../images/hero1.jpg')
+  }
+  .hero2{
+    position: relative; 
+    background-image: url('../../images/hero2.jpg')
   }
   
-  .hero h1 {
+  .hero1 h1, .hero2 h1 {
+    z-index: 5;
     font-size: 48px;
     margin-bottom: 20px;
   }
   
-  .hero p {
+  .hero1 p, .hero2 p {
+    z-index: 5;
     font-size: 24px;
   }
   
@@ -36,18 +55,152 @@
     font-size: 18px;
   }
   
-  .numbers {
+  .number-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 100px;
+  }
+  
+  .number-card {
+    width: 250px;
+    padding: 20px;
     background-color: #fff;
-    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
   }
   
-  .numbers h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
+  .number-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .numbers .number {
+  .number-card .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+  }
+  
+  .number-card:hover .icon-wrapper {
+    background-color: #e6e6e6;
+  }
+  
+  .number-icon {
+    font-size: 32px;
+    color: #333;
+  }
+  
+  .number-title {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #333;
+  }
+  
+  .number-description {
+    font-size: 14px;
+    color: #777;
+  }
+
+  .testimonial-slider {
+    text-align: center;
+    padding: 50px;
+    margin-top: 50px;
+  }
+  
+  .slider-title {
     font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .slider-container {
+    position: relative;
+    width: 40%;
+    height: 300px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .slide.active {
+    opacity: 1;
+  }
+  
+  .testimonial-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .slide.active .testimonial-content {
+    transform: translateY(0);
+  }
+  
+  .slide .testimonial-content {
+    transform: translateY(100%);
+  }
+  
+  .testimonial-name {
+    font-size: 20px;
     margin-bottom: 10px;
+  }
+  
+  .testimonial-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #888;
+  }
+  
+  .testimonial-description {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .slider-controls {
+    margin-top: -0px;
+  }
+  
+  .prev-button,
+  .next-button {
+    font-size: 24px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .prev-button:hover,
+  .next-button:hover {
+    background-color: #555;
+  }
+  
+  .prev-button {
+    margin-right: 10px;
+  }
+  
+  .next-button {
+    margin-left: 10px;
   }

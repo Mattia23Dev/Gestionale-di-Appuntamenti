@@ -10,39 +10,7 @@
 .service-icon-mobile{
   display: none;
 }
-select {
-  height: 40px;
-  padding: 8px;
-  border: none;
-  border-radius: 0;
-  font-size: 16px;
-  background-color: #f2f2f2;
-  color: #333;
-  appearance: none;
-  padding: 5px;
-}
 
-select:focus {
-  outline: none;
-  background-color: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-option {
-  padding: 15px;
-  font-size: 14px;
-  background-color: #fff;
-  color: #333;
-}
-
-option:hover {
-  background-color: #e6e6e6;
-}
-
-option:selected {
-  background-color: #0066cc;
-  color: #fff;
-}
 .service-information{
   width: 100%;
   display: flex;

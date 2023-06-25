@@ -508,7 +508,7 @@ const AdminStaff = (props) => {
   const { isSidebarOpen } = useContext(SidebarContext);
 
   return (
-    <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`}>
+    <div className={`admin_clients_container ${isSidebarOpen ? '' : 'admin_clients_container_closed'}`} style={{ overflow: "scroll" }}>
       {redirectToAdminLogInPage()}
       <Modal
         isOpen={imageLoading || loadingSpinnerActive || getClientsLoading}

@@ -2,16 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Link, useLocation, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLazyQuery, useQuery } from "@apollo/react-hooks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { Form } from "reactstrap";
+import { Form, Input, Label, FormGroup } from "reactstrap";
 import { css } from "@emotion/css";
+import axios from "axios";
 import BounceLoader from "react-spinners/BounceLoader";
 import Modal from "react-modal";
-import loginQuery from "../../../graphql/queries/loginQuery";
 import getClientsQuery from "../../../graphql/queries/getClientsQuery";
-import LoginEmail from "./LoginEmail/LoginEmail";
-import LoginPassword from "./LoginPassword/LoginPassword";
 import ACTION_LOGIN_IS_NOT_ACTIVE from "../../../actions/Login/ACTION_LOGIN_IS_NOT_ACTIVE";
 import ACTION_LOGIN_IS_ACTIVE from "../../../actions/Login/ACTION_LOGIN_IS_ACTIVE";
 import ACTION_LOGIN_EMAIL_INVALID from "../../../actions/Login/LoginEmail/Invalid/ACTION_LOGIN_EMAIL_INVALID";
@@ -23,8 +19,15 @@ import ACTION_LOGIN_PASSWORD_NOT_INVALID from "../../../actions/Login/LoginPassw
 import ACTION_SPLASH_SCREEN_COMPLETE from "../../../actions/SplashScreenComplete/ACTION_SPLASH_SCREEN_COMPLETE";
 import ACTION_SPLASH_SCREEN_HALFWAY from "../../../actions/SplashScreenHalfway/ACTION_SPLASH_SCREEN_HALFWAY";
 import "./Login.css";
+import "../../admin/AdminLogin/AdminLoginPage.css";
 
-const Login = (props) => {
+const ResetPassword = (props) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [resetCode, setResetCode] = useState('');
+
+
   let location = useLocation();
   const dispatch = useDispatch();
   const splashScreenHalfway = useSelector(
@@ -49,45 +52,6 @@ const Login = (props) => {
   const userAuthenticated = useSelector(
     (state) => state.userAuthenticated.user_authenticated
   );
-  const facebookCompleteRegistration = useSelector(
-    (state) =>
-      state.facebookCompleteRegistration.facebook_complete_registration_active
-  );
-
-  const handleClientLogin = () => {
-    changeSignInLoading(false);
-
-    if (registeredClientFound) {
-      if (loginEmailInvalid) {
-        dispatch(ACTION_LOGIN_EMAIL_NOT_INVALID());
-      }
-
-      if (loginPasswordInvalid) {
-        dispatch(ACTION_LOGIN_PASSWORD_NOT_INVALID());
-      }
-    }
-  };
-
-  const handleClientLoginError = () => {
-    if (error) {
-      changeSignInLoading(false);
-      if (error.message) {
-        if (error.message.includes("email")) {
-          dispatch(ACTION_LOGIN_EMAIL_INVALID());
-          dispatch(ACTION_LOGIN_PASSWORD_NOT_INVALID());
-        } else {
-          dispatch(ACTION_LOGIN_PASSWORD_INVALID());
-          dispatch(ACTION_LOGIN_EMAIL_NOT_INVALID());
-        }
-      }
-    }
-  };
-
-  const [loginClient, { error }] = useLazyQuery(loginQuery, {
-    fetchPolicy: "no-cache",
-    onCompleted: handleClientLogin,
-    onError: handleClientLoginError,
-  });
 
   const { data: getClientsData } = useQuery(getClientsQuery, {
     fetchPolicy: "no-cache",
@@ -137,11 +101,25 @@ const Login = (props) => {
     }
   };
 
-  const redirectToFacebookCompleteRegistration = () => {
-    if (facebookCompleteRegistration) {
-      return <Redirect to="/account/completeregistration" />;
+  
+const handleResetPassword = async () => {
+    console.log(email, resetCode, password);
+    try {
+      const response = await axios.post(process.env.REACT_APP_ENV === "production"
+      ? process.env.REACT_APP_PRODUCTION_SERVER_URL_TEST
+      : "http://localhost:4000" + "/resetPassword", {
+        email,
+        resetCode,
+        password,
+      });
+  
+      console.log('Reset password successful:', response.data.message);
+      history.push('/account/login');
+    } catch (error) {
+      console.error('Error during password reset:', error);
     }
   };
+  
 
   useEffect(() => {
     if (!splashScreenComplete) {
@@ -166,16 +144,6 @@ const Login = (props) => {
 
   const navigateToReset = () => {
     history.push('/reset-password');
-  };
-
-  const handleLoginClick = () => {
-    loginClient({
-      variables: {
-        email: loginEmail,
-        password: loginPassword,
-      },
-    });
-    changeSignInLoading(true);
   };
 
   // When account screen unmounts, allow navbar
@@ -204,7 +172,6 @@ const Login = (props) => {
           : props.currentScreenSize >= 1200
           ? redirectToUpcomingAppointments()
           : redirectToClientProfile()}
-        {redirectToFacebookCompleteRegistration()}
         <header className="login_logo_container">
           <svg
             width="100%"
@@ -221,51 +188,64 @@ const Login = (props) => {
           </svg>
         </header>
         <div className="login_section_designator">
-          <h2>Entra nel tuo account</h2>
+          <h2>Imposta la tua password</h2>
         </div>
-        <div className="login_facebook_container">
-          <a
-            className="continue_with_facebook_button"
-            href={`${
-              process.env.REACT_APP_ENV === "production"
-                ? process.env.REACT_APP_PRODUCTION_SERVER_URL
-                : "http://localhost:4000"
-            }/api/auth/facebook/callback`}
-          >
-            <FontAwesomeIcon icon={faFacebook} />
-            <p>Continua con Facebook</p>
-          </a>
-        </div>
-        <div className="login_or_container">
-          <p className="or_dash">——————</p>
-          <p className="or_capital_letters">OR</p>
-          <p className="or_dash">——————</p>
-        </div>
-        <Form className="login_form_container">
-          <LoginEmail />
-          <LoginPassword handleLoginClick={handleLoginClick} />
-        </Form>
+            <FormGroup className="sign_up_individual_form_field">
+            <Label for="adminLoginPassword">
+                <div className="required_label">Email</div>
+            </Label>
+                <Input 
+                className="input_field_sign_up" 
+                type="email" value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="Inserisci la tua email"
+                />
+            </FormGroup>
+            <FormGroup className="sign_up_individual_form_field">
+                <Label for="adminLoginPassword">
+                    <div className="required_label">Password</div>
+                </Label>
+                <Input 
+                className="input_field_sign_up" 
+                type="password" value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="Inserisci la nuova password qui"
+                />
+            </FormGroup>
+            <FormGroup className="sign_up_individual_form_field">
+            <Label for="adminLoginPassword">
+                <div className="required_label">Codice</div>
+            </Label>
+                <Input 
+                className="input_field_sign_up" 
+                type="text" 
+                value={resetCode} onChange={(e) => setResetCode(e.target.value)} 
+                placeholder="Inserisci il codice qui"
+                />
+            </FormGroup>
         <div className="bottom_buttons_container">
           <Link
             className="log_in_button"
             to="/account/login"
             style={{
               display: "block",
-              pointerEvents: loginEmail && loginPassword ? "auto" : "none",
+              pointerEvents: email && password && resetCode ? "auto" : "none",
               background:
-                loginEmail && loginPassword ? "rgb(44, 44, 52)" : "#f0f0f0",
+                email && password && resetCode ? "rgb(44, 44, 52)" : "#f0f0f0",
               color:
-                loginEmail && loginPassword
+                email && password && resetCode
                   ? "rgb(255, 255, 255)"
                   : "rgb(201, 201, 201)",
               transition: "background 0.5s ease, color 0.5s ease",
             }}
-            onClick={handleLoginClick}
+            onClick={handleResetPassword}
           >
-            <p>Accedi</p>
+            <p>Imposta Password</p>
           </Link>
+          <div className="dont_have_an_account_question">
+            <p>Non hai un account?</p>
+          </div>
           <Link
-            style={{marginTop: '10px'}}
             to="/account/signup"
             className="create_account_redirect_button"
             onClick={handleCreateClick}
@@ -273,12 +253,11 @@ const Login = (props) => {
             <p>Crea Account</p>
           </Link>
           <Link
-          style={{marginTop: '10px'}}
-            to="/account/reset-password"
+            to="/account/login"
             className="create_account_redirect_button"
             onClick={navigateToReset}
           >
-            <p>Imposta Password</p>
+            <p>Accedi</p>
           </Link>
         </div>
       </div>
@@ -332,4 +311,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default ResetPassword;

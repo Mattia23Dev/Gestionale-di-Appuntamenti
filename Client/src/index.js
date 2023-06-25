@@ -131,6 +131,7 @@ import ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION from "./actions/Admin/AdminNotific
 import ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION_RESET from "./actions/Admin/AdminNotificationSubscription/ACTION_ADMIN_NOTIFICATION_SUBSCRIPTION_RESET";
 import "./styles.css";
 import { SidebarProvider } from "./components/account/LargeScreenSideMenu/SidebarContext";
+import Prenota from "./components/prenota/Prenota";
 
 // Lazy-loaded Routes
 const Availability = React.lazy(() =>
@@ -1779,6 +1780,38 @@ const App = () => {
                 scrollValue={scrollValue}
                 ref={ref}
                 name="chiSiamo"
+              />
+            </div>
+          </KeepAlive>
+        </Route>
+        <Route exact path="/prenota">
+          <KeepAlive saveScrollPosition="screen">
+            <div
+              className="main_container"
+              onScroll={(e) => handleScrollDirection(e)}
+              ref={MainContainerRef}
+              style={{ overflow: splashScreenComplete ? "auto" : "hidden" }}
+              id="main_container_element"
+            >
+              {redirectToCartRoutes()}
+              <Prenota
+                currentScreenSize={currentScreenSize}
+                initialScreenSize={initialScreenSize}
+                currentScreenHeight={currentScreenHeight}
+                initialScreenHeight={initialScreenHeight}
+                handleClickToScrollToHome={handleClickToScrollToHome}
+                handleClickToScrollToTreatments={
+                  handleClickToScrollToTreatments
+                }
+                handleClickToScrollToAddOns={handleClickToScrollToAddOns}
+                handleClickToScrollToInstagram={handleClickToScrollToInstagram}
+                handleClickToScrollToContact={handleClickToScrollToContact}
+                navbarVisible={navbarVisible}
+                treatmentsPageInView={treatmentsPageInView}
+                scrollDirection={scrollDirection}
+                scrollValue={scrollValue}
+                ref={ref}
+                name="prenota"
               />
             </div>
           </KeepAlive>

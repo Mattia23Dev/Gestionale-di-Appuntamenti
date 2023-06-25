@@ -47,14 +47,14 @@ const AdminNewPassword = () => {
   return (
     <FormGroup>
       <Label for="adminLoginPassword">
-        <div className="required_label">New Password</div>
+        <div className="required_label">Nuova Password</div>
       </Label>
       <Input
         type="password"
         name="createNewAdminPassword"
         defaultValue={adminNewPassword}
         maxLength={128}
-        placeholder="Enter new password here"
+        placeholder="Inserisci la nuova password qui"
         className="input_field_sign_up"
         onChange={adminPasswordTyping}
         onBlur={validatePassword}
@@ -71,7 +71,7 @@ const AdminNewPassword = () => {
       />
       {adminNewPassword.length < 8 ? (
         <FormFeedback className="invalid_message_container" invalid="true">
-          Password must be at least 8 characters long.
+          La password deve avere almeno 8 caratteri.
         </FormFeedback>
       ) : (
         <FormFeedback className="invalid_message_container" invalid="true">
