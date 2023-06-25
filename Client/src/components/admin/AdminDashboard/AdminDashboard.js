@@ -729,8 +729,8 @@ const ReminderPopup = ({ clientId, onClose }) => {
   
     try {
       const response = await axios.post(process.env.REACT_APP_ENV === "production"
-      ? `${process.env.REACT_APP_PRODUCTION_SERVER_URL_TEST}`
-      : "http://localhost:4000" + "/sendReminderEmail", {
+      ? `${process.env.REACT_APP_PRODUCTION_SERVER_URL}/sendReminderEmail`
+      : "http://localhost:4000/sendReminderEmail", {
         email,
         oggetto,
         messaggio,
