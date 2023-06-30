@@ -680,6 +680,7 @@ const add =()=>{
       </FormGroup>
       <div className="button-filter-container">
         <select 
+        className="select-category-services"
         style={{width: '200px'}} 
         value={selectedCategory} 
         onChange={handleChange}>
@@ -726,7 +727,7 @@ const add =()=>{
                       ref={individualEmployeeRef}
                     >
                     <div className="service-information">
-                      <img  src= {`${imageUrl}${item.img}`} alt="service" className="admin_individual_client_initials_square" /> 
+                      {/*<img  src= {`${imageUrl}${item.img}`} alt="service" className="admin_individual_client_initials_square" /> */}
                       <div className="admin_individual_client_full_name admin-service-name">
                         <p>
                           {item.name[0].toUpperCase() +

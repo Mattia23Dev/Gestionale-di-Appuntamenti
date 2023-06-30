@@ -2,6 +2,12 @@ import React, {useState} from 'react';
 import './ChiSiamo.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCalendar, faHeart, faStar } from '@fortawesome/free-solid-svg-icons';
+import service1 from '../../images/service-icon-1.png';
+import service2 from '../../images/service-icon-2.png';
+import service3 from '../../images/service-icon-3.png';
+import service4 from '../../images/service-icon-4.png';
+import fotomedical from '../../images/foto1.jpg';
+
 
 const ChiSiamo = () => {
 
@@ -52,48 +58,66 @@ const ChiSiamo = () => {
     <div className="chi-siamo">
       <section className="hero2">
       <div className="hero-overlay"></div>
-        <h1>Benvenuti nel nostro centro estetico</h1>
+        <h1>Health & Medical Center</h1>
         <p>Offriamo servizi di bellezza di alta qualità</p>
+        <button className='button_hero_chi_siamo'>Prenota</button>
       </section>
   
       <section className="description">
-        <h2>Cosa facciamo</h2>
-        <p>Il nostro centro estetico offre una vasta gamma di servizi per la cura del viso, del corpo e dei capelli. Utilizziamo solo prodotti di alta qualità e siamo specializzati in trattamenti personalizzati per ogni cliente.</p>
+        <div>
+          <h2>Choose The Top Clinic For Yourself and Your Family</h2>
+          <div className='star-container'>
+            <FontAwesomeIcon icon={faStar} className="number-icon" />
+            <FontAwesomeIcon icon={faStar} className="number-icon" />
+            <FontAwesomeIcon icon={faStar} className="number-icon" />
+            <FontAwesomeIcon icon={faStar} className="number-icon" />
+            <FontAwesomeIcon icon={faStar} className="number-icon" />
+          </div>
+
+        </div>
+        <div>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Standard dummy text ever since.<br /> <br />
+
+It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+        </div>
+        
       </section>
+      <hr className='line_middle'/>
   
         <div className="number-section">
           <div className="number-card">
             <div className="icon-wrapper">
-              <FontAwesomeIcon icon={faUser} className="number-icon" />
+              <img src={service4} alt='service' />
             </div>
             <h3 className="number-title">Clienti soddisfatti</h3>
             <p className="number-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div className="number-card">
             <div className="icon-wrapper">
-              <FontAwesomeIcon icon={faCalendar} className="number-icon" />
+              <img src={service1} alt='service' />
             </div>
             <h3 className="number-title">Anni di esperienza</h3>
             <p className="number-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div className="number-card">
             <div className="icon-wrapper">
-              <FontAwesomeIcon icon={faHeart} className="number-icon" />
+              <img src={service2} alt='service' />
             </div>
             <h3 className="number-title">Servizio di qualità</h3>
             <p className="number-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div className="number-card">
             <div className="icon-wrapper">
-              <FontAwesomeIcon icon={faStar} className="number-icon" />
+              <img src={service3} alt='service' />
             </div>
             <h3 className="number-title">Valutazioni positive</h3>
             <p className="number-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
       </div>
 
+    <h2 className="slider-title">Cosa dicono i nostri clienti</h2>
+    <div className='testimonials'>
       <div className="testimonial-slider">
-      <h2 className="slider-title">Cosa dicono i nostri clienti</h2>
       <div className="slider-container">
         {testimonials.map((testimonial, index) => (
           <div
@@ -113,6 +137,11 @@ const ChiSiamo = () => {
         <button className="next-button" onClick={nextSlide}>&#8250;</button>
       </div>
     </div>
+    <div className='testimonials_foto'>
+          <img alt='' src={fotomedical} />
+    </div>
+    </div>
+
     </div>
   );
 };

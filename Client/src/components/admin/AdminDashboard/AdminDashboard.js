@@ -579,8 +579,8 @@ useEffect(() => {
         data: data,
         options: {
           responsive: true,
-          maintainAspectRatio: false,
-          height: '200px',
+          maintainAspectRatio: true,
+          aspectRatio: 2,
           scales: {
             y: {
               beginAtZero: true, // Imposta il valore minimo sull'asse Y a 0
@@ -682,8 +682,8 @@ useEffect(() => {
         data: data,
         options: {
           responsive: true,
-          maintainAspectRatio: false,
-          height: '200px',
+          maintainAspectRatio: true,
+          aspectRatio: 2,
           scales: {
             y: {
               beginAtZero: true, 

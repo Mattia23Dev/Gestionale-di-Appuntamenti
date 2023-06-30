@@ -628,7 +628,6 @@ const App = () => {
           dispatch(ACTION_NAVBAR_TOGGLE());
           dispatch(ACTION_BODY_SCROLL_RESET());
           dispatch(ACTION_NAVBAR_IS_VISIBLE());
-          toast.dismiss();
         }
       }
     } else {

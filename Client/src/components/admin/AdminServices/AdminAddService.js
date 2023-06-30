@@ -538,7 +538,7 @@ formData.append("img", img);
                   />
                 </div>
                 </div>
-                <div className="admin_create_appointment_input_information_container">
+                {/*<div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
                   Immagine
                 </div>
@@ -571,7 +571,7 @@ formData.append("img", img);
                     placeholder="Image"
                   />
                 </div>
-              </div>
+              </div>*/}
               <div className="admin_create_appointment_input_information_container">
               <div className="admin_create_appointment_label admin_create_appointment_double_label">
                   Personale

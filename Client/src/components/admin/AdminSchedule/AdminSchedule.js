@@ -326,7 +326,7 @@ const AdminSchedule = (props) => {
   const { isSidebarOpen } = useContext(SidebarContext);
 
   return (
-    <div className={`admin_schedule_container ${isSidebarOpen ? '' : 'admin_schedule_container_closed'}`}>
+    <div className={`admin_schedule_container ${isSidebarOpen ? '' : 'admin_schedule_container_closed'}`} style={{ overflow: "scroll" }}>
       {redirectToAdminLogInPage()}
       <div
         className="admin_schedule_header"

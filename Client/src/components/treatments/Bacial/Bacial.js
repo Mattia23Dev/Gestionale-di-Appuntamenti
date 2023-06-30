@@ -7,6 +7,7 @@ import {
   faClock,
   faTag,
   faSquare,
+  faPaintBrush,
 } from "@fortawesome/free-solid-svg-icons";
 import { InView } from "react-intersection-observer";
 import treatmentSuggestions from "../../admin/AdminSchedule/AdminCreateAppointment/TreatmentSuggestions";
@@ -151,7 +152,7 @@ const Bacial = (props) => {
     if (bacialToggle) {
       return (
         <>
-          <div className="card_description_paragraph_toggle">
+          <div className="card_description_paragraph_toggle" style={{marginTop: '15px', fontFamily: 'Montserrat, sans-serif'}}>
             <div className="card_description_icon_wrapper_container">
               <div className="card_description_paragraph_icon_wrapper">
                 <FontAwesomeIcon
@@ -179,7 +180,7 @@ const Bacial = (props) => {
       );
     } else {
       return (
-        <p className="card_description_paragraph">{props.data.description}</p>
+        <p className="card_description_paragraph" style={{marginTop: '20px', fontFamily: 'Montserrat, sans-serif'}}>{props.data.description}</p>
       );
     }
   };
@@ -520,26 +521,6 @@ const Bacial = (props) => {
     );
   };
 
-  const bigScreenBottomWrapperRender = () => {
-    return (
-      <div className="big_screen_entire_bottom_wrapper">
-        <div className="big_screen_price_wrapper">
-          <FontAwesomeIcon
-            className="big_screen_card_description_icon"
-            icon={faTag}
-          />
-          <p className="big_screen_price">{props.data.price},00 €</p>
-        </div>
-        <div className="big_screen_duration_wrapper">
-          <FontAwesomeIcon
-            className="big_screen_card_description_icon"
-            icon={faClock}
-          />
-          <p className="big_screen_duration">{props.data.duration} minuti</p>
-        </div>
-      </div>
-    );
-  };
 
   const smallScreenBottomWrapperRender = () => {
     return (
@@ -632,43 +613,12 @@ const Bacial = (props) => {
     }
   };
 
-  return (
-    <InView threshold={0.2} triggerOnce={true}>
-      {({ inView, ref }) => (
+  const bigScreenBottomWrapperRender = () => {
+    return (
+      <div className="big_screen_entire_bottom_wrapper">
+        <div className="big_screen_price_wrapper">
         <div
-          className="card_container"
-          ref={ref}
-          style={{ display: props.bacialRendered }}
-        >
-          {inView ? (
-            <Spring
-              from={{ position: "relative", opacity: 0 }}
-              to={{ position: "relative", opacity: 1 }}
-              config={{ duration: 1000 }}
-            >
-              {(styleprops) => (
-                <section className="card" style={styleprops}>
-                  <div
-                    className="card_image"
-                    style={{
-                      backgroundColor: bacialToggle
-                        ? "rgba(0, 129, 177, 0.2)"
-                        : "rgba(211, 211, 211, 0.4)",
-                      boxShadow: bacialToggle
-                        ? "0px -3px 3px 0px rgba(207, 207, 196, 0.7), -3px 0px 3px 0px rgba(207, 207, 196, 0.7), 0px 3px 3px 0px rgba(207, 207, 196, 0.7)"
-                        : "0px -1px 1px 0px rgba(207, 207, 196, 0.1)",
-                      transition: "ease all 0.5s",
-                    }}
-                  >
-                    <Spring
-                      from={{ x: 200, fill: "#fff" }}
-                      to={{ x: 0, fill: "rgba(150,221,225, 0.5)" }}
-                      config={{ delay: 300, duration: 1500 }}
-                    >
-                      {(styles) => (
-                        <>
-                          <div
-                            className="big_screen_book_now_wrapper"
+        className="big_screen_book_now_wrapper"
                             onClick={() => addToCart()}
                             style={{
                               background: bookNowButtonHovered
@@ -796,47 +746,45 @@ const Bacial = (props) => {
                           >
                             {bigScreenAddToCartButton()}
                           </div>
-                          <img
-                            className="card_svg"
-                            
-                            src= {`${imageUrl}${props.data.img}`}
-                            
-                            style={{borderRadius:"5px" , maxWidth:"90%", maxHeight:"40%", marginTop:"10px", minHeight:"20%", minWidth:"75%", width:'auto', height: 'auto'}}
-                        />
-                            {/* <circle
-                              cx="28"
-                              cy="28"
-                              r={
-                                props.currentScreenSize === ""
-                                  ? props.initialScreenSize >= 1200
-                                    ? "22"
-                                    : "25"
-                                  : props.currentScreenSize >= 1200
-                                  ? "22"
-                                  : "25"
-                              }
-                              stroke={
-                                bacialToggle
-                                  ? "rgb(25, 154, 202)"
-                                  : "rgba(191, 191, 191)"
-                              }
-                              strokeWidth="0.5"
-                              fill="white"
-                            />
-                           
-                          </img> */}
-                        </>
-                      )}
-                    </Spring>
-                    <div
-                      className="card_border_right"
-                      style={{
-                        borderRight: bacialToggle
-                          ? "1px solid rgba(25, 154, 202, 0.4)"
-                          : "1px solid rgb(211, 211, 211)",
-                      }}
-                    />
-                  </div>
+        </div>
+        <div className="big_screen_price_wrapper">
+          <FontAwesomeIcon
+            className="big_screen_card_description_icon"
+            icon={faTag}
+          />
+          <p className="big_screen_price">{props.data.price},00 €</p>
+        </div>
+        <div className="big_screen_duration_wrapper">
+          <FontAwesomeIcon
+            className="big_screen_card_description_icon"
+            icon={faClock}
+          />
+          <p className="big_screen_duration">{props.data.duration} minuti</p>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <InView threshold={0.2} triggerOnce={true}>
+      {({ inView, ref }) => (
+        <div
+          className="card_container"
+          ref={ref}
+          style={{ display: props.bacialRendered, alignItems: 'center', justifyContent: 'center', display: 'flex', height: '450px' }}
+        >
+                        <div className="icon-services">
+              <FontAwesomeIcon icon={faPaintBrush} />
+              </div>
+          {inView ? (
+            
+            <Spring
+              from={{ position: "relative", opacity: 0 }}
+              to={{ position: "relative", opacity: 1 }}
+              config={{ duration: 1000 }}
+            >
+              {(styleprops) => (
+                <section className="card" style={styleprops}>
                   <div
                     className="card_description"
                     style={{
@@ -847,16 +795,17 @@ const Bacial = (props) => {
                         ? "0px -3px 3px 0px rgba(207, 207, 196, 0.7), 3px 0px 3px 0px rgba(207, 207, 196, 0.7), 0px 4px 3px 0px rgba(207, 207, 196, 0.7)"
                         : "0px -1px 1px 0px rgba(207, 207, 196, 0.1)",
                       transition: "ease all 0.5s",
+                      marginTop: '20px',
                     }}
                   >
                     <div className="card_description_inner_wrapper">
-                      <h2 style={{ fontWeight: 400 }}>{props.data.name}</h2>
-                      <p
+                      <h2 style={{ fontWeight: 600 }}>{props.data.name}</h2>
+                      {/*<p
                         className="card_description_subheader"
-                        style={{ opacity: 0.6 }}
+                        style={{ opacity: 0.7 }}
                       >
                         {props.data.category}
-                      </p>
+                      </p>*/}
                       {cardDescriptionHandler()}
                       {dynamicScreenSizeBottomCardRender()}
                     </div>

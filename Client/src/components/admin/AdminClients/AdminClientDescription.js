@@ -10,6 +10,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import Modal from "react-modal";
 import { css } from "@emotion/css";
 import { FormGroup, Input } from "reactstrap";
+import { toast } from "react-toastify";
 import {
   faShoppingCart,
   faChevronLeft,
@@ -22,6 +23,7 @@ import "react-day-picker/lib/style.css";
 import "./AdminClients";
 // import { useHistory } from "react-router-dom";
 import BounceLoader from "react-spinners/BounceLoader";
+import CircleLoader from "react-spinners/CircleLoader";
 import getEmployeesQuery from "../../../graphql/queries/getEmployeesQuery";
 
 const AdminClientDescription = (props) => {
@@ -61,6 +63,8 @@ const AdminClientDescription = (props) => {
         console.log(data, "data");
         // perform any data processing here
         console.log(data, "data");
+        toast.success('Hai aggiunto la descrizione');
+
         navigate.go(0);
 
     }
@@ -93,7 +97,7 @@ const AdminClientDescription = (props) => {
           },
         }}
       >
-        <BounceLoader
+        <CircleLoader
           size={100}
           css={override}
           color={"rgb(44, 44, 52)"}

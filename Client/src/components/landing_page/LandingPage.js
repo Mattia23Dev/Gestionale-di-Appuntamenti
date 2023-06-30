@@ -292,7 +292,7 @@ const LandingPage = React.forwardRef((props, ref) => {
         background: splashScreenHalfway
           ? "rgb(224, 224, 232)"
           : "rgb(245, 245, 245)",
-        transition: "background 2s ease-out",
+        transition: "background 0.5s ease-out",
         zIndex: finalBookingModal ? -1 : "auto",
       }}
       id={name}
@@ -363,7 +363,7 @@ const LandingPage = React.forwardRef((props, ref) => {
                   ? 3000
                   : 2350
                 : 2350,
-              duration: 500,
+              duration: 200,
             }}
           >
             {(propstyles) => (

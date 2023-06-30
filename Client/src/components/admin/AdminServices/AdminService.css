@@ -18,6 +18,10 @@
   align-items: center;
   justify-content: flex-start;
 }
+.select-category-services{
+  padding: 6px 12px;
+  font-size: 1.3rem;
+}
 .add_staff_member_button {
   display: flex;
   flex-direction: column;

@@ -8,13 +8,17 @@ import leftImage from '../../images/1478254271f24428b884916396971609accb25f958.j
 import { ToastContainer } from "react-toastify";
 import ToastifyCSSImport from "./ToastifyCSSImport";
 import "./AllTreatments.css";
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import treatmentSuggestions from "../admin/AdminSchedule/AdminCreateAppointment/TreatmentSuggestions";
 import getAllAppointmentsQuery from "../../graphql/queries/getAllAppointmentsQuery";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf, faSpa, faBath, faFlask, faHandHoldingWater } from '@fortawesome/free-solid-svg-icons';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css';
+import 'swiper/swiper-bundle.min.css';
+
+
+SwiperCore.use([Navigation, Pagination]);
 
 const AllTreatments = React.forwardRef((props, ref) => {
   const {
@@ -58,26 +62,6 @@ const AllTreatments = React.forwardRef((props, ref) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-
-  const settings = {
-    dots: true,
-    arrows: true,
-    draggable: true,
-    swipe: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-
   /*const filteredServices = selectedCategory
     ? data.services.filter((service) => service.category === selectedCategory)
     : data.services;*/
@@ -147,14 +131,14 @@ const AllTreatments = React.forwardRef((props, ref) => {
                 <div className="who-right">
                   <div className="who-right-item">
                       <div className="who-right-item-card">
-                          <FontAwesomeIcon icon={faFlask} size="4x" color="pink" />
+                          <FontAwesomeIcon icon={faFlask} size="3x" color="pink" />
                           <h4>Trattamenti di benessere</h4>
                           <p> 
                             Ogni trattamento è personalizzato per le tue esigenze, utilizzando tecniche tradizionali e innovative 
                             per sciogliere le tensioni e promuovere il fluire dell'energia vitale.</p>
                       </div>
                       <div className="who-right-item-card">
-                          <FontAwesomeIcon icon={faSpa} size="4x" color="pink" />
+                          <FontAwesomeIcon icon={faSpa} size="3x" color="pink" />
                           <h4>Massaggi e terapie</h4>
                           <p>offriamo anche terapie specifiche che si concentrano sul ripristino dell'equilibrio interno. Attraverso approcci terapeutici mirati, 
                             ti aiuteremo a superare i disagi fisici e a ristabilire l'armonia nella tua vita.</p>
@@ -162,14 +146,14 @@ const AllTreatments = React.forwardRef((props, ref) => {
                   </div>
                   <div className="who-right-item">
                       <div className="who-right-item-card">
-                          <FontAwesomeIcon icon={faBath} size="4x" color="pink" />
+                          <FontAwesomeIcon icon={faBath} size="3x" color="pink" />
                           <h4>Cura della persona</h4>
                           <p>
                             Il nostro team di professionisti qualificati sarà al tuo fianco per consigliarti e guidarti lungo il percorso verso 
                             una salute migliore.</p>
                       </div>
                       <div className="who-right-item-card">
-                          <FontAwesomeIcon icon={faHandHoldingWater} size="4x" color="pink" />
+                          <FontAwesomeIcon icon={faHandHoldingWater} size="3x" color="pink" />
                           <h4>Prodotti naturali</h4>
                           <p>La nostra filosofia si basa sull'utilizzo di prodotti naturali, 
                             selezionati con cura per fornirti trattamenti delicati e rispettosi della tua pelle 
@@ -182,48 +166,19 @@ const AllTreatments = React.forwardRef((props, ref) => {
 
 
       <header className="all_treatments_header" ref={inViewRef}>
-        {inView ? (
-          <Spring
-            from={{
-              position: "relative",
-              opacity: 0,
-            }}
-            to={{
-              position: "relative",
-              opacity: 1,
-            }}
-            config={{ duration: 1000 }}
-          >
-            {(styles) => (
-              <>
                 <Suspense fallback={<></>}>
                   <ToastifyCSSImport />
                 </Suspense>
                 <h2
-                  style={{
-                    position: `${styles.position}`,
-                    opacity: `${styles.opacity}`,
-                  }}
                   ref={treatmentsHeaderRef}
                 >
                   I NOSTRI TRATTAMENTI
                 </h2>
                 <span
-                  style={{
-                    position: `${styles.position}`,
-                    opacity: `${styles.opacity}`,
-                    width: treatmentsHeaderRef.current
-                      ? treatmentsHeaderRef.current.clientWidth + "px"
-                      : "0px",
-                  }}
                   className="treatments_title_underline"
                 />
                 <br />
                 <h3
-                  style={{
-                    position: `${styles.position}`,
-                    opacity: `${styles.opacity}`,
-                  }}
                 >
                   <p className="landing_page_description">
                     Ogni trattamento è
@@ -232,10 +187,6 @@ const AllTreatments = React.forwardRef((props, ref) => {
                     specifici bisogni.
                   </p>
                 </h3>
-              </>
-            )}
-          </Spring>
-        ) : null}
             <div className="button-filter-container">
               <button onClick={() => setSelectedCategory(null)} className={selectedCategory === null ? 'selected-button' : 'not-sel-butt'}>Guarda tutte</button>
               <button onClick={() => handleCategoryClick('opzione1')} className={selectedCategory === 'opzione1' ? 'selected-button' : 'not-sel-butt'}>Trattamenti Viso</button>
@@ -247,25 +198,47 @@ const AllTreatments = React.forwardRef((props, ref) => {
               <button onClick={() => handleCategoryClick('opzione7')} className={selectedCategory === 'opzione7' ? 'selected-button' : 'not-sel-butt'}>Pressoterapia</button>
             </div>
       </header>
-
       <div className="services-container">
-      <Suspense fallback={<></>}>
-      <Slider {...settings}>
-      {data
-        ? data.services
-            .filter(service => selectedCategory ? service.category === selectedCategory : true)
-            .map((d) => (
-                <Bacial
+      <Swiper
+      navigation
+      pagination={{ clickable: true }}
+      spaceBetween={10}
+      slidesPerView={3}
+      breakpoints={{
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      }}
+    >
+
+      {data &&
+        data.services ? (
+          data.services
+          .filter((service) => (selectedCategory ? service.category === selectedCategory : true))
+          .map((d) => (
+            <SwiperSlide key={d._id}>
+              <Suspense fallback={<></>}>
+               <Bacial
                   key={d._id}
                   initialScreenSize={initialScreenSize}
                   currentScreenSize={currentScreenSize}
                   resetAllCartStates={resetAllCartStates}
                   data={d}
                 />
-            ))
-        : null}
-    </Slider>
-    </Suspense>
+                </Suspense>
+            </SwiperSlide>
+          ))
+        )
+        : 
+        (
+          <>Loading...</>
+        )
+        }
+
+    </Swiper>
       </div>
 
     </div>

@@ -6,6 +6,17 @@
   position: relative;
   z-index: 4;
 }
+.icon-services{
+  position: absolute;
+  top: 15px;
+  right: 15%;
+  padding: 20px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 121);
+  transform: rotate(90deg);
+  color: white;
+  z-index: 100;
+}
 .notification_removed_container,
 .notification_container{
   height: 100px;
