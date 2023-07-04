@@ -10,7 +10,10 @@
 .service-icon-mobile{
   display: none;
 }
-
+.select-category-services{
+  border-radius: 5px;
+  text-align: center;
+}
 .service-information{
   width: 100%;
   display: flex;

@@ -27,34 +27,13 @@ const addServiceMutation = {
     price: { type: new GraphQLNonNull(GraphQLInt) },
 
     duration: { type: new GraphQLNonNull(GraphQLInt) },
-    img: { type: GraphQLUpload },
     employees:{type:GraphQLList(GraphQLString)},
   },
 
   async resolve(parent, args, context) {
     const adminAccessToken = context.cookies["admin-access-token"];
-    console.log(args.img, "e");
 
     if (adminAccessToken) {
-      const { createReadStream, filename } = await args.img;
-      const stream = createReadStream();
-      const path = `./uploads/${filename}`;
-      console.log(path, path);
-      await new Promise((resolve, reject) => {
-        stream
-          .on("error", (error) => {
-            fs.unlink(path, () => {
-              reject(error);
-            });
-          })
-          .pipe(fs.createWriteStream(path))
-          .on("error", (error) => {
-            reject(error);
-          })
-          .on("finish", () => {
-            resolve();
-          });
-      });
 
       let newService = new Service({
         _id: new mongoose.Types.ObjectId(),
@@ -63,7 +42,6 @@ const addServiceMutation = {
         description: args.description,
         price: args.price,
         duration: args.duration,
-        img: filename,
         employees:args.employees,
       });
 

@@ -8,7 +8,6 @@ const servicesQuery = {
   type: new GraphQLList(serviceType),
   async resolve(parent, args) {
     const response =await Service.find({});
-    console.log(response, "response")
    
     return response
   },

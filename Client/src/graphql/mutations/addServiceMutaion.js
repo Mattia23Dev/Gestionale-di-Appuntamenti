@@ -10,7 +10,6 @@ const addServiceMutation = gql`
     $description: String!
     $price: Int!
     $duration: Int!
-    $img:Upload
     $employees: [String]
   ) {
     addService(
@@ -19,7 +18,6 @@ const addServiceMutation = gql`
       description: $description
       price: $price
       duration: $duration
-      img:$img
       employees: $employees
     ) {
       name
@@ -27,7 +25,6 @@ const addServiceMutation = gql`
       description
       price
       duration
-      img
       employees
       
   

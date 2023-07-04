@@ -86,7 +86,6 @@ const AdminAddService = (props) => {
   const [durationError, changeDurationError] = useState(false);
   const [descriptionError, changeDescriptionError] = useState(false);
   const [categoryError, changeCategoryError] = useState(false);
-  const [imgError, changeImgError] = useState(false);
   const [emplError, changeEmpError] = useState(false);
 
 
@@ -95,7 +94,6 @@ const AdminAddService = (props) => {
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [img, setImg] = useState("");
 
   const [employee, setEmployee] = useState([]);
 const handleEmployee =(e)=>{
@@ -139,7 +137,6 @@ const handleEmployee =(e)=>{
 // formData.append('description', description);
 // formData.append('price', price);
 // formData.append('duration', duration);
-formData.append("img", img);
   const [
     addEmployee,
     { loading: addEmployeeLoading, data: addEmployeeData },
@@ -151,13 +148,10 @@ formData.append("img", img);
       description: description,
       price: parseInt(price),
       duration: parseInt(duration),
-      img: img||undefined,
       employees:employee,
     },
     // variables:formData,
     onCompleted: (data) => {
-      console.log(data, "data");
-      // perform any data processing here
       console.log(data, "data");
     },
   });
@@ -253,8 +247,7 @@ formData.append("img", img);
 
   const handleSubmit = async () => {
 
-    console.log(img, "img");
-    if (name && price && duration && description && category && img && employee) {
+    if (name && price && duration && description && category && employee) {
       try {
         const f = await addService();
         console.log(f, "response");
@@ -282,9 +275,6 @@ formData.append("img", img);
    
       if (!category) {
         changeCategoryError(true);
-      }
-      if (!img) {
-        changeImgError(true);
       }
       if (!employee) {
         changeEmpError(true);
